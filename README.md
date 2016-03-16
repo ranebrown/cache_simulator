@@ -10,8 +10,6 @@
 3. report written in latex
 3. each function has its own file and header
 3. functions documented in doxygen style
-    * e.g.
-
     ```C
      /**
       * @brief function description
@@ -29,20 +27,25 @@
     * `report/images` images used in latex report
 
 ## Project Outline
+
 ### Memory Structure
 * L1 instruction cache
 * L1 data cache
   * L2 unified cache (inst. & data)
     * Main Memory
+
 ### Input Traces
 * stored in gzip format
 * use zcat command piped to simulator
+
 ### Configuration File
 * at runtime a config file is read to specify cache parameters
 * cache sizes, bus widths and associativity **always** a power of 2
+
 ### Main Memory
 * modeled by a constant delay and bandwidth
 * in-order processor model i.e. only a single out-standing request to memory system at a time
+
 ### Cache Organization
 * caches are *write-allocate, write-back*
 * 8-entry *victim cache*
