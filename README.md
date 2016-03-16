@@ -10,6 +10,7 @@
 3. report written in latex
 3. each function has its own file and header
 3. functions documented in doxygen style
+
     ```C
      /**
       * @brief function description
