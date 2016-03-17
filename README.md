@@ -58,7 +58,7 @@
 * each cache must maintain a LRU (least recently used) replacement policy
     * the least recently used item is discarded first
 * cache lines are marked as "dirty" if the program has written to that cache entry
-* on a miss the chache's victim cache is checked before going to the next level or main memory
+* on a miss the cache's victim cache is checked before going to the next level or main memory
     * the victim cache is an 8 deep LRU stack
     * if the line is available in the victim cache it is moved to the top of the victim cache stack
     * the line being removed from the cache is then swapped with the entry at the top of the victim cache
@@ -150,3 +150,5 @@
     1. create plots of performance vs. cost
     1. discuss best main memory system model
     1. discuss effects of bandwidth on overall system performance
+1. submit hard copy of report
+1. submit cd or usb of code and simulation results
