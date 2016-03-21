@@ -8,17 +8,23 @@
 
 int printResults(char *filename)
 {
-    FILE *fp;                                   // file pointer
-    char name[]     =   "../sim_results/";      // directory path to write to
+    FILE *fp;               // file pointer
+    char name[128];         // directory path to write to
+
+    if(filename == NULL)
+        return EXIT_FAILURE;
 
     // concatenate filename to file path
+    strcpy(name,"../sim_results/");
     strcat(name, filename);
 
     // open file for writing
     fp = fopen(name, "w+");
 
     // print to file
-    fprintf(fp, "%10s %10s\n", name, "Simulation Results");
+    fprintf(fp,"------------------------------------------------------------------------------------------\n");
+    fprintf(fp, "%20s %30s\n", filename, "Simulation Results");
+    fprintf(fp,"------------------------------------------------------------------------------------------\n");
 
     // close file
     fclose(fp);
