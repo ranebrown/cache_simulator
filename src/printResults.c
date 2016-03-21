@@ -17,6 +17,7 @@ int printResults(char *filename)
     // concatenate filename to file path
     strcpy(name,"../sim_results/");
     strcat(name, filename);
+    strcat(name, ".txt");
 
     // open file for writing
     fp = fopen(name, "w+");
