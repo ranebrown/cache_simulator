@@ -7,16 +7,16 @@ TESTDIR = ../test
 INCDIR = ../inc
 
 # Compiler to use
-CC = gcc
+CC = clang
 
 # Include paths for header files
-INCLUDES = -I $(INCDIR)
+INCLUDES = -I $(INCDIR) -I /usr/local/include
 
 # Compiler flags
-CFLAGS = -Wall -Wextra -g $(INCLUDES)
+CFLAGS = -Wall -Wextra -g $(INCLUDES) -std=c11
 
 # Paths to required libraries
-LFLAGS =
+LFLAGS = -L /usr/local/lib
 
 # The specific libraries that project depends on
 LIBS = -lm
@@ -28,22 +28,24 @@ SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS := $(SRCS:$(SRCDIR)/%.c=%.o)
 
 # name of executable
-MAIN = sim
+MAIN = sim.exe
 
 # make all
+.PHONY: all
 all: $(MAIN)
 
 $(MAIN): $(OBJS)
-	@echo "Compiling executable $(MAIN)..."
+	@echo "Compiling executable: $(MAIN)"
 	@$(CC) $(CFLAGS) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
-	@echo "Operation complete :)"
+	@echo
 
 # Automatically builds all object files from source files
 # -c option compiles but does not link (create object files)
 # -o is output filename
 $(OBJS): %.o : $(SRCDIR)/%.c
-	@echo "Compiling $@..."
+	@echo "Compiling object file: $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo
 
 # unit test setup
 TESTFLAG = -lcheck
@@ -55,31 +57,36 @@ TESTOBJS := $(TESTSRCS:$(TESTDIR)/%.c=%.o) #convert names of all .c files to .o
 MAINOBJS := $(filter-out main.o, $(OBJS)) #remove main.o from list of .o files (check doesn't use main)
 
 $(TESTOBJS): %.o : $(TESTDIR)/%.c #compile but don't link .o files
-	@echo "Compiling $@..."
+	@echo "Compiling object file: $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo
 
-TESTEX = test # name of executable
+# unit test executables
+TEXCS = $(TESTOBJS:%.o=%.exe)
 
-$(TESTEX): $(TESTOBJS) #compile executable for test
-	@echo "Compiling executable $(TESTEX)..."
-	@$(CC) $(CFLAGS) $(TESTFLAG) -o $(TESTEX) $(TESTOBJS) $(MAINOBJS) $(LFLAGS) $(LIBS)
-	@echo "Operation complete :)"
+# check target - compile the executable for each test file
+$(TEXCS): %.exe: %.o $(MAINOBJS)
+	@echo "Compiling unit test executable: $@"
+	@$(CC) $(CFLAGS) $(TESTFLAG) $(LFLAGS) $(LIBS) -o $@ $^
 	@echo
 
 # make and run unit tests
 # makefile info: structure using $TESTEX here and above so target isn't rebuilt if no changes
 # this is the same way main is set up
-test: $(TESTEX)
-	@./$(TESTEX)
+.PHONY: check
+check: $(TEXCS)
+	@for test in $^;  do \
+		./$${test}; \
+		echo; \
+	done
 
-# This is used in case there is a file named clean
+# phony is used in case there is a file named clean
 # @ suppresses command at shell
 .PHONY: clean
 clean:
-	@if [ -e $(MAIN) ]; then rm $(MAIN); fi;
-	@if [ -e $(TESTEX) ]; then rm $(TESTEX); fi;
+	@if [ `find . -name "*.exe" | head -1` ]; then rm *.exe; fi;
 	@if [ `find . -name "*.o" | head -1` ]; then rm *.o; fi;
-	@if [ `find . -name "*.txt" | head -1` ]; then rm *.txt; fi;
 	@echo "Cleaning..."
 	@echo "Operation complete :)"
+	@echo
 
