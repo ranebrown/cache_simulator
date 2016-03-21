@@ -1,3 +1,6 @@
+# ignore simulation results dir
+sim_results/
+
 # swap
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
