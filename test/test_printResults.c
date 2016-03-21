@@ -14,7 +14,7 @@
 START_TEST (test_printResults)
 {
     // variables
-    char filename[] = "test simulation";
+    char filename[] = "test_trace";
     int res = 1;
 
     // function under test
