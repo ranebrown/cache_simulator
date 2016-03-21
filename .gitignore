@@ -2,8 +2,7 @@
 sim_results/
 
 # executables
-check_sim
-sim
+*.exe
 
 # swap
 [._]*.s[a-w][a-z]
