@@ -13,7 +13,7 @@ CC = clang
 INCLUDES = -I $(INCDIR) -I /usr/local/include
 
 # Compiler flags
-CFLAGS = -Wall -Wextra -g $(INCLUDES)
+CFLAGS = -Wall -Wextra -g $(INCLUDES) -std=c11
 
 # Paths to required libraries
 LFLAGS = -L /usr/local/lib
@@ -31,6 +31,7 @@ OBJS := $(SRCS:$(SRCDIR)/%.c=%.o)
 MAIN = sim
 
 # make all
+.PHONY: all
 all: $(MAIN)
 
 $(MAIN): $(OBJS)
@@ -61,7 +62,7 @@ $(TESTOBJS): %.o : $(TESTDIR)/%.c #compile but don't link .o files
 # name of executable
 TESTEX = check_sim
 
-$(TESTEX): $(TESTOBJS) $(MAINOBJS)# compile executable for test
+$(TESTEX): $(TESTOBJS) $(MAINOBJS) # compile executable for test
 	@echo "Compiling executable $(TESTEX)..."
 	@$(CC) $(CFLAGS) $(TESTFLAG) -o $(TESTEX) $(TESTOBJS) $(MAINOBJS) $(LFLAGS) $(LIBS)
 	@echo "Operation complete :)"
@@ -71,6 +72,7 @@ $(TESTEX): $(TESTOBJS) $(MAINOBJS)# compile executable for test
 # make and run unit tests
 # makefile info: structure using $TESTEX here and above so target isn't rebuilt if no changes
 # this is the same way main is set up
+.PHONY: check
 check: $(TESTEX)
 
 # This is used in case there is a file named clean
