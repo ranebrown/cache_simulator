@@ -51,7 +51,8 @@ Suite * printResults_suite(void)
 }
 
 /**
- * @brief main section for printResults unit tests - should not be modified
+ * @brief main section for printResults unit tests - should not be modified except for the name
+ *  of the function used for creating the test suite
  */
 int main(void)
 {
