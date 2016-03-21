@@ -35,16 +35,17 @@ MAIN = sim.exe
 all: $(MAIN)
 
 $(MAIN): $(OBJS)
-	@echo "Compiling executable $(MAIN)..."
+	@echo "Compiling executable: $(MAIN)"
 	@$(CC) $(CFLAGS) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
-	@echo "Operation complete :)"
+	@echo
 
 # Automatically builds all object files from source files
 # -c option compiles but does not link (create object files)
 # -o is output filename
 $(OBJS): %.o : $(SRCDIR)/%.c
-	@echo "Compiling $@..."
+	@echo "Compiling object file: $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo
 
 # unit test setup
 TESTFLAG = -lcheck
@@ -56,15 +57,17 @@ TESTOBJS := $(TESTSRCS:$(TESTDIR)/%.c=%.o) #convert names of all .c files to .o
 MAINOBJS := $(filter-out main.o, $(OBJS)) #remove main.o from list of .o files (check doesn't use main)
 
 $(TESTOBJS): %.o : $(TESTDIR)/%.c #compile but don't link .o files
-	@echo "Compiling $@..."
+	@echo "Compiling object file: $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo
 
 # unit test executables
 TEXCS = $(TESTOBJS:%.o=%.exe)
-$(TEXCS): $(TESTOBJS) $(MAINOBJS)
-	@echo "Creating unit test executable(s): $@"
+
+# check target - compile the executable for each test file
+$(TEXCS): %.exe: %.o $(MAINOBJS)
+	@echo "Compiling unit test executable: $@"
 	@$(CC) $(CFLAGS) $(TESTFLAG) $(LFLAGS) $(LIBS) -o $@ $^
-	@echo "Operation complete :)"
 	@echo
 
 # make and run unit tests
@@ -72,16 +75,18 @@ $(TEXCS): $(TESTOBJS) $(MAINOBJS)
 # this is the same way main is set up
 .PHONY: check
 check: $(TEXCS)
-	@echo "Running unit test: $^"
-	@for test in $^;  do ./$$test; done
+	@for test in $^;  do \
+		./$${test}; \
+		echo; \
+	done
 
 # phony is used in case there is a file named clean
 # @ suppresses command at shell
 .PHONY: clean
 clean:
-	@if [ -e $(MAIN) ]; then rm $(MAIN); fi;
-	@if [ -e $(TEXCS) ]; then rm $(TEXCS); fi;
+	@if [ `find . -name "*.exe" | head -1` ]; then rm *.exe; fi;
 	@if [ `find . -name "*.o" | head -1` ]; then rm *.o; fi;
 	@echo "Cleaning..."
 	@echo "Operation complete :)"
+	@echo
 
