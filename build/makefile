@@ -7,16 +7,16 @@ TESTDIR = ../test
 INCDIR = ../inc
 
 # Compiler to use
-CC = gcc
+CC = clang
 
 # Include paths for header files
-INCLUDES = -I $(INCDIR)
+INCLUDES = -I $(INCDIR) -I /usr/local/include
 
 # Compiler flags
 CFLAGS = -Wall -Wextra -g $(INCLUDES)
 
 # Paths to required libraries
-LFLAGS =
+LFLAGS = -L /usr/local/lib
 
 # The specific libraries that project depends on
 LIBS = -lm
@@ -58,19 +58,20 @@ $(TESTOBJS): %.o : $(TESTDIR)/%.c #compile but don't link .o files
 	@echo "Compiling $@..."
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-TESTEX = test # name of executable
+# name of executable
+TESTEX = check_sim
 
-$(TESTEX): $(TESTOBJS) #compile executable for test
+$(TESTEX): $(TESTOBJS) $(MAINOBJS)# compile executable for test
 	@echo "Compiling executable $(TESTEX)..."
 	@$(CC) $(CFLAGS) $(TESTFLAG) -o $(TESTEX) $(TESTOBJS) $(MAINOBJS) $(LFLAGS) $(LIBS)
 	@echo "Operation complete :)"
 	@echo
+	@./$(TESTEX)
 
 # make and run unit tests
 # makefile info: structure using $TESTEX here and above so target isn't rebuilt if no changes
 # this is the same way main is set up
-test: $(TESTEX)
-	@./$(TESTEX)
+check: $(TESTEX)
 
 # This is used in case there is a file named clean
 # @ suppresses command at shell
