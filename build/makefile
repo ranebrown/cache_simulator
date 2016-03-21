@@ -28,7 +28,7 @@ SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS := $(SRCS:$(SRCDIR)/%.c=%.o)
 
 # name of executable
-MAIN = sim
+MAIN = sim.exe
 
 # make all
 .PHONY: all
@@ -59,30 +59,29 @@ $(TESTOBJS): %.o : $(TESTDIR)/%.c #compile but don't link .o files
 	@echo "Compiling $@..."
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-# name of executable
-TESTEX = check_sim
-
-$(TESTEX): $(TESTOBJS) $(MAINOBJS) # compile executable for test
-	@echo "Compiling executable $(TESTEX)..."
-	@$(CC) $(CFLAGS) $(TESTFLAG) -o $(TESTEX) $(TESTOBJS) $(MAINOBJS) $(LFLAGS) $(LIBS)
+# unit test executables
+TEXCS = $(TESTOBJS:%.o=%.exe)
+$(TEXCS): $(TESTOBJS) $(MAINOBJS)
+	@echo "Creating unit test executable(s): $@"
+	@$(CC) $(CFLAGS) $(TESTFLAG) $(LFLAGS) $(LIBS) -o $@ $^
 	@echo "Operation complete :)"
 	@echo
-	@./$(TESTEX)
 
 # make and run unit tests
 # makefile info: structure using $TESTEX here and above so target isn't rebuilt if no changes
 # this is the same way main is set up
 .PHONY: check
-check: $(TESTEX)
+check: $(TEXCS)
+	@echo "Running unit test: $^"
+	@for test in $^;  do ./$$test; done
 
-# This is used in case there is a file named clean
+# phony is used in case there is a file named clean
 # @ suppresses command at shell
 .PHONY: clean
 clean:
 	@if [ -e $(MAIN) ]; then rm $(MAIN); fi;
-	@if [ -e $(TESTEX) ]; then rm $(TESTEX); fi;
+	@if [ -e $(TEXCS) ]; then rm $(TEXCS); fi;
 	@if [ `find . -name "*.o" | head -1` ]; then rm *.o; fi;
-	@if [ `find . -name "*.txt" | head -1` ]; then rm *.txt; fi;
 	@echo "Cleaning..."
 	@echo "Operation complete :)"
 
