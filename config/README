@@ -2,7 +2,7 @@ CONFIGURATION README
 
 How to read the files:
 -Each file is only as long as needed, one line.
--Values are separated by commas.
+-Values are sequential (No spaces or commas etc.).
 -The line ends with new line character.
 
 0 -> direct mapped
