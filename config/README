@@ -5,18 +5,18 @@ How to read the files:
 -Values are separated by commas.
 -The line ends with new line character.
 
-d -> direct mapped
-	-The next number after a 'd' is the cache size.
-s -> set associative
-	-The next number after a 's' is the number of ways, then the size.
-f -> fully associative
-	-The next number after a 'f' is the cache size.
+0 -> direct mapped
+	-The next number after a '0' is the cache size.
+1 -> set associative
+	-The next number after a '1' is the number of ways, then the size.
+2 -> fully associative
+	-The next number after a '2' is the cache size.
 
 For example the line:
-s 4 4 s 4 4 d 32  means
-|     |     |
-|     |     direct mapped 32kB L2
-|     4-way set associative, 4kB in size L1 Dcache
+144144032  means
+|  |  |
+|  |  direct mapped 32kB L2
+|  4-way set associative, 4kB in size L1 Dcache
 4-way set associative, 4kB in size L1 Icache
 
 
@@ -25,12 +25,12 @@ s 4 4 s 4 4 d 32  means
               |                  L1                  |      L2
 Configuration |    Icache        |     Dcache        |
               |Type Way Size(KB) | Type Way Size(KB) | Type Way Size(KB)
-default       |d        8        | d        8        | d        32
-L1-2way       |s    2   8        | s    2   8        | d        32
-All-2way      |s    2   8        | s    2   8        | s    2   32
-All-4way      |s    4   8        | s    4   8        | s    4   32
-L1-8way       |s    8   8        | s    8   8        | d        32
-L1-small      |d        4        | d        4        | d        32
-L1-small-4way |s    4   4        | s    4   4        | d        32
-All-small     |d        4        | d        4        | d        16
-All-FA        |f        8        | f        8        | f        32
+default       |0    1   8        | 0    1   8        | 0    1   32
+L1-2way       |1    2   8        | 1    2   8        | 0    1   32
+All-2way      |1    2   8        | 1    2   8        | 1    2   32
+All-4way      |1    4   8        | 1    4   8        | 1    4   32
+L1-8way       |1    8   8        | 1    8   8        | 0    1   32
+L1-small      |0    1   4        | 0    1   4        | 0    1   32
+L1-small-4way |1    4   4        | 1    4   4        | 0    1   32
+All-small     |0    1   4        | 0    1   4        | 0    1   16
+All-FA        |2    1   8        | 2    1   8        | 2    1   32
