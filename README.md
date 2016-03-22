@@ -28,7 +28,8 @@
     * `inc/` header files
     * `build/` makefile, .o files, executable, config file
     * `test/` unit test files - uses check framework
-    * `sim_results` all txt files of simulation results - folder is ignored for now
+    * `sim_results/` all txt files of simulation results - folder is ignored for now
+    * `config/` contains configuration files used to specify cache memory parameters at runtime
     * `report/` latex report
     * `report/images` images used in latex report (and any other images e.g. for wiki)
 
