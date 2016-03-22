@@ -1,10 +1,14 @@
 CONFIGURATION README
 
 How to read the files:
--Each file is only as long as needed, one line.
--Values are sequential (No spaces or commas etc.).
+-The 'default' file is required to keep (for now).
+-Each file is only one line.
+-Value fields are sequential (No spaces or commas etc.).
 -The line ends with new line character.
+-A '1' in the 'ways' column is the default for direct mapped
+ or fully associative.
 
+Type Values:
 0 -> direct mapped
 	-The next number after a '0' is the cache size.
 1 -> set associative
@@ -12,16 +16,15 @@ How to read the files:
 2 -> fully associative
 	-The next number after a '2' is the cache size.
 
-For example the line:
+For example, the line:
 144144032  means
 |  |  |
 |  |  direct mapped 32kB L2
 |  4-way set associative, 4kB in size L1 Dcache
 4-way set associative, 4kB in size L1 Icache
 
-
-
-
+Table of all values:
+________________________________________________________________________
               |                  L1                  |      L2
 Configuration |    Icache        |     Dcache        |
               |Type Way Size(KB) | Type Way Size(KB) | Type Way Size(KB)
@@ -34,3 +37,4 @@ L1-small      |0    1   4        | 0    1   4        | 0    1   32
 L1-small-4way |1    4   4        | 1    4   4        | 0    1   32
 All-small     |0    1   4        | 0    1   4        | 0    1   16
 All-FA        |2    1   8        | 2    1   8        | 2    1   32
+________________________________________________________________________
