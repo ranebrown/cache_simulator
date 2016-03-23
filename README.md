@@ -2,7 +2,7 @@
 
 ## Important Information
 * **Hard Deadline:** 5 pm on Friday, April 29
-* traces on eces server `/scratch/arp/ecen4594-sp16`
+* traces on eces server `/scratch/arp/ecen4593-sp16`
 * **data types:** - very important - signed, unsigned, long int, long long int, etc.
     * any timing statistic - unsigned long long
     * use correct printf format specifier e.g. %llu or %Lu
