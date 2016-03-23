@@ -44,6 +44,8 @@
 ### Input Traces
 * stored in gzip format
 * use zcat command piped to simulator
+    * `zcat trace_name.gz | ./executable config_file`
+    * on OSX may be necessary to use `zcat < trace_name.gz`
 
 ### Configuration File
 * at runtime a config file is read to specify cache and memory parameters
