@@ -2,7 +2,7 @@
  * @file        test_printResults.c
  * @authors     Rane Brown & Brian Douglass
  * @date        03-20-2016
- * @brief       Unit tests for the all functions in printResults.h
+ * @brief       Unit tests for all functions in printResults.h
  */
 #include <check.h>
 #include <stdlib.h>
