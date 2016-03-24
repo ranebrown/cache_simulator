@@ -9,10 +9,10 @@
 
 int readTrace(char *op, unsigned long long int *addr, unsigned int *bs)
 {
-    int res;                            /// result of scan
+    int res;    // result of scan
 
     // read a trace from stdin
-    res = scanf("%c %Lx %d\n", op, addr, bs);
+    res = scanf("%c %llx %d\n", op, addr, bs);
 
     if(res == 3)
         return EXIT_SUCCESS;
