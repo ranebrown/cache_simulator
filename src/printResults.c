@@ -46,10 +46,10 @@ int printResults(char *trace, memInfo *mem)
     // TODO - correct data types for below items - replace with variables
     fprintf( fp, "%60s\n", "Overall Performance");
     fprintf( fp, "%90s\n", "-------------------------------------------------------------------------------------");
-    fprintf( fp, "%40s %30llu\n", "Execution time", 87473922384);
-    fprintf( fp, "%40s %30llu\n", "Total references", 87473922384);
-    fprintf( fp, "%40s %30llu\n", "Instruction references", 87473922384);
-    fprintf( fp, "%40s %30llu\n", "Data references", 87473922384);
+    fprintf( fp, "%40s %30d\n", "Execution time", 8384);
+    fprintf( fp, "%40s %30d\n", "Total references", 384);
+    fprintf( fp, "%40s %30d\n", "Instruction references", 84);
+    fprintf( fp, "%40s %30d\n", "Data references", 8744);
     fprintf( fp, "\n");
     fprintf( fp, "\n");
 
