@@ -10,8 +10,12 @@
 
 /**
  * @brief unit test for int readTrace(char *op, unsigned long long int *addr, unsigned int *bs)
+ *
+ * This test uses short trace tr1 in gzip format tr1.gz If this test is run without a trace available from
+ * stdin it will timeout after a few seconds and return an error. Correct operation is to use the zcat command
+ * to pipe the trace to the executable e.g. zcat < tr1.gz | ./test_readTrace.exe
  */
-START_TEST (test_readTrace)
+START_TEST (test_readTracetr1)
 {
     char op;                            /// type of operation - read or write or instruction
     unsigned long long int addr;        /// memory address
@@ -39,6 +43,8 @@ START_TEST (test_readTrace)
     for(int i=0; i<10; i++)
     {
         res = readTrace(&op, &addr, &bs);
+        if(res == EXIT_FAILURE)
+            ck_abort_msg("\nscanf did not read a valid trace\n");
         if(op != tr_op[i])
             ck_abort_msg("\noperation incorrect\n");
         if(addr != tr_addr[i])
@@ -62,13 +68,13 @@ Suite * readTrace_suite(void)
     Suite *s = suite_create("Read Trace");
 
     // create a test case for each unit test
-    TCase *tc_readTrace = tcase_create("Core_readTrace");
+    TCase *tc_readTracetr1 = tcase_create("Core_readTracetr1");
 
     // add each unit test to its test case
-    tcase_add_test(tc_readTrace, test_readTrace);
+    tcase_add_test(tc_readTracetr1, test_readTracetr1);
 
     // add each test case to the suite
-    suite_add_tcase(s, tc_readTrace);
+    suite_add_tcase(s, tc_readTracetr1);
 
     return s;
 }
