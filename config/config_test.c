@@ -6,19 +6,26 @@ memInfo cache;
 int main (int argc, char ** argv)
 {
     FILE *config;
-    char inStr[11];
+    char inStr[8];
+    int i=0;
 
     (argc == 2) ? (config = fopen(argv[1],"r"))
-                : (config = fopen("default","r"));
+                : (config = fopen("default.txt","r"));
 
     fscanf(config, "%s", inStr);
     printf("-- %s --\n",inStr);
 
-	strncpy(cache.cacheName, argv[1],9);
-	printf("%s\n",cache.cacheName);
+    /* Copy the cache name minus the ".txt"
+        This is a more reliable and safe way
+        than using strncpy or strcpy. */
+    while(argv[1][i] != '.')
+    {
+        printf("%c",argv[1][i]);
+        cache.cacheName[i] = argv[1][i];
+        i++;
+    }
+    printf("\nCache type: %s\n",cache.cacheName);
     setValues(inStr);
-
-    //printf("string length: %lu\n",strlen(inStr));
 
     return 0;
 }
@@ -26,23 +33,18 @@ int main (int argc, char ** argv)
 void setValues(char inStr[])
 {
     /* L1 data */
-//    cache.L1dType   = inStr[0]-'0';
     cache.L1dWays   = inStr[0]-'0';
     cache.L1dSize   = inStr[1]-'0';
     cache.L1dBlock  = 32;          // TODO
 
     /* L1 instruction */
-//    cache.L1iType   = inStr[3]-'0';
     cache.L1iWays   = inStr[2]-'0';
-    printf("L1iWays: %d\n",cache.L1iWays);
     cache.L1iSize   = inStr[3]-'0';
     cache.L1iBlock  = 32;          // TODO
 
     /* L2 */
-//    cache.L2Type    = inStr[6]-'0';
     cache.L2Ways    = inStr[4]-'0';
     cache.L2Size    = (inStr[5]-'0')*10 + (inStr[6]-'0');
-    printf("L2 size: %d\n",cache.L2Size);
     cache.L2Block   = 64;      // TODO
 
     /* Main Memory (default values) */

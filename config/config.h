@@ -17,8 +17,8 @@
  */
 typedef struct
 {
-	char cacheName[10]; // For testing purposes
-	
+	char cacheName[32]; // For testing purposes
+
 //    int L1dType;    /// L1 data cache type (PROBABLY NOT NEEDED)
     int L1dSize;    /// L1 data cache size
     int L1dWays;    /// L1 data cache ways
@@ -37,7 +37,7 @@ typedef struct
     int chunkS;     /// main memory chunk size
 } memInfo;
 
-void setValues(char inStr[10]);
+void setValues(char inStr[8]);
 void printCacheInfo();
 
 #endif //CONFIG_H
