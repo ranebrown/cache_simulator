@@ -17,15 +17,17 @@
  */
 typedef struct
 {
-    int L1dType;    /// L1 data cache type
+	char cacheName[10]; // For testing purposes
+	
+//    int L1dType;    /// L1 data cache type (PROBABLY NOT NEEDED)
     int L1dSize;    /// L1 data cache size
     int L1dWays;    /// L1 data cache ways
     int L1dBlock;   /// L1 data block size
-    int L1iType;    /// L1 instruction type
+//    int L1iType;    /// L1 instruction type
     int L1iSize;    /// L1 instruction cache size
     int L1iWays;    /// L1 instruction cache ways
     int L1iBlock;   /// L1 instruction block size
-    int L2Type;     /// L2 cache type
+//    int L2Type;     /// L2 cache type
     int L2Size;     /// L2 cache size
     int L2Ways;     /// L2 cache ways
     int L2Block;    /// L2 cache block size
@@ -36,5 +38,6 @@ typedef struct
 } memInfo;
 
 void setValues(char inStr[10]);
+void printCacheInfo();
 
 #endif //CONFIG_H
