@@ -2,7 +2,7 @@
 
 ## Important Information
 * **Hard Deadline:** 5 pm on Friday, April 29
-* traces on eces server `/scratch/arp/ecen4594-sp16`
+* traces on eces server `/scratch/arp/ecen4593-sp16`
 * **data types:** - very important - signed, unsigned, long int, long long int, etc.
     * any timing statistic - unsigned long long
     * use correct printf format specifier e.g. %llu or %Lu
@@ -28,7 +28,9 @@
     * `inc/` header files
     * `build/` makefile, .o files, executable, config file
     * `test/` unit test files - uses check framework
-    * `sim_results` all txt files of simulation results - folder is ignored for now
+    * `sim_results/` all txt files of simulation results - folder is ignored for now
+    * `config/` contains configuration files used to specify cache memory parameters at runtime
+    * `trace_short/` gzipped short traces tr1 through tr6
     * `report/` latex report
     * `report/images` images used in latex report (and any other images e.g. for wiki)
 
@@ -43,6 +45,8 @@
 ### Input Traces
 * stored in gzip format
 * use zcat command piped to simulator
+    * `zcat trace_name.gz | ./executable config_file`
+    * on OSX may be necessary to use `zcat < trace_name.gz`
 
 ### Configuration File
 * at runtime a config file is read to specify cache and memory parameters

@@ -76,7 +76,11 @@ $(TEXCS): %.exe: %.o $(MAINOBJS)
 .PHONY: check
 check: $(TEXCS)
 	@for test in $^;  do \
-		./$${test}; \
+		if [ $${test} = 'test_readTrace.exe' ]; then \
+			zcat < ../trace_short/tr1.gz | ./$${test}; \
+		else \
+			./$${test}; \
+		fi; \
 		echo; \
 	done
 
