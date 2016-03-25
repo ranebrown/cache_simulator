@@ -20,11 +20,10 @@ int main (int argc, char ** argv)
         than using strncpy or strcpy. */
     while(argv[1][i] != '.')
     {
-        printf("%c",argv[1][i]);
         cache.cacheName[i] = argv[1][i];
         i++;
     }
-    printf("\nCache type: %s\n",cache.cacheName);
+    printf("\nCache name: %s\n",cache.cacheName);
     setValues(inStr);
 
     return 0;
