@@ -1,12 +1,11 @@
 CONFIGURATION README
 
 How to read the files:
--The 'default' file is required to keep (for now).
+-The 'default.txt' file is required to keep (for now).
 -Each file is only one line.
 -Value fields are sequential (No spaces or commas etc.).
 -The line ends with new line character.
--A '1' in the 'ways' column is the default for direct mapped
- or fully associative.
+-A '1' in the 'ways' column is the default for direct mapped.
 
 Type Values:
 0 -> direct mapped

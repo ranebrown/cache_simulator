@@ -31,7 +31,7 @@ int setCacheValues ()
     char inStr[8];
 
     /* Open the file */
-    if( !(config = fopen(cache.cacheName,"r") )
+    if( !(config = fopen(cache.cacheName,"r")) )
     {
         printf("error opening file.\n");
         return 1;
@@ -59,6 +59,12 @@ int setCacheValues ()
     cache.L2Ways    = inStr[4]-'0';
     cache.L2Size    = (inStr[5]-'0')*10 + (inStr[6]-'0');
     cache.L2Block   = 64;         // TODO Is this correct?
+
+    /* Check for fully associative */
+    if(cache.L1dWays == 0)
+    {
+        printf("Fully Associative.\n");
+    }
 
     /* Main Memory (default values) */
     cache.addrsendT = 10;

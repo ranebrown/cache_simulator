@@ -17,7 +17,7 @@
  */
 typedef struct
 {
-    char cacheName[32]; ///Holds the config filename, might be helpful for printing
+    char cacheName[32]; ///Holds the config filename, helpful for printing
     int L1dSize;    /// L1 data cache size
     int L1dWays;    /// L1 data cache ways
     int L1dBlock;   /// L1 data block size
