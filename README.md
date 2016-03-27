@@ -38,7 +38,7 @@
     * `make run` - run the main executable with default options
     * run the main executable with a specific configuration file located in `config/` and a trace file (located anywhere)
         * `make run trace=path_to_a_trace conf=configuration_filename`
-    * `make` check - compile each unit test file as a seperate executable and run them all
+    * `make check` - compile each unit test file as a seperate executable and run them all
 
 ## Project Outline
 
