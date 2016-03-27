@@ -33,6 +33,12 @@
     * `trace_short/` gzipped short traces tr1 through tr6
     * `report/` latex report
     * `report/images` images used in latex report (and any other images e.g. for wiki)
+1. makefile commands
+    * `make` - compile main executable
+    * `make run` - run the main executable with default options
+    * run the main executable with a specific configuration file located in `config/` and a trace file (located anywhere)
+        * `make run trace=path_to_a_trace conf=configuration_filename`
+    * `make` check - compile each unit test file as a seperate executable and run them all
 
 ## Project Outline
 
