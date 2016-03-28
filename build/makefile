@@ -92,6 +92,7 @@ check: $(TEXCS)
 	done
 
 # run main executable
+.PHONY: run
 run: $(MAIN)
 	@zcat < $(trace) | ./$(MAIN) ../config/$(conf)
 
