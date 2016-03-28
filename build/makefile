@@ -21,6 +21,13 @@ LFLAGS = -L /usr/local/lib
 # The specific libraries that project depends on
 LIBS = -lm
 
+# config file
+# ?= uses default unless it is overwritten
+conf ?= default
+
+# trace name
+trace ?= ../trace_short/tr1.gz
+
 # All source files
 SRCS = $(wildcard $(SRCDIR)/*.c)
 
@@ -83,6 +90,10 @@ check: $(TEXCS)
 		fi; \
 		echo; \
 	done
+
+# run main executable
+run: $(MAIN)
+	@zcat < $(trace) | ./$(MAIN) ../config/$(conf)
 
 # phony is used in case there is a file named clean
 # @ suppresses command at shell
