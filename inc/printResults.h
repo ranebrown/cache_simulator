@@ -6,11 +6,15 @@
  */
 #ifndef PRINT_RESULTS_H
     #define PRINT_RESULTS_H
+    //#define USEPRINTSTRUCT 0
 
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
 
+    #include "config.h"
+
+    #ifdef USEPRINTSTRUCT // Keep this here until it is debugged enough
     /**
      * @struct memInfo
      * @brief contains variables about the memory system configuration in use
@@ -32,6 +36,7 @@
         int chunkT;     /// main memory chunk time
         int chunkS;     /// main memory chunk size
     } memInfo;
+    #endif
 
     /**
      * @brief prints the results of the simulation to a file

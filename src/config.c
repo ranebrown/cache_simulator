@@ -1,35 +1,13 @@
 
 #include "config.h"
 
-memInfo cache;
 
-int main (int argc, char ** argv)
-{
-
-    /***** The following are required for the main function *****/
-    /* If there is a file included, it is the config needed */
-    if(argv[1])
-        //This works a little more reliably than
-        //strcpy for unknown string lengths
-        for(int i=0; argv[1][i] != '\0'; i++)
-            cache.cacheName[i] = argv[1][i];
-    /* Otherwise use the default values */
-    else
-        strcpy(cache.cacheName,"default.txt");
-
-    printf("\nCache name: %s\n",cache.cacheName);
-
-    if( setCacheValues() )
-        printf("Error setting values.\n");
-
-    return 0;
-}
-
-int setCacheValues ()
+int setCacheValues (memInfo cache)
 {
     FILE *config;
     char inStr[8];
 
+    printf("About to open: %s\n",cache.cacheName);
     /* Open the file */
     if( !(config = fopen(cache.cacheName,"r")) )
     {

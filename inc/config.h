@@ -37,11 +37,13 @@
         int chunkS;     /// main memory chunk size
     } memInfo;
 
+
+
     /**
      * @brief reads from config file, and set the values of the cache
      * @param[out] fully populated memInfo struct
      * @return EXIT_SUCCESS or EXIT_FAILURE
      */
-    int setCacheValues();
+    int setCacheValues(memInfo cache);
 
 #endif //CONFIG_H

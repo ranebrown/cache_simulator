@@ -11,6 +11,9 @@
 #include "readTrace.h"
 #include "config.h"
 
+/* Global variables */
+memInfo cache;
+
 int main(int argc, char *argv[])
 {
     /* Local Variables */
@@ -20,7 +23,7 @@ int main(int argc, char *argv[])
     int res = 0;                        /// result of trace read
 
     /* If there is a file included, it is the config needed */
-    if(argv[1])
+    if(argc == 2)
     {
         //This works a little more reliably than
         //strcpy for unknown string lengths
@@ -37,12 +40,10 @@ int main(int argc, char *argv[])
 
     printf("\nCache name: %s\n",cache.cacheName);
 
-    if( setCacheValues() )
+    if( setCacheValues(cache) )
         printf("Error setting values.\n");
 
-
-
-
+    printf("Done setting values.\n");
 
     while(res == 0)
     {
