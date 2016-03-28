@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     int res = 0;                        /// result of trace read
 
     (argc == 2) ? (config = fopen(argv[1],"r"))
-                : (config = fopen("default","r"));
+                : (config = fopen("../config/default.txt","r"));
     fscanf(config, "%s", inStr);
     printf("-- %s --\n",inStr);
 
