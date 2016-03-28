@@ -9,20 +9,41 @@
 #include <string.h>
 #include "printResults.h"
 #include "readTrace.h"
+#include "config.h"
+
+/* Global variables */
+memInfo cache;
 
 int main(int argc, char *argv[])
 {
-    FILE *config;                       /// file pointer to configuration file
-    char inStr[20];                     /// the line read in from configuration file
+    /* Local Variables */
     char op;                            /// type of operation - read or write or instruction
     unsigned long long int addr;        /// memory address
     unsigned int bs;                    /// byte size - number of bytes referenced by request
     int res = 0;                        /// result of trace read
 
-    (argc == 2) ? (config = fopen(argv[1],"r"))
-                : (config = fopen("default","r"));
-    fscanf(config, "%s", inStr);
-    printf("-- %s --\n",inStr);
+    /* If there is a file included, it is the config needed */
+    if(argc == 2)
+    {
+        //This works a little more reliably than
+        //strcpy for unknown string lengths
+        for(int i=0; argv[1][i] != '\0'; i++)
+        {
+            cache.cacheName[i] = argv[1][i];
+        }
+    }
+    /* Otherwise use the default values */
+    else
+    {
+        strcpy(cache.cacheName,"default.txt");
+    }
+
+    printf("\nCache name: %s\n",cache.cacheName);
+
+    if( setCacheValues(cache) )
+        printf("Error setting values.\n");
+
+    printf("Done setting values.\n");
 
     while(res == 0)
     {
