@@ -94,7 +94,7 @@ check: $(TEXCS)
 # run main executable
 .PHONY: run
 run: $(MAIN)
-	@zcat < $(trace) | ./$(MAIN) ../config/$(conf)
+	@zcat < $(trace) | ./$(MAIN) ../config/$(conf).txt
 
 # phony is used in case there is a file named clean
 # @ suppresses command at shell
