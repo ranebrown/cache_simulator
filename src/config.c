@@ -33,16 +33,23 @@ int setCacheValues ()
     /* Open the file */
     if( !(config = fopen(cache.cacheName,"r")) )
     {
-        printf("error opening file.\n");
-        return 1;
+        printf("Error opening file.\n");
+        return EXIT_FAILURE;
     }
 
     /* Get the line from the file */
     fscanf(config, "%s", inStr);
-    printf("-- %s --\n",inStr);
+
+    #ifdef LISTVALUES
+        printf("Input string: ->%s<-\n",inStr);
+    #endif
 
     /* Close the file */
-    fclose(config);
+    if( fclose(config) )
+    {
+        printf("Error closing file.\n");
+        return EXIT_FAILURE;
+    }
 
     /** Set the cache parameters from the file **/
     /* L1 data */
@@ -60,11 +67,13 @@ int setCacheValues ()
     cache.L2Size    = (inStr[5]-'0')*10 + (inStr[6]-'0');
     cache.L2Block   = 64;         // TODO Is this correct?
 
-    /* Check for fully associative */
-    if(cache.L1dWays == 0)
-    {
-        printf("Fully Associative.\n");
-    }
+    #ifdef LISTVALUES
+        /* Check for fully associative */
+        if(cache.L1dWays == 0)
+        {
+            printf("Fully Associative.\n");
+        }
+    #endif
 
     /* Main Memory (default values) */
     cache.addrsendT = 10;
@@ -72,5 +81,5 @@ int setCacheValues ()
     cache.chunkT    = 15;
     cache.chunkS    = 8;
 
-    return 0;
+    return EXIT_SUCCESS;
 }

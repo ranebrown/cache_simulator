@@ -1,15 +1,19 @@
 /**
- * @file        printResults.h
+ * @file        config.h
  * @authors     Rane Brown & Brian Douglass
  * @date        03-20-2016
- * @brief       Header file with function prototypes for printing the cache simulation results to a file.
+ * @brief       Header file with function prototypes for configuring the cache and memory.
  */
-#ifndef PRINT_RESULTS_H
-    #define PRINT_RESULTS_H
 
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <string.h>
+ #ifndef CONFIG_H
+     #define CONFIG_H
+     #define LISTVALUES 1
+
+     #include <stdio.h>
+     #include <stdlib.h>
+     #include <string.h>
+
+
 
     /**
      * @struct memInfo
@@ -17,7 +21,7 @@
      */
     typedef struct
     {
-        //char cacheName[32]; ///Holds the config filename, helpful for printing
+        char cacheName[32]; ///Holds the config filename, helpful for printing
         int L1dSize;    /// L1 data cache size
         int L1dWays;    /// L1 data cache ways
         int L1dBlock;   /// L1 data block size
@@ -27,18 +31,17 @@
         int L2Size;     /// L2 cache size
         int L2Ways;     /// L2 cache ways
         int L2Block;    /// L2 cache block size
-        //int addrsendT;  /// main memory address send time
+        int addrsendT;  /// main memory address send time
         int readyT;     /// main memory ready time
         int chunkT;     /// main memory chunk time
         int chunkS;     /// main memory chunk size
     } memInfo;
 
     /**
-     * @brief prints the results of the simulation to a file
-     * @param[in] trace string containing the name of the currently running trace
-     * @param[in] mem struct containing memory configuration parameters
+     * @brief reads from config file, and set the values of the cache
+     * @param[out] fully populated memInfo struct
      * @return EXIT_SUCCESS or EXIT_FAILURE
      */
-    int printResults(char *trace, memInfo *mem);
+    int setCacheValues();
 
-#endif // PRINT_RESULTS_H
+#endif //CONFIG_H
