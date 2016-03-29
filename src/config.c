@@ -62,6 +62,7 @@ int setCacheValues (memInfo *cache)
     cache->readyT    = 50;
     cache->chunkT    = 15;
     cache->chunkS    = 8;
+    cache->memoryCost = BASEMEMORY;
 
     return EXIT_SUCCESS;
 }
@@ -69,25 +70,24 @@ int setCacheValues (memInfo *cache)
 int calculateCost(memInfo *cache)
 {
 
+    //TODO Add functionality for fully associative cache
+
     #ifdef LISTVALUES
-        printf("L1dWays: %d\nL1dSize: %d\n",cache->L1dSize,cache->L1dSize);
-        printf("L1iWays: %d\nL1iSize: %d\n",cache->L1iSize,cache->L1iSize);
+        printf("L1dWays: %d\nL1dSize: %d\n",cache->L1dWays,cache->L1dSize);
+        printf("L1iWays: %d\nL1iSize: %d\n",cache->L1iWays,cache->L1iSize);
+        printf("L2Ways: %d\nL2Size: %d\n",cache->L2Ways,cache->L2Size);
     #endif
-    cache->L1dCost = (int) (L1_4KB * cache->L1dSize / 4) + (L1_ASSOC * cache->L1dSize);
-    printf("L1dCost: %d\n\n", cache->L1dCost);
-    cache->L1iCost = (int) (L1_4KB * cache->L1iSize / 4) + (L1_ASSOC * cache->L1iSize);
-
+    cache->L1dCost = (int) ((L1_4KB * cache->L1dSize / 4) + (L1_ASSOC * cache->L1dWays));
+    cache->L1iCost = (int) ((L1_4KB * cache->L1iSize / 4) + (L1_ASSOC * cache->L1iWays));
     cache->L1TotCost = cache->L1dCost + cache->L1iCost;
-
-    cache->L2Cost = (int) (L2_16KB * cache->L2Size / 16) + (L1_ASSOC * cache->L2Size);
-
+    cache->L2Cost = (int) ((L2_16KB * cache->L2Size / 16) + (L1_ASSOC * cache->L2Ways));
     cache->totalCost = cache->L1TotCost + cache->L2Cost + cache->memoryCost;
 
     #ifdef LISTVALUES
 
     printf("L1 cache cost (Icache $%d) + (Dcache $%d) = $%d\n", \
            cache->L1iCost, cache->L1dCost, cache->L1TotCost);
-    printf("L2 cache cost = $%d;  Memory cost = %d  Total cost = %d\n", \
+    printf("L2 cache cost = $%d;  Memory cost = %d  Total cost = $%d\n", \
             cache->L2Cost, cache->memoryCost, cache->totalCost);
 
     #endif
