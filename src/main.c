@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     char op;                            /// type of operation - read or write or instruction
     unsigned long long int addr;        /// memory address
     unsigned int bs;                    /// byte size - number of bytes referenced by request
-    int res = 0;                        /// result of trace read
+    int res = -1;                       /// result of trace read
 
     /* If there is a file included, it is the config needed */
     if(argc == 2)
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     /* Otherwise use the default values */
     else
     {
-        strcpy(cache.cacheName,"default.txt");
+        strcpy(cache.cacheName, "../config/default.txt");
     }
 
     printf("\nCache name: %s\n",cache.cacheName);
@@ -45,11 +45,12 @@ int main(int argc, char *argv[])
 
     printf("Done setting values.\n");
 
+    // read a trace from stdin and print it
+    res = readTrace(&op, &addr, &bs);
     while(res == 0)
     {
         res = readTrace(&op, &addr, &bs);
         printf("%c %llx %d\n" ,op ,addr ,bs);
-
     }
 
     return EXIT_SUCCESS;
