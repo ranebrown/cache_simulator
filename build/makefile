@@ -23,7 +23,7 @@ LIBS = -lm
 
 # config file
 # ?= uses default unless it is overwritten
-conf ?= default
+conf ?= ../config/default.txt
 
 # trace name
 trace ?= ../trace_short/tr1.gz
@@ -92,8 +92,9 @@ check: $(TEXCS)
 	done
 
 # run main executable
+.PHONY: run
 run: $(MAIN)
-	@zcat < $(trace) | ./$(MAIN) ../config/$(conf)
+	@zcat < $(trace) | ./$(MAIN) $(conf)
 
 # phony is used in case there is a file named clean
 # @ suppresses command at shell
