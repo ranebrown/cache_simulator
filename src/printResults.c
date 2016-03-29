@@ -11,7 +11,7 @@ int printResults(char *trace, memInfo *mem)
     FILE *fp;               // file pointer
     char name[128];         // directory path to write to
 
-    if(trace == NULL)
+    if(trace == NULL || mem == NULL)
         return EXIT_FAILURE;
 
     // concatenate trace to file path
