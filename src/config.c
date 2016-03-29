@@ -1,6 +1,10 @@
-
+/**
+ * @file        config.c
+ * @authors     Rane Brown & Brian Douglass
+ * @date        03-20-2016
+ * @brief       Contains functions defined in the config.h header file.
+ */
 #include "config.h"
-
 
 int setCacheValues (memInfo cache)
 {
@@ -60,4 +64,10 @@ int setCacheValues (memInfo cache)
     cache.chunkS    = 8;
 
     return EXIT_SUCCESS;
+}
+
+int calculateCost(memInfo cache)
+{
+
+    return 0;
 }
