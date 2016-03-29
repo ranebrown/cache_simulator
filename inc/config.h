@@ -7,7 +7,7 @@
 
  #ifndef CONFIG_H
      #define CONFIG_H
-     #define LISTVALUES 1
+     #define LISTVALUES  1
      #define L1_4KB      100   /// per 4KB of L1 cache
      #define L1_ASSOC    100   /// per doubling of L1 associativity
      #define L2_16KB     50    /// per 16KB of L2 cache
@@ -19,6 +19,7 @@
      #include <stdio.h>
      #include <stdlib.h>
      #include <string.h>
+     #include <math.h>
 
 
     /**

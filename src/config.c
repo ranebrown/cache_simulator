@@ -69,6 +69,13 @@ int setCacheValues (memInfo *cache)
 
 int calculateCost(memInfo *cache)
 {
+    int i=0, temp = cache->L1dSize;
+    int j=0, temp1 = cache->L2Size;
+    int waysDoubled = log2(cache->L1dWays);
+    if(!waysDoubled)
+    {
+        waysDoubled = 1;
+    }
 
     //TODO Add functionality for fully associative cache
 
@@ -77,10 +84,27 @@ int calculateCost(memInfo *cache)
         printf("L1iWays: %d\nL1iSize: %d\n",cache->L1iWays,cache->L1iSize);
         printf("L2Ways: %d\nL2Size: %d\n",cache->L2Ways,cache->L2Size);
     #endif
-    cache->L1dCost = (int) ((L1_4KB * cache->L1dSize / 4) + (L1_ASSOC * cache->L1dWays));
-    cache->L1iCost = (int) ((L1_4KB * cache->L1iSize / 4) + (L1_ASSOC * cache->L1iWays));
+
+    while(temp)
+    {
+        temp /= 4;
+        i++;
+    }
+    cache->L1dCost = (int) ((L1_4KB * cache->L1dSize / i) + (L1_ASSOC * waysDoubled));
+    cache->L1iCost = (int) ((L1_4KB * cache->L1iSize / i) + (L1_ASSOC * waysDoubled));
     cache->L1TotCost = cache->L1dCost + cache->L1iCost;
-    cache->L2Cost = (int) ((L2_16KB * cache->L2Size / 16) + (L1_ASSOC * cache->L2Ways));
+
+    while(temp1)
+    {
+        temp1 /= 16;
+        j++;
+    }
+    waysDoubled = log2(cache->L1dWays);
+    if(!waysDoubled)
+    {
+        waysDoubled = 1;
+    }
+    cache->L2Cost = (int) ((L2_16KB * cache->L2Size / j) + (L1_ASSOC * waysDoubled));
     cache->totalCost = cache->L1TotCost + cache->L2Cost + cache->memoryCost;
 
     #ifdef LISTVALUES
