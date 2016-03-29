@@ -12,7 +12,7 @@
 #include "config.h"
 
 /* Global variables */
-memInfo cache;
+
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +22,9 @@ int main(int argc, char *argv[])
     unsigned int bs;                    /// byte size - number of bytes referenced by request
     int res = 0;                        /// result of trace read
 
+    memInfo *cache = (memInfo *) malloc(sizeof(memInfo));
+
+
     /* If there is a file included, it is the config needed */
     if(argc == 2)
     {
@@ -29,21 +32,26 @@ int main(int argc, char *argv[])
         //strcpy for unknown string lengths
         for(int i=0; argv[1][i] != '\0'; i++)
         {
-            cache.cacheName[i] = argv[1][i];
+            cache->cacheName[i] = argv[1][i];
         }
     }
     /* Otherwise use the default values */
     else
     {
-        strcpy(cache.cacheName,"default.txt");
+        strcpy(cache->cacheName,"default.txt");
     }
 
-    printf("\nCache name: %s\n",cache.cacheName);
+    printf("\nCache name: %s\n",cache->cacheName);
 
     if( setCacheValues(cache) )
         printf("Error setting values.\n");
 
+
+
+    calculateCost(cache);
+
     printf("Done setting values.\n");
+    return 0;
 
     while(res == 0)
     {

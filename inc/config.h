@@ -33,10 +33,13 @@
         int L1dSize;    /// L1 data cache size
         int L1dWays;    /// L1 data cache ways
         int L1dBlock;   /// L1 data block size
+        int L1dCost;    /// L1 data cost
+
         int L1iSize;    /// L1 instruction cache size
         int L1iWays;    /// L1 instruction cache ways
         int L1iBlock;   /// L1 instruction block size
-        int L1Cost      /// L1 cost
+        int L1iCost;    /// L1 instruction cost
+        int L1TotCost;  /// L1 cost of data + instruction
 
         int L2Size;     /// L2 cache size
         int L2Ways;     /// L2 cache ways
@@ -57,14 +60,14 @@
      * @param[out] fully populated memInfo struct
      * @return EXIT_SUCCESS or EXIT_FAILURE
      */
-    int setCacheValues(memInfo cache);
+    int setCacheValues(memInfo *cache);
 
     /**
      * @brief calculates cost of a cache
      * @param[out] fully populated memInfo struct
      * @return EXIT_SUCCESS or EXIT_FAILURE
      */
-     int calculateCost(memInfo cache);
+     int calculateCost(memInfo *cache);
 
 
 #endif //CONFIG_H
