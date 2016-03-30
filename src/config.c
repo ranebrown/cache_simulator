@@ -62,65 +62,130 @@ int setCacheValues (memInfo *cache)
     cache->readyT    = 50;
     cache->chunkT    = 15;
     cache->chunkS    = 8;
-    cache->memoryCost = BASEMEMORY;
 
     return EXIT_SUCCESS;
 }
 
 int calculateCost(memInfo *cache)
 {
-    int i=0, temp = cache->L1dSize;
-    int j=0, temp1 = cache->L2Size;
-    int waysDoubled = log2(cache->L1dWays);
-    if(!waysDoubled)
-    {
-        waysDoubled = 1;
-    }
-
     //TODO Add functionality for fully associative cache
 
-    #ifdef LISTVALUES
-        printf("L1dWays: %d\nL1dSize: %d\n",cache->L1dWays,cache->L1dSize);
-        printf("L1iWays: %d\nL1iSize: %d\n",cache->L1iWays,cache->L1iSize);
-        printf("L2Ways: %d\nL2Size: %d\n",cache->L2Ways,cache->L2Size);
-    #endif
+    // #ifdef LISTVALUES
+    //     printf("L1dWays: %d\nL1dSize: %d\n",cache->L1dWays,cache->L1dSize);
+    //     printf("L1iWays: %d\nL1iSize: %d\n",cache->L1iWays,cache->L1iSize);
+    //     printf("L2Ways:  %d\nL2Size:  %d\n",cache->L2Ways,cache->L2Size);
+    // #endif
 
-    while(temp)
+    cache->memoryCost = 75;
+
+    /* Get the cost of the L1i and L1d caches */
+    // $100 for every 4KB, L1 cache
+    if(cache->L1dSize == 4)
     {
-        temp /= 4;
-        i++;
+        cache->L1dCost = 100;
+        cache->L1iCost = 100;
+        printf("L1d == 4\n");
     }
-    cache->L1dCost = (int) ((L1_4KB * cache->L1dSize / i) + (L1_ASSOC * waysDoubled));
-    cache->L1iCost = (int) ((L1_4KB * cache->L1iSize / i) + (L1_ASSOC * waysDoubled));
+    else //8KB
+    {
+        cache->L1dCost = 200;
+        cache->L1iCost = 200;
+        printf("L1d == 8\n");
+    }
+    // An additional $100 every time the ways are doubled, L1 cache
+    if(cache->L1iWays == 2)
+    {
+        cache->L1dCost += 100;
+        cache->L1iCost += 100;
+        printf("L1 ways == 2\n");
+    }
+    else if(cache->L1iWays == 4)
+    {
+        cache->L1dCost += 200;
+        cache->L1iCost += 200;
+        printf("L1 ways == 4\n");
+    }
+    else if(cache->L1iWays == 8)
+    {
+        cache->L1dCost += 400;
+        cache->L1iCost += 400;
+        printf("L1 ways == 8\n");
+    }
+    // else
+    // {
+    //     cache->L1dCost += 100;
+    //     cache->L1iCost += 100;
+    // }
+    // TODO FULLY ASSOCIATIVE
+    // else if(cache->L1iWays == FULLY ASSOCIATIVE)
+    // {
+    //     cache-L1Cost += COST;
+    // }
     cache->L1TotCost = cache->L1dCost + cache->L1iCost;
 
-    while(temp1)
+
+    if(cache->L2Size == 16)
     {
-        temp1 /= 16;
-        j++;
+        cache->L2Cost = 50;
     }
-    waysDoubled = log2(cache->L1dWays);
-    if(!waysDoubled)
+    else
     {
-        waysDoubled = 1;
+        cache->L2Cost = 100;
     }
-    cache->L2Cost = (int) ((L2_16KB * cache->L2Size / j) + (L1_ASSOC * waysDoubled));
+
+    if(cache->L2Ways == 2)
+    {
+        cache->L2Cost += 100;
+    }
+    else if(cache->L2Ways == 4)
+    {
+        cache->L2Cost += 150;
+    }
     cache->totalCost = cache->L1TotCost + cache->L2Cost + cache->memoryCost;
 
-    #ifdef LISTVALUES
+    // TODO extra simulation using sjeng trace with different parameters.
 
+
+    #ifdef LISTVALUES
     printf("L1 cache cost (Icache $%d) + (Dcache $%d) = $%d\n", \
            cache->L1iCost, cache->L1dCost, cache->L1TotCost);
     printf("L2 cache cost = $%d;  Memory cost = %d  Total cost = $%d\n", \
             cache->L2Cost, cache->memoryCost, cache->totalCost);
-
     #endif
+
+
     return 0;
 }
 
+/*
+printf("i=%d\n",i);
+// Get divisor i in order to
+while(temp)
+{
+    temp /= 4;
+    i++;
+    printf("i=%d temp = %d\n",i,temp);
+}
+i--;
+printf("final i=%d\nwaysDoubled=%d",i,waysDoubled);
+cache->L1dCost   = (int) ((L1_4KB * cache->L1dSize / i) + (L1_ASSOC * waysDoubled));
+cache->L1iCost   = (int) ((L1_4KB * cache->L1iSize / i) + (L1_ASSOC * waysDoubled));
+cache->L1TotCost = cache->L1dCost + cache->L1iCost;
 
 
+while(temp1)
+{
+    temp1 /= 16;
+    j++;
+}
+waysDoubled = log2(cache->L1dWays);
+if(!waysDoubled)
+{
+    waysDoubled = 1;
+}
+cache->L2Cost    = (int) ((L2_16KB * cache->L2Size / j) + (L1_ASSOC * waysDoubled));
 
+*/
 
 
 

@@ -8,13 +8,9 @@
  #ifndef CONFIG_H
      #define CONFIG_H
      #define LISTVALUES  1
-     #define L1_4KB      100   /// per 4KB of L1 cache
-     #define L1_ASSOC    100   /// per doubling of L1 associativity
-     #define L2_16KB     50    /// per 16KB of L2 cache
-     #define L2_ASSOC    50    /// per doubling of L2 associativity
      #define DECMEMLAT   200   /// to halve decrease memory latency
      #define BANDWIDTH   100   /// to double the bandwidth
-     #define BASEMEMORY  75    /// TODO ?????????? NOT SURE ABOUT THIS
+
 
      #include <stdio.h>
      #include <stdlib.h>

@@ -30,3 +30,13 @@ L1-small-4way |  4   4       |  4   4       |  1   32
 All-small     |  1   4       |  1   4       |  1   16
 All-FA        |  0   8       |  0   8       |  0   32
 _____________________________________________________________
+
+default       ok
+L1-2way       bad
+All-2way      bad
+All-4way      bad
+L1-8way       
+L1-small
+L1-small-4way
+All-small
+All-FA
