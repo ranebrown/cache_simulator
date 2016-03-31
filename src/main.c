@@ -21,6 +21,14 @@ int main(int argc, char *argv[])
     unsigned long long int addr;        /// memory address
     unsigned int bs;                    /// byte size - number of bytes referenced by request
     int res = 0;                        /// result of trace read
+    int i = 0;
+
+    while(res == 0)
+    {
+        res = readTrace(&op, &addr, &bs);
+        printf("%c %llx %d\n" ,op ,addr ,bs);
+    }
+
 
     memInfo *cache = (memInfo *) malloc(sizeof(memInfo));
 
@@ -52,12 +60,7 @@ int main(int argc, char *argv[])
 
     printf("Done setting values.\n");
 
-    while(res == 0)
-    {
-        res = readTrace(&op, &addr, &bs);
-        printf("%c %llx %d\n" ,op ,addr ,bs);
 
-    }
 
     return EXIT_SUCCESS;
 }
