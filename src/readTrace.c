@@ -9,13 +9,42 @@
 
 int readTrace(char *op, unsigned long long int *addr, unsigned int *bs)
 {
-    int res;    // result of scan
+    // result of scanf
+    int res;
 
-    // read a trace from stdin
-    res = scanf("%c %llx %d\n", op, addr, bs);
+    // variables used to timeout if no input from stdin
+    fd_set rfds;
+    struct timeval tv;
+    int retval;
 
-    if(res == 3)
-        return EXIT_SUCCESS;
-    else
+    // Watch stdin (fd 0) to see when it has input.
+    FD_ZERO(&rfds);
+    FD_SET(0, &rfds);
+
+    // wait up to 2 seconds for input
+    tv.tv_sec = 2;
+    tv.tv_usec = 0;
+
+    // select function returns status
+    retval = select(1, &rfds, NULL, NULL, &tv);
+
+    if (retval == -1)   // error with select function
+    {
+        perror("select()");
         return EXIT_FAILURE;
+    }
+    else if (retval)    // data is ready to be read
+    {
+        // read a trace from stdin
+        res = scanf("%c %llx %d\n", op, addr, bs);
+        if(res == 3)
+            return EXIT_SUCCESS;
+        else
+            return EXIT_FAILURE;
+    }
+    else
+    {
+        printf("Trace read timeout\n");
+        return EXIT_FAILURE;
+    }
 }

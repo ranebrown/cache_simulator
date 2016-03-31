@@ -11,7 +11,7 @@ int printResults(char *trace, memInfo *mem)
     FILE *fp;               // file pointer
     char name[128];         // directory path to write to
 
-    if(trace == NULL)
+    if(trace == NULL || mem == NULL)
         return EXIT_FAILURE;
 
     // concatenate trace to file path
@@ -21,6 +21,11 @@ int printResults(char *trace, memInfo *mem)
 
     // open file for writing
     fp = fopen(name, "w+");
+    if(fp == NULL)
+    {
+        perror("error opening file to print simulation results");
+        return EXIT_FAILURE;
+    }
 
     // print to file
     fprintf( fp, "-----------------------------------------------------------------------------------------------\n");
@@ -116,7 +121,9 @@ int printResults(char *trace, memInfo *mem)
     fprintf( fp, "\n");
 
     // close file
-    fclose(fp);
-
-    return EXIT_SUCCESS;
+    int close = fclose(fp);
+    if(close == 0)
+        return EXIT_SUCCESS;
+    else
+        return EXIT_FAILURE;
 }

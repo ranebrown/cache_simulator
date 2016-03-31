@@ -96,6 +96,13 @@ check: $(TEXCS)
 run: $(MAIN)
 	@zcat < $(trace) | ./$(MAIN) $(conf)
 
+# generate doxygen documentation
+doc:
+	@echo "Generating documentation..."
+	@echo ""
+	@doxygen ../doc/config
+	@echo ""
+
 # phony is used in case there is a file named clean
 # @ suppresses command at shell
 .PHONY: clean
