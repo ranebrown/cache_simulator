@@ -51,7 +51,6 @@ int main(int argc, char *argv[])
     calculateCost(cache);
 
     printf("Done setting values.\n");
-    return 0;
 
     while(res == 0)
     {
