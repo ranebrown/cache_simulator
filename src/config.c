@@ -53,7 +53,7 @@ int setCacheValues (memInfo *cache)
     cache->L2Ways    = inStr[6]-'0';
     temp             = (inStr[7]-'0')*10 + (inStr[8]-'0');
     cache->L2Size    = pow(2,temp);
-    
+
     #ifdef PRINTVALUES
         /* Check for fully associative */
         if(cache->L1dWays == 0)
