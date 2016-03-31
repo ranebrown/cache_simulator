@@ -7,3 +7,4 @@
 * `make check` - compile each unit test file as a seperate executable and run them all
     * if the executables are already compiled it will still run the tests
 * `make clean` - delete all .o files and all executables located in `build/`
+* `make doc` - generate doxygen documentation in html format
