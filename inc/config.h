@@ -6,16 +6,20 @@
  */
 
  #ifndef CONFIG_H
-     #define CONFIG_H
-     #define LISTVALUES  1
-     #define DECMEMLAT   200   /// to halve decrease memory latency
-     #define BANDWIDTH   100   /// to double the bandwidth
+    #define CONFIG_H
+    #define PRINTVALUES  1
+    #define L1_4KB      100
+    #define L1_ASSOC    100
+    #define L2_16KB     50
+    #define L2_ASSOC    50
+    #define DECMEMLAT   200   /// to halve decrease memory latency
+    #define BANDWIDTH   100   /// to double the bandwidth
 
 
-     #include <stdio.h>
-     #include <stdlib.h>
-     #include <string.h>
-     #include <math.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
+    //#include <math.h>
 
 
     /**
@@ -64,7 +68,14 @@
      * @param[out] fully populated memInfo struct
      * @return EXIT_SUCCESS or EXIT_FAILURE
      */
-     int calculateCost(memInfo *cache);
+    int calculateCost(memInfo *cache);
 
+     /**
+      * @brief calculates integer base 2 logarithm @f$ log_2/(x/)=y@f$
+      * doing this is faster and doesn't require the entire math.h library.
+      * param[in] argument for the logarithm
+      * @return the solution of the base 2 logarithm
+      */
+    int ilog2(int x);
 
 #endif //CONFIG_H
