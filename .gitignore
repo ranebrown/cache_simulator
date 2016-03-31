@@ -1,3 +1,6 @@
+# ignore doxygen generated files
+doc/html/
+
 # vim stuff
 .syntastic_clang_check_config
 .tags
