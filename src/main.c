@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     unsigned long long int addr;        /// memory address
     unsigned int bs;                    /// byte size - number of bytes referenced by request
     int res = 0;                        /// result of trace read
-    int i = 0;
+
 
     while(res == 0)
     {

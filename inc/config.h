@@ -7,7 +7,7 @@
 
  #ifndef CONFIG_H
     #define CONFIG_H
-    #define PRINTVALUES  1
+    #define PRINTVALUES
     #define L1_4KB      100
     #define L1_ASSOC    100
     #define L2_16KB     50
@@ -15,12 +15,10 @@
     #define DECMEMLAT   200   /// to halve decrease memory latency
     #define BANDWIDTH   100   /// to double the bandwidth
 
-
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
-    //#include <math.h>
-
+    #include <math.h>
 
     /**
      * @struct memInfo
@@ -30,6 +28,7 @@
     {
         char cacheName[32]; ///Holds the config filename, helpful for printing
         int totalCost;   /// Total cost of the cache
+        int L1TotCost;  /// L1 cost of data + instruction
 
         int L1dSize;    /// L1 data cache size
         int L1dWays;    /// L1 data cache ways
@@ -40,7 +39,6 @@
         int L1iWays;    /// L1 instruction cache ways
         int L1iBlock;   /// L1 instruction block size
         int L1iCost;    /// L1 instruction cost
-        int L1TotCost;  /// L1 cost of data + instruction
 
         int L2Size;     /// L2 cache size
         int L2Ways;     /// L2 cache ways

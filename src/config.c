@@ -8,10 +8,15 @@
 
 int setCacheValues (memInfo *cache)
 {
+    /* Local variables */
     FILE *config;
-    char inStr[8];
+    int temp;
+    char inStr[10];
 
-    printf("About to open: %s\n",cache->cacheName);
+    #ifdef PRINTVALUES
+        printf("About to open: %s\n",cache->cacheName);
+    #endif
+
     /* Open the file */
     if( !(config = fopen(cache->cacheName,"r")) )
     {
@@ -36,17 +41,20 @@ int setCacheValues (memInfo *cache)
     /** Set the cache parameters from the file **/
     /* L1 data */
     cache->L1dWays   = inStr[0]-'0';
-    cache->L1dSize   = inStr[1]-'0';
+    temp             = (inStr[1]-'0')*10 + (inStr[2]-'0');
+    cache->L1dSize   = pow(2,temp);
     cache->L1dBlock  = 32;          // TODO Is this correct?
 
     /* L1 instruction */
-    cache->L1iWays   = inStr[2]-'0';
-    cache->L1iSize   = inStr[3]-'0';
+    cache->L1iWays   = inStr[3]-'0';
+    temp             = (inStr[4]-'0')*10 + (inStr[5]-'0');
+    cache->L1iSize   = pow(2,temp);
     cache->L1iBlock  = 32;          // TODO Is this correct?
 
     /* L2 */
-    cache->L2Ways    = inStr[4]-'0';
-    cache->L2Size    = (inStr[5]-'0')*10 + (inStr[6]-'0');
+    cache->L2Ways    = inStr[6]-'0';
+    temp             = (inStr[7]-'0')*10 + (inStr[8]-'0');
+    cache->L2Size    = pow(2,temp);
     cache->L2Block   = 64;         // TODO Is this correct?
 
     #ifdef PRINTVALUES
@@ -79,12 +87,12 @@ int calculateCost(memInfo *cache)
     cache->memoryCost = 75;
 
     /* Get the cost of the L1i and L1d caches */
-    cache->L1dCost   = (L1_4KB * cache->L1dSize/4) + (L1_ASSOC * ilog2(cache->L1dWays) * cache->L1dSize/4);
-    cache->L1iCost   = (L1_4KB * cache->L1iSize/4) + (L1_ASSOC * ilog2(cache->L1iWays) * cache->L1iSize/4);
+    cache->L1dCost   = (L1_4KB * cache->L1dSize/4096) + (L1_ASSOC * log2(cache->L1dWays) * cache->L1dSize/4096);
+    cache->L1iCost   = (L1_4KB * cache->L1iSize/4096) + (L1_ASSOC * log2(cache->L1iWays) * cache->L1iSize/4096);
     cache->L1TotCost = cache->L1dCost + cache->L1iCost;
 
     /* Get the L2 cache cost */
-    cache->L2Cost    = (L2_16KB * cache->L2Size/16) + (L2_ASSOC * ilog2(cache->L2Ways) * cache->L2Size/16);
+    cache->L2Cost    = (L2_16KB * cache->L2Size/16384) + (L2_ASSOC * log2(cache->L2Ways) * cache->L2Size/16384);
 
 
     cache->totalCost = cache->L1TotCost + cache->L2Cost + cache->memoryCost;

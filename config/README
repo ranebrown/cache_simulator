@@ -4,39 +4,30 @@ How to read the files:
 -The 'default.txt' file is required to keep (for now).
 -Each file is only one line.
 -Value fields are sequential (No spaces or commas etc.).
--The line ends with new line character.
+-Following every 'ways' column is a two digit number that gives
+ the exponent to calculate the size of the cache. Ex. 14 => 2^13 = 8192
 -A '1' in the 'ways' column is the default for direct mapped.
 -A '0' in the 'ways' column is the default for fully associative.
 
 For example, the line:
-4848432  means
-| | |
-| | 4-way set associative 32kB L2
-| 4-way set associative, 8kB in size L1 Dcache
-4-way set associative, 8kB in size L1 Icache
+213213215  means
+|  |  |
+|  |  4-way set associative 2^15=32B L2
+|  4-way set associative, 2^13=8KB in size L1 Dcache
+2-way set associative, 2^13=8KB in size L1 Icache
 
 Table of all values:
 _____________________________________________________________
               |              L1             |      L2
 Configuration |    Icache    |     Dcache   |
               | Way Size(KB) | Way Size(KB) | Way Size(KB)
-default       |  1   8       |  1   8       |  1   32
-L1-2way       |  2   8       |  2   8       |  1   32
-All-2way      |  2   8       |  2   8       |  2   32
-All-4way      |  4   8       |  4   8       |  4   32
-L1-8way       |  8   8       |  8   8       |  1   32
-L1-small      |  1   4       |  1   4       |  1   32
-L1-small-4way |  4   4       |  4   4       |  1   32
-All-small     |  1   4       |  1   4       |  1   16
-All-FA        |  0   8       |  0   8       |  0   32
+default       |  1   13       |  1   13       |  1   15
+L1-2way       |  2   13       |  2   13       |  1   15
+All-2way      |  2   13       |  2   13       |  2   15
+All-4way      |  4   13       |  4   13       |  4   15
+L1-8way       |  8   13       |  8   13       |  1   15
+L1-small      |  1   12       |  1   12       |  1   15
+L1-small-4way |  4   12       |  4   12       |  1   15
+All-small     |  1   12       |  1   12       |  1   14
+All-FA        |  0   13       |  0   13       |  0   15
 _____________________________________________________________
-
-default       ok
-L1-2way       bad
-All-2way      bad
-All-4way      bad
-L1-8way       
-L1-small
-L1-small-4way
-All-small
-All-FA
