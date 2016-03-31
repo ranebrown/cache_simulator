@@ -24,7 +24,7 @@ int setCacheValues (memInfo *cache)
         return EXIT_FAILURE;
     }
 
-    /* Get the line from the file */
+    /* Read the line from the file */
     fscanf(config, "%s", inStr);
 
     #ifdef PRINTVALUES

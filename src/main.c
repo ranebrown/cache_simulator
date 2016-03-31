@@ -31,7 +31,22 @@ int main(int argc, char *argv[])
 
 
     memInfo *cache = (memInfo *) malloc(sizeof(memInfo));
+    cache->L1dWays   = 1;
+    temp             = ;
+    cache->L1dSize   = pow(2,temp);
+    cache->L1dBlock  = 32;          // TODO Is this correct?
 
+    /* L1 instruction */
+    cache->L1iWays   = inStr[3]-'0';
+    temp             = (inStr[4]-'0')*10 + (inStr[5]-'0');
+    cache->L1iSize   = pow(2,temp);
+    cache->L1iBlock  = 32;          // TODO Is this correct?
+
+    /* L2 */
+    cache->L2Ways    = inStr[6]-'0';
+    temp             = (inStr[7]-'0')*10 + (inStr[8]-'0');
+    cache->L2Size    = pow(2,temp);
+    cache->L2Block   = 64;         // TODO Is this correct?
 
     /* If there is a file included, it is the config needed */
     if(argc == 2)
