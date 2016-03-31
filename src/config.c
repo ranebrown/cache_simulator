@@ -43,20 +43,17 @@ int setCacheValues (memInfo *cache)
     cache->L1dWays   = inStr[0]-'0';
     temp             = (inStr[1]-'0')*10 + (inStr[2]-'0');
     cache->L1dSize   = pow(2,temp);
-    cache->L1dBlock  = 32;          // TODO Is this correct?
 
     /* L1 instruction */
     cache->L1iWays   = inStr[3]-'0';
     temp             = (inStr[4]-'0')*10 + (inStr[5]-'0');
     cache->L1iSize   = pow(2,temp);
-    cache->L1iBlock  = 32;          // TODO Is this correct?
 
     /* L2 */
     cache->L2Ways    = inStr[6]-'0';
     temp             = (inStr[7]-'0')*10 + (inStr[8]-'0');
     cache->L2Size    = pow(2,temp);
-    cache->L2Block   = 64;         // TODO Is this correct?
-
+    
     #ifdef PRINTVALUES
         /* Check for fully associative */
         if(cache->L1dWays == 0)
@@ -65,11 +62,7 @@ int setCacheValues (memInfo *cache)
         }
     #endif
 
-    /* Main Memory (default values) */
-    cache->addrsendT = 10;
-    cache->readyT    = 50;
-    cache->chunkT    = 15;
-    cache->chunkS    = 8;
+
 
     return EXIT_SUCCESS;
 }

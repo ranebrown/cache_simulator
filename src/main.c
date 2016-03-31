@@ -31,50 +31,56 @@ int main(int argc, char *argv[])
 
 
     memInfo *cache = (memInfo *) malloc(sizeof(memInfo));
-    cache->L1dWays   = 1;
-    temp             = ;
-    cache->L1dSize   = pow(2,temp);
-    cache->L1dBlock  = 32;          // TODO Is this correct?
 
-    /* L1 instruction */
-    cache->L1iWays   = inStr[3]-'0';
-    temp             = (inStr[4]-'0')*10 + (inStr[5]-'0');
-    cache->L1iSize   = pow(2,temp);
-    cache->L1iBlock  = 32;          // TODO Is this correct?
+    /* Default values*/
+    cache->L1dBlock  = 32;
+    cache->L1iBlock  = 32;
+    cache->L2Block   = 64;
 
-    /* L2 */
-    cache->L2Ways    = inStr[6]-'0';
-    temp             = (inStr[7]-'0')*10 + (inStr[8]-'0');
-    cache->L2Size    = pow(2,temp);
-    cache->L2Block   = 64;         // TODO Is this correct?
+    /* Main Memory (default values) */
+    cache->addrsendT = 10;
+    cache->readyT    = 50;
+    cache->chunkT    = 15;
+    cache->chunkS    = 8;
 
     /* If there is a file included, it is the config needed */
     if(argc == 2)
     {
-        //This works a little more reliably than
-        //strcpy for unknown string lengths
-        for(int i=0; argv[1][i] != '\0'; i++)
+        strcpy(cache->cacheName,argv[1]);
+        /* Set the values from the file */
+        if( setCacheValues(cache) )
         {
-            cache->cacheName[i] = argv[1][i];
+            printf("Error setting values.\n");
         }
     }
-    /* Otherwise use the default values */
     else
     {
+        /***** Default cache values *****/
         strcpy(cache->cacheName,"default.txt");
+
+        /* L1 data */
+        cache->L1dWays   = 1;
+        cache->L1dSize   = 8192;
+        cache->L1dBlock  = 32;
+
+        /* L1 instruction */
+        cache->L1iWays   = 1;
+        cache->L1iSize   = 8192;
+        cache->L1iBlock  = 32;
+
+        /* L2 */
+        cache->L2Ways    = 1;
+        cache->L2Size    = 32768;
+        cache->L2Block   = 64;
     }
 
     printf("\nCache name: %s\n",cache->cacheName);
-
-    if( setCacheValues(cache) )
-        printf("Error setting values.\n");
-
-
 
     calculateCost(cache);
 
     printf("Done setting values.\n");
 
+    free(cache);
 
 
     return EXIT_SUCCESS;
