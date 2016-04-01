@@ -11,9 +11,6 @@
 #include "readTrace.h"
 #include "config.h"
 
-/* Global variables */
-memInfo cache;
-
 int main(int argc, char *argv[])
 {
     /* Local Variables */
@@ -22,28 +19,59 @@ int main(int argc, char *argv[])
     unsigned int bs;                    /// byte size - number of bytes referenced by request
     int res = -1;                       /// result of trace read
 
+    // structure containing cache settings
+    memInfo *cache = (memInfo *) malloc(sizeof(memInfo));
+
+    /* Default values*/
+    cache->L1dBlock  = 32;
+    cache->L1iBlock  = 32;
+    cache->L2Block   = 64;
+
+    /* Main Memory (default values) */
+    cache->addrsendT = 10;
+    cache->readyT    = 50;
+    cache->chunkT    = 15;
+    cache->chunkS    = 8;
+
     /* If there is a file included, it is the config needed */
     if(argc == 2)
     {
-        //This works a little more reliably than
-        //strcpy for unknown string lengths
-        for(int i=0; argv[1][i] != '\0'; i++)
+        strcpy(cache->cacheName,argv[1]);
+        /* Set the values from the file */
+        if( setCacheValues(cache) )
         {
-            cache.cacheName[i] = argv[1][i];
+            printf("Error setting values.\n");
+        }
+        else
+        {
+            printf("\nCache name: %s\n",cache->cacheName);
+            printf("Done setting values.\n");
         }
     }
-    /* Otherwise use the default values */
     else
     {
-        strcpy(cache.cacheName, "../config/default.txt");
+        /***** Default cache values *****/
+        strcpy(cache->cacheName,"../config/default.txt");
+        printf("\nCache name: %s\n",cache->cacheName);
+
+        /* L1 data */
+        cache->L1dWays   = 1;
+        cache->L1dSize   = 8192;
+        cache->L1dBlock  = 32;
+
+        /* L1 instruction */
+        cache->L1iWays   = 1;
+        cache->L1iSize   = 8192;
+        cache->L1iBlock  = 32;
+
+        /* L2 */
+        cache->L2Ways    = 1;
+        cache->L2Size    = 32768;
+        cache->L2Block   = 64;
     }
 
-    printf("\nCache name: %s\n",cache.cacheName);
-
-    if( setCacheValues(cache) )
-        printf("Error setting values.\n");
-
-    printf("Done setting values.\n");
+    // calculate cost based on cache configuration
+    calculateCost(cache);
 
     // read a trace from stdin and print it
     res = readTrace(&op, &addr, &bs);
@@ -52,6 +80,9 @@ int main(int argc, char *argv[])
         res = readTrace(&op, &addr, &bs);
         printf("%c %llx %d\n" ,op ,addr ,bs);
     }
+
+    // free any allocated memory
+    free(cache);
 
     return EXIT_SUCCESS;
 }
