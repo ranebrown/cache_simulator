@@ -1,12 +1,9 @@
 var searchData=
 [
-  ['l1dblock',['L1dBlock',['../structmem_info.html#adbcb8d0f6cff9d14d7ec5f2af4b9051b',1,'memInfo']]],
-  ['l1dsize',['L1dSize',['../structmem_info.html#aaf6614b071e66cc3f8aa8afec24246bf',1,'memInfo']]],
-  ['l1dways',['L1dWays',['../structmem_info.html#a4defe4bd8c6798edcdf8ab5817992490',1,'memInfo']]],
-  ['l1iblock',['L1iBlock',['../structmem_info.html#a8b9171bd7116591a869a0f539c532030',1,'memInfo']]],
-  ['l1isize',['L1iSize',['../structmem_info.html#a4d41d16be3b104307938f428d89daae5',1,'memInfo']]],
-  ['l1iways',['L1iWays',['../structmem_info.html#a7f8c4a1e48db2283e8da603abff6960a',1,'memInfo']]],
-  ['l2block',['L2Block',['../structmem_info.html#a10a45bacca03211ab1e4809cc1ec5b7d',1,'memInfo']]],
-  ['l2size',['L2Size',['../structmem_info.html#a84c86681321e80f10029647af067884c',1,'memInfo']]],
-  ['l2ways',['L2Ways',['../structmem_info.html#acf9b2df9d926d22e8e48091ac47f5b3c',1,'memInfo']]]
+  ['cachename',['cacheName',['../structmem_info.html#a0d74bed84925d1921c77a91a6adcb342',1,'memInfo']]],
+  ['calculatecost',['calculateCost',['../config_8c.html#a731e8e0a2681e8913bd2f5db587c4f8f',1,'calculateCost(memInfo *cache):&#160;config.c'],['../config_8h.html#a731e8e0a2681e8913bd2f5db587c4f8f',1,'calculateCost(memInfo *cache):&#160;config.c']]],
+  ['chunks',['chunkS',['../structmem_info.html#a049a504dc12f135ba82661994fde68fa',1,'memInfo']]],
+  ['chunkt',['chunkT',['../structmem_info.html#ab13d3aa418be605078fa86ea173c7057',1,'memInfo']]],
+  ['config_2ec',['config.c',['../config_8c.html',1,'']]],
+  ['config_2eh',['config.h',['../config_8h.html',1,'']]]
 ];

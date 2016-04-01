@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['readtrace',['readTrace',['../read_trace_8c.html#a8b90063d0fcee263d7a789b957c7f1cb',1,'readTrace(char *op, unsigned long long int *addr, unsigned int *bs):&#160;readTrace.c'],['../read_trace_8h.html#a8b90063d0fcee263d7a789b957c7f1cb',1,'readTrace(char *op, unsigned long long int *addr, unsigned int *bs):&#160;readTrace.c']]],
-  ['readtrace_5fsuite',['readTrace_suite',['../test__read_trace_8c.html#af72b1b0d89e85bcfcac4a825158f4a4b',1,'test_readTrace.c']]]
+  ['main',['main',['../main_8c.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.c'],['../test__print_results_8c.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main(void):&#160;test_printResults.c'],['../test__read_trace_8c.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main(void):&#160;test_readTrace.c']]]
 ];

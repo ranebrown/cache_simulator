@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['main',['main',['../main_8c.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.c'],['../test__print_results_8c.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main(void):&#160;test_printResults.c'],['../test__read_trace_8c.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main(void):&#160;test_readTrace.c']]],
-  ['main_2ec',['main.c',['../main_8c.html',1,'']]],
-  ['meminfo',['memInfo',['../structmem_info.html',1,'']]]
+  ['decmemlat',['DECMEMLAT',['../config_8h.html#a248de5d1eca094767b305b01d26189d1',1,'config.h']]],
+  ['doxygen_20information',['Doxygen Information',['../md__Users_Rane_Documents_Classes_Spring16_Computer_Organization_cache_simulator_doc_README.html',1,'']]]
 ];

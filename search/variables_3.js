@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['readyt',['readyT',['../structmem_info.html#a0cd28c9131c7c5870ccba794efe947a6',1,'memInfo']]]
+  ['memorycost',['memoryCost',['../structmem_info.html#a55e2e27a05b3d7b04f6e110a7fd0dbc9',1,'memInfo']]]
 ];
