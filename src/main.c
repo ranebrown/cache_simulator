@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     char op;                            /// type of operation - read or write or instruction
     unsigned long long int addr;        /// memory address
     unsigned int bs;                    /// byte size - number of bytes referenced by request
-    int res = -1;                       /// result of trace read
+    int res = 0;                        /// result of trace read
 
     // structure containing cache settings
     memInfo *cache = (memInfo *) malloc(sizeof(memInfo));
@@ -74,11 +74,11 @@ int main(int argc, char *argv[])
     calculateCost(cache);
 
     // read a trace from stdin and print it
-    res = readTrace(&op, &addr, &bs);
     while(res == 0)
     {
         res = readTrace(&op, &addr, &bs);
-        printf("%c %llx %d\n" ,op ,addr ,bs);
+        if(res == 0)
+            printf("%c %llx %d\n" ,op ,addr ,bs);
     }
 
     // free any allocated memory
