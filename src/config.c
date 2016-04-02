@@ -10,12 +10,7 @@ int setCacheValues (memInfo *cacheCnfg)
 {
     /* Local variables */
     FILE *config;
-    int temp;
-    char inStr[10];
-
-    #ifdef PRINTVALUES
-        printf("About to open: %s\n",cacheCnfg->cacheName);
-    #endif
+    int temp1=0, temp2=0, temp3=0;
 
     /* Open the file */
     if( !(config = fopen(cacheCnfg->cacheName,"r")) )
@@ -25,11 +20,10 @@ int setCacheValues (memInfo *cacheCnfg)
     }
 
     /* Read the line from the file */
-    fscanf(config, "%s", inStr);
-
-    #ifdef PRINTVALUES
-        printf("Input string: ->%s<-\n",inStr);
-    #endif
+    //fscanf(config, "%s", inStr);
+    fscanf(config, "%d %d %d %d %d %d", &(cacheCnfg->L1dWays), &temp1, \
+                                        &(cacheCnfg->L1iWays), &temp2, \
+                                        &(cacheCnfg->L2Ways),  &temp3);
 
     /* Close the file */
     if( fclose(config) )
@@ -38,21 +32,9 @@ int setCacheValues (memInfo *cacheCnfg)
         return EXIT_FAILURE;
     }
 
-    /** Set the cache parameters from the file **/
-    /* L1 data */
-    cacheCnfg->L1dWays   = inStr[0]-'0';
-    temp             = (inStr[1]-'0')*10 + (inStr[2]-'0');
-    cacheCnfg->L1dSize   = pow(2,temp);
-
-    /* L1 instruction */
-    cacheCnfg->L1iWays   = inStr[3]-'0';
-    temp             = (inStr[4]-'0')*10 + (inStr[5]-'0');
-    cacheCnfg->L1iSize   = pow(2,temp);
-
-    /* L2 */
-    cacheCnfg->L2Ways    = inStr[6]-'0';
-    temp             = (inStr[7]-'0')*10 + (inStr[8]-'0');
-    cacheCnfg->L2Size    = pow(2,temp);
+    cacheCnfg->L1dSize = pow(2,temp1);
+    cacheCnfg->L1iSize = pow(2,temp2);
+    cacheCnfg->L2Size  = pow(2,temp3);
 
     #ifdef PRINTVALUES
         /* Check for fully associative */
@@ -103,14 +85,6 @@ int calculateCost(memInfo *cacheCnfg)
 
     return 0;
 }
-
-int ilog2(int x)
-{
-    int y = 0;
-    while(x >>= 1) ++y;
-    return y;
-}
-
 
 
 

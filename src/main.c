@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
         cacheCnfg->L2Ways    = 1;
         cacheCnfg->L2Size    = 32768;
         cacheCnfg->L2Block   = 64;
-        strcpy(cacheCnfg.cacheName, "../config/default.txt");
+        strcpy(cacheCnfg->cacheName, "../config/default.txt");
     }
 
     printf("\nCache name: %s\n",cacheCnfg->cacheName);

@@ -8,12 +8,17 @@
  #ifndef CONFIG_H
     #define CONFIG_H
     #define PRINTVALUES
-    #define L1_4KB      100
-    #define L1_ASSOC    100
-    #define L2_16KB     50
-    #define L2_ASSOC    50
-    #define DECMEMLAT   200   /// to halve decrease memory latency
-    #define BANDWIDTH   100   /// to double the bandwidth
+    #define L1_4KB        100
+    #define L1_ASSOC      100
+    #define L2_16KB       50
+    #define L2_ASSOC      50
+    #define DECMEMLAT     200   /// to halve decrease memory latency
+    #define BANDWIDTH     100   /// to double the bandwidth
+    #define L1_HIT_TIME   1
+    #define L1_MISS_TIME  1
+    #define L2_HIT_TIME   8
+    #define L2_TRANS_TIME 10
+    #define L2_BUS_WIDTH  16
 
     #include <stdio.h>
     #include <stdlib.h>
@@ -26,7 +31,6 @@
      */
     typedef struct
     {
-        char cacheName[32]; ///Holds the config filename, helpful for printing
         int totalCost;   /// Total cost of the cache
         int L1TotCost;  /// L1 cost of data + instruction
 
@@ -50,6 +54,8 @@
         int chunkT;     /// main memory chunk time
         int chunkS;     /// main memory chunk size
         int memoryCost; /// main memory cost
+
+        char cacheName[32]; ///Holds the config filename, helpful for printing
     } memInfo;
 
 
@@ -68,12 +74,5 @@
      */
     int calculateCost(memInfo *cache);
 
-     /**
-      * @brief calculates integer base 2 logarithm @f$ log_2/(x/)=y@f$
-      * doing this is faster and doesn't require the entire math.h library.
-      * param[in] argument for the logarithm
-      * @return the solution of the base 2 logarithm
-      */
-    int ilog2(int x);
 
 #endif //CONFIG_H
