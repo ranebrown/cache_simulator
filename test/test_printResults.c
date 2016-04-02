@@ -14,27 +14,35 @@
 START_TEST (test_printResults)
 {
     // variables
-    char filename[] = "test_trace";
-    int res = 1;
-    memInfo *mem    =   (memInfo*)malloc(sizeof(memInfo));
-    mem->L1dSize    =   8192;
-    mem->L1dWays    =   2;
-    mem->L1dBlock   =   32;
-    mem->L1iSize    =   8192;
-    mem->L1iWays    =   2;
-    mem->L1iBlock   =   32;
-    mem->L2Size     =   32768;
-    mem->L2Ways     =   1;
-    mem->L2Block    =   64;
-    mem->readyT     =   50;
-    mem->chunkS     =   8;
-    mem->chunkT     =   15;
+    char filename[]     =       "test_trace";
+    int res             =       1;
+    memInfo *mem        =       (memInfo*)malloc(sizeof(memInfo));
+    mem->L1dSize        =       8192;
+    mem->L1dWays        =       2;
+    mem->L1dBlock       =       32;
+    mem->L1iSize        =       8192;
+    mem->L1iWays        =       2;
+    mem->L1iBlock       =       32;
+    mem->L2Size         =       32768;
+    mem->L2Ways         =       1;
+    mem->L2Block        =       64;
+    mem->readyT         =       50;
+    mem->chunkS         =       8;
+    mem->chunkT         =       15;
+    int nullres         =       0;
+    char *nullName      =       NULL;
+    int nullres2        =       0;
+    memInfo *nullS      =       NULL;
 
     // function under test
-    res = printResults(filename, mem);
+    res         =       printResults(filename, mem);
+    nullres     =       printResults(nullName, mem);
+    nullres2    =       printResults(filename, nullS);
 
     // verify results are as expected
     ck_assert_int_eq(res, EXIT_SUCCESS);
+    ck_assert_int_eq(nullres, EXIT_FAILURE);
+    ck_assert_int_eq(nullres2, EXIT_FAILURE);
 
     // free allocated memory
     free(mem);

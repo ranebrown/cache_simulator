@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     char op;                            /// type of operation - read or write or instruction
     unsigned long long int addr;        /// memory address
     unsigned int bs;                    /// byte size - number of bytes referenced by request
-    int res = 0;                        /// result of trace read
+    int res = -1;                       /// result of trace read
 
 
     while(res == 0)
@@ -72,6 +72,7 @@ int main(int argc, char *argv[])
         cache->L2Ways    = 1;
         cache->L2Size    = 32768;
         cache->L2Block   = 64;
+        strcpy(cache.cacheName, "../config/default.txt");
     }
 
     printf("\nCache name: %s\n",cache->cacheName);
@@ -81,6 +82,14 @@ int main(int argc, char *argv[])
     printf("Done setting values.\n");
 
     free(cache);
+
+    // read a trace from stdin and print it
+    res = readTrace(&op, &addr, &bs);
+    while(res == 0)
+    {
+        res = readTrace(&op, &addr, &bs);
+        printf("%c %llx %d\n" ,op ,addr ,bs);
+    }
 
 
     return EXIT_SUCCESS;
