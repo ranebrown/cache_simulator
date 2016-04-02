@@ -11,9 +11,6 @@
 #include "readTrace.h"
 #include "config.h"
 
-/* Global variables */
-
-
 int main(int argc, char *argv[])
 {
     /* Local Variables */
@@ -21,6 +18,8 @@ int main(int argc, char *argv[])
     unsigned long long int addr;        /// memory address
     unsigned int bs;                    /// byte size - number of bytes referenced by request
     int res = -1;                       /// result of trace read
+
+    // structure containing cache settings
     memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));
 
     while(res == 0)
@@ -30,7 +29,6 @@ int main(int argc, char *argv[])
     }
 
 
-    //memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));
 
     /* Default values*/
     cacheCnfg->L1dBlock  = 32;
@@ -52,11 +50,18 @@ int main(int argc, char *argv[])
         {
             printf("Error setting values.\n");
         }
+        else
+        {
+            printf("\nCache name: %s\n",cache->cacheName);
+            printf("Done setting values.\n");
+        }
     }
     else
     {
         /***** Default cache values *****/
+
         strcpy(cacheCnfg->cacheName,"default.txt");
+
 
         /* L1 data */
         cacheCnfg->L1dWays   = 1;
@@ -72,8 +77,10 @@ int main(int argc, char *argv[])
         cacheCnfg->L2Ways    = 1;
         cacheCnfg->L2Size    = 32768;
         cacheCnfg->L2Block   = 64;
-        strcpy(cacheCnfg.cacheName, "../config/default.txt");
     }
+
+    // calculate cost based on cache configuration
+    calculateCost(cache);
 
     printf("\nCache name: %s\n",cacheCnfg->cacheName);
 
@@ -91,6 +98,8 @@ int main(int argc, char *argv[])
         printf("%c %llx %d\n" ,op ,addr ,bs);
     }
 
+    // free any allocated memory
+    free(cache);
 
     return EXIT_SUCCESS;
 }
