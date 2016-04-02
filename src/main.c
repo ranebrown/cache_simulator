@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     unsigned long long int addr;        /// memory address
     unsigned int bs;                    /// byte size - number of bytes referenced by request
     int res = -1;                       /// result of trace read
-
+    memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));
 
     while(res == 0)
     {
@@ -30,25 +30,25 @@ int main(int argc, char *argv[])
     }
 
 
-    memInfo *cache = (memInfo *) malloc(sizeof(memInfo));
+    //memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));
 
     /* Default values*/
-    cache->L1dBlock  = 32;
-    cache->L1iBlock  = 32;
-    cache->L2Block   = 64;
+    cacheCnfg->L1dBlock  = 32;
+    cacheCnfg->L1iBlock  = 32;
+    cacheCnfg->L2Block   = 64;
 
     /* Main Memory (default values) */
-    cache->addrsendT = 10;
-    cache->readyT    = 50;
-    cache->chunkT    = 15;
-    cache->chunkS    = 8;
+    cacheCnfg->addrsendT = 10;
+    cacheCnfg->readyT    = 50;
+    cacheCnfg->chunkT    = 15;
+    cacheCnfg->chunkS    = 8;
 
     /* If there is a file included, it is the config needed */
     if(argc == 2)
     {
-        strcpy(cache->cacheName,argv[1]);
+        strcpy(cacheCnfg->cacheName,argv[1]);
         /* Set the values from the file */
-        if( setCacheValues(cache) )
+        if( setCacheValues(cacheCnfg) )
         {
             printf("Error setting values.\n");
         }
@@ -56,32 +56,32 @@ int main(int argc, char *argv[])
     else
     {
         /***** Default cache values *****/
-        strcpy(cache->cacheName,"default.txt");
+        strcpy(cacheCnfg->cacheName,"default.txt");
 
         /* L1 data */
-        cache->L1dWays   = 1;
-        cache->L1dSize   = 8192;
-        cache->L1dBlock  = 32;
+        cacheCnfg->L1dWays   = 1;
+        cacheCnfg->L1dSize   = 8192;
+        cacheCnfg->L1dBlock  = 32;
 
         /* L1 instruction */
-        cache->L1iWays   = 1;
-        cache->L1iSize   = 8192;
-        cache->L1iBlock  = 32;
+        cacheCnfg->L1iWays   = 1;
+        cacheCnfg->L1iSize   = 8192;
+        cacheCnfg->L1iBlock  = 32;
 
         /* L2 */
-        cache->L2Ways    = 1;
-        cache->L2Size    = 32768;
-        cache->L2Block   = 64;
-        strcpy(cache.cacheName, "../config/default.txt");
+        cacheCnfg->L2Ways    = 1;
+        cacheCnfg->L2Size    = 32768;
+        cacheCnfg->L2Block   = 64;
+        strcpy(cacheCnfg.cacheName, "../config/default.txt");
     }
 
-    printf("\nCache name: %s\n",cache->cacheName);
+    printf("\nCache name: %s\n",cacheCnfg->cacheName);
 
-    calculateCost(cache);
+    calculateCost(cacheCnfg);
 
     printf("Done setting values.\n");
 
-    free(cache);
+    free(cacheCnfg);
 
     // read a trace from stdin and print it
     res = readTrace(&op, &addr, &bs);
