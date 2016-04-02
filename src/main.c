@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     unsigned long long int addr;        /// memory address
     unsigned int bs;                    /// byte size - number of bytes referenced by request
     int res = -1;                       /// result of trace read
-    memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));
+    memInfo *cacheCnfg = malloc(sizeof(memInfo));
 
     while(res == 0)
     {
