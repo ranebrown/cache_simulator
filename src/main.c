@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
         }
         else
         {
-            printf("\nCache name: %s\n",cache->cacheName);
+            printf("\nCache name: %s\n",cacheCnfg->cacheName);
             printf("Done setting values.\n");
         }
     }
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     }
 
     // calculate cost based on cache configuration
-    calculateCost(cache);
+    calculateCost(cacheCnfg);
 
     printf("\nCache name: %s\n",cacheCnfg->cacheName);
 
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 
     printf("Done setting values.\n");
 
-    free(cacheCnfg);
+
 
     // read a trace from stdin and print it
     res = readTrace(&op, &addr, &bs);
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
     }
 
     // free any allocated memory
-    free(cache);
+    free(cacheCnfg);
 
     return EXIT_SUCCESS;
 }

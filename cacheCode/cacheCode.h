@@ -13,16 +13,19 @@
     #include <string.h>
 
     #include "config.h"
-    #include "readTrace.h"
+    //#include "readTrace.h"
 
 
-typedef struct{
+    typedef struct{
+        int **L1i;
+        int **L1d;
+        int **L2;
+        int **victim;
+    }cacheList;
 
-}cacheStruct;
+    int **cacheInit( memInfo *);
 
-int cacheInit(memInfo *cacheCnfg);
-
-
+    int deleteCache(int **, memInfo *);
 
 
 
