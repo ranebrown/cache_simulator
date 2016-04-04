@@ -26,7 +26,7 @@ LIBS = -lm
 conf ?= ../config/default.txt
 
 # trace name
-trace ?= ../trace_short/tr1.gz
+trace ?= ../traces/traces_short/tr1.gz
 
 # All source files
 SRCS = $(wildcard $(SRCDIR)/*.c)
