@@ -5,13 +5,14 @@
 
 int main()
 {
-    int **L1i = NULL;
+    //int **L1i = NULL;
     memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));
+    cacheList *list    = (cacheList *) malloc(sizeof(cacheList));
 
+    strcpy(cacheCnfg->cacheName,"default.txt");
     cacheCnfg->L1dBlock  = 32;
     cacheCnfg->L1iBlock  = 32;
     cacheCnfg->L2Block   = 64;
-    strcpy(cacheCnfg->cacheName,"default.txt");
 
     /* L1 data */
     cacheCnfg->L1dWays   = 1;
@@ -29,18 +30,22 @@ int main()
     cacheCnfg->L2Block   = 64;
 
 
-    if( !(L1i = cacheInit( cacheCnfg)) )
+    if( cacheInit(list, cacheCnfg) )
     {
         printf("init failed.\n");
     }
-// printf("*****HERE*****\n");
-    L1i[200][3] = 100;
-    printf("between functions %d\n",L1i[200][3]);
 
-    deleteCache(L1i, cacheCnfg);
+    list->L1i[200][3] = 100;
+    printf("between functions %d\n",list->L1i[200][3]);
+
+    deleteCache(list, cacheCnfg);
 
     free(cacheCnfg);
+    free(list);
 
     printf("done\n");
+
+    while(1)
+    ;
     return 0;
 }

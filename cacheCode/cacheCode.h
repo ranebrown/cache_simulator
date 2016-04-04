@@ -23,9 +23,22 @@
         int **victim;
     }cacheList;
 
-    int **cacheInit( memInfo *);
+    /**
+     * @brief builds all of the caches listed in cacheList
+     * @param[in] cacheList - Struct of pointers to all caches
+     * @param[in] memInfo - Struct of all cache configuration data
+     * @param[out] cacheList - With fully built caches
+     * @return EXIT_SUCCESS or EXIT_FAILURE
+     */
 
-    int deleteCache(int **, memInfo *);
+    int cacheInit(cacheList *, memInfo *);
+
+    /**
+     * @brief deletes all caches listed in cacheList
+     * @param[in] cacheList - Struct of pointers to all caches.
+     * @param[in] memInfo - Struct of all cache configuration data
+     */
+    void deleteCache(cacheList *, memInfo *);
 
 
 
