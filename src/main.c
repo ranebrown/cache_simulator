@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     /* Local Variables */
     char op;                            /// type of operation - read or write or instruction
     unsigned long long int addr;        /// memory address
-    unsigned int bs;                    /// byte size - number of bytes referenced by request
+    unsigned int numBytes;              /// number of bytes referenced by request
     int res = 0;                        /// result of trace read
 
     // structure containing cache settings
@@ -76,9 +76,11 @@ int main(int argc, char *argv[])
     // read a trace from stdin and print it
     while(res == 0)
     {
-        res = readTrace(&op, &addr, &bs);
+        res = readTrace(&op, &addr, &numBytes);
         if(res == 0)
-            printf("%c %llx %d\n" ,op ,addr ,bs);
+        {
+            printf("%c %llx %d" ,op ,addr ,numBytes);
+        }
     }
 
     // free any allocated memory
