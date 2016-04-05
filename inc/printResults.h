@@ -12,7 +12,7 @@
     #include <string.h>
     #include <errno.h>
     #include "config.h"
-    #include "directMapped.h"
+    #include "cache.h"
 
     /**
      * @brief prints the results of the simulation to a file
