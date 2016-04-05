@@ -6,7 +6,7 @@
  */
 #include "printResults.h"
 
-int printResults(char *trace, memInfo *mem)
+int printResults(char *trace, memInfo *mem, performance *stats)
 {
     FILE *fp;               // file pointer
     char name[128];         // directory path to write to
@@ -51,10 +51,10 @@ int printResults(char *trace, memInfo *mem)
     // TODO - correct data types for below items - replace with variables
     fprintf( fp, "%60s\n", "Overall Performance");
     fprintf( fp, "%90s\n", "-------------------------------------------------------------------------------------");
-    fprintf( fp, "%40s %30d\n", "Execution time", 8384);
-    fprintf( fp, "%40s %30d\n", "Total references", 384);
-    fprintf( fp, "%40s %30d\n", "Instruction references", 84);
-    fprintf( fp, "%40s %30d\n", "Data references", 8744);
+    fprintf( fp, "%40s %30llu\n", "Execution time", stats->totExecT);
+    fprintf( fp, "%40s %30llu\n", "Total references", stats->totRefs);
+    fprintf( fp, "%40s %30llu\n", "Instruction references", stats->instRefs);
+    fprintf( fp, "%40s %30llu\n", "Data references", stats->dataRefs);
     fprintf( fp, "\n");
     fprintf( fp, "\n");
 
@@ -62,11 +62,11 @@ int printResults(char *trace, memInfo *mem)
     fprintf( fp, "%90s\n", "-------------------------------------------------------------------------------------");
     fprintf( fp, "%25s %25s %25s\n", "type", "count", "percentage");
     fprintf( fp, "%25s %25s %25s\n", "----", "-----", "----------");
-    fprintf( fp, "%25s %25d %25.2f\n", "reads", 23, 87.6);
-    fprintf( fp, "%25s %25d %25.2f\n", "writes", 43, 88.8);
-    fprintf( fp, "%25s %25d %25.2f\n", "instruction", 89848984, 99.99);
+    fprintf( fp, "%25s %25llu %25.2f\n", "reads", stats->dataReads, stats->percRefDRead);
+    fprintf( fp, "%25s %25llu %25.2f\n", "writes", stats->dataWrites, stats->percRefDWrite);
+    fprintf( fp, "%25s %25llu %25.2f\n", "instruction", stats->instRefs, stats->percRefInst);
     fprintf( fp, "%25s %25s %25s\n", "", "--------------", "---------------");
-    fprintf( fp, "%25s %25d %25.2f\n", "total", 89848984, 100.00);
+    fprintf( fp, "%25s %25llu %25.2f\n", "total", stats->totRefs, 100.00);
     fprintf( fp, "\n");
     fprintf( fp, "\n");
 
@@ -74,11 +74,11 @@ int printResults(char *trace, memInfo *mem)
     fprintf( fp, "%90s\n", "-------------------------------------------------------------------------------------");
     fprintf( fp, "%25s %25s %25s\n", "type", "count", "percentage");
     fprintf( fp, "%25s %25s %25s\n", "----", "-----", "----------");
-    fprintf( fp, "%25s %25d %25.2f\n", "reads", 23, 87.6);
-    fprintf( fp, "%25s %25d %25.2f\n", "writes", 43, 88.8);
-    fprintf( fp, "%25s %25d %25.2f\n", "instruction", 89848984, 99.99);
+    fprintf( fp, "%25s %25llu %25.2f\n", "reads", stats->cycleDRead, stats->percCycleDR);
+    fprintf( fp, "%25s %25llu %25.2f\n", "writes", stats->cycleDWrite, stats->percCycleDW);
+    fprintf( fp, "%25s %25llu %25.2f\n", "instruction", stats->cycleInst, stats->percCycleInst);
     fprintf( fp, "%25s %25s %25s\n", "", "---------------", "---------------");
-    fprintf( fp, "%25s %25d %25.2f\n", "total", 89848984, 100.00);
+    fprintf( fp, "%25s %25llu %25.2f\n", "total", stats->cycleInst+stats->cycleDRead+stats->cycleDWrite, 100.00);
     fprintf( fp, "\n");
     fprintf( fp, "\n");
 
@@ -86,9 +86,9 @@ int printResults(char *trace, memInfo *mem)
     fprintf( fp, "%90s\n", "-------------------------------------------------------------------------------------");
     fprintf( fp, "%25s %25s %25s\n", "type", "execution time", "CPI");
     fprintf( fp, "%25s %25s %25s\n", "----", "--------------", "---");
-    fprintf( fp, "%25s %25d %25.1f\n", "actual", 99999999, 87.6);
-    fprintf( fp, "%25s %25d %25.1f\n", "ideal", 758394, 2.5);
-    fprintf( fp, "%25s %25d %25.1f\n", "ideal mis-aligned", 758394, 7.8);
+    fprintf( fp, "%25s %25llu %25.1f\n", "actual", stats->totExecT, stats->cpi);
+    fprintf( fp, "%25s %25llu %25.1f\n", "ideal", stats->idealExecT, stats->idealCpi);
+    fprintf( fp, "%25s %25llu %25.1f\n", "ideal mis-aligned", stats->idealMisExecT, stats->idealMisCpi);
     fprintf( fp, "\n");
     fprintf( fp, "\n");
 
@@ -96,15 +96,15 @@ int printResults(char *trace, memInfo *mem)
     fprintf( fp, "%90s\n", "-------------------------------------------------------------------------------------");
     fprintf( fp, "%20s %20s %20s %20s\n", "value", "L1i", "L1d", "L2");
     fprintf( fp, "%20s %20s %20s %20s\n", "-----", "----", "----", "----");
-    fprintf( fp, "%20s %20d %20d %20d\n", "hit count", 89, 88, 77);
-    fprintf( fp, "%20s %20d %20d %20d\n", "miss count", 89, 88, 77);
-    fprintf( fp, "%20s %20d %20d %20d\n", "total requests", 89, 88, 77);
-    fprintf( fp, "%20s %20.2f %20.2f %20.2f\n", "hit rate", 89.2, 88.8, 77.8);
-    fprintf( fp, "%20s %20.2f %20.2f %20.2f\n", "miss rate", 89.2, 88.8, 77.8);
-    fprintf( fp, "%20s %20d %20d %20d\n", "kickouts", 89, 88, 77);
-    fprintf( fp, "%20s %20d %20d %20d\n", "dirty kickouts", 89, 88, 77);
-    fprintf( fp, "%20s %20d %20d %20d\n", "transfers", 89, 88, 77);
-    fprintf( fp, "%20s %20d %20d %20d\n", "VC hit count", 89, 88, 77);
+    fprintf( fp, "%20s %20llu %20llu %20llu\n", "hit count", stats->hitL1i, stats->hitL1d, stats->hitL2);
+    fprintf( fp, "%20s %20llu %20llu %20llu\n", "miss count", stats->missL1i, stats->missL1d, stats->missL2);
+    fprintf( fp, "%20s %20llu %20llu %20llu\n", "total requests", stats->totalReqL1i, stats->totalReqL1d, stats->totalReqL2);
+    fprintf( fp, "%20s %20.2f %20.2f %20.2f\n", "hit rate", stats->hitRateL1i, stats->hitRateL1d, stats->hitRateL2);
+    fprintf( fp, "%20s %20.2f %20.2f %20.2f\n", "miss rate", stats->missRateL1i, stats->missRateL1d, stats->missRateL2);
+    fprintf( fp, "%20s %20llu %20llu %20llu\n", "kickouts", stats->kickoutL1i, stats->kickoutL1d, stats->kickoutL2);
+    fprintf( fp, "%20s %20llu %20llu %20llu\n", "dirty kickouts", stats->dirtyKickL1i, stats->dirtyKickL1d, stats->dirtyKickL2);
+    fprintf( fp, "%20s %20llu %20llu %20llu\n", "transfers", stats->transfersL1i, stats->transfersL1d, stats->transfersL2);
+    fprintf( fp, "%20s %20llu %20llu %20llu\n", "VC hit count", stats->VChitL1i, stats->VChitL1d, stats->VChitL2);
     fprintf( fp, "\n");
     fprintf( fp, "\n");
 
@@ -112,11 +112,11 @@ int printResults(char *trace, memInfo *mem)
     fprintf( fp, "%90s\n", "-------------------------------------------------------------------------------------");
     fprintf( fp, "%40s %30s\n", "hierarchy", "cost");
     fprintf( fp, "%40s %30s\n", "---------", "----");
-    fprintf( fp, "%40s %30d\n", "L1", 100);
-    fprintf( fp, "%40s %30d\n", "L2", 834);
-    fprintf( fp, "%40s %30d\n", "Main memory", 129);
+    fprintf( fp, "%40s %30d\n", "L1", mem->L1TotCost);
+    fprintf( fp, "%40s %30d\n", "L2", mem->L2Cost);
+    fprintf( fp, "%40s %30d\n", "Main memory", mem->memoryCost);
     fprintf( fp, "%40s %30s\n", "", "---------------" );
-    fprintf( fp, "%40s %30d\n", "Total", 129);
+    fprintf( fp, "%40s %30d\n", "Total", mem->totalCost);
     fprintf( fp, "\n");
     fprintf( fp, "\n");
 

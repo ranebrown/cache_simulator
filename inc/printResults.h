@@ -12,6 +12,7 @@
     #include <string.h>
     #include <errno.h>
     #include "config.h"
+    #include "directMapped.h"
 
     /**
      * @brief prints the results of the simulation to a file
@@ -19,6 +20,6 @@
      * @param[in] mem struct containing memory configuration parameters
      * @return EXIT_SUCCESS or EXIT_FAILURE
      */
-    int printResults(char *trace, memInfo *mem);
+    int printResults(char *trace, memInfo *mem, performance *stats);
 
 #endif // PRINT_RESULTS_H
