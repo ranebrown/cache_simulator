@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
         res = readTrace(&op, &addr, &numBytes);
         if(res == 0)
         {
-            printf("%c %llx %d" ,op ,addr ,numBytes);
+            printf("%c %llx %d\n" ,op ,addr ,numBytes);
         }
     }
 
