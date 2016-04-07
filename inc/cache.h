@@ -2,10 +2,10 @@
  * @file        cache.h
  * @authors     Rane Brown & Brian Douglass
  * @date        04-01-2016
- * @brief       Header file with function prototypes and structs used for cache operations
+ * @brief       Function prototypes shared between all cache levels
  */
-#ifndef DIRECT_MAPPED_H
-    #define DIRECT_MAPPED_H
+#ifndef CACHE_H
+    #define CACHE_H
 
     #include <stdio.h>
     #include <stdlib.h>
@@ -24,9 +24,9 @@
      */
     typedef struct
     {
-        int     dirty;       ///< indicates whether a write has occurred
-        int     valid;       ///< indicates if the data in cache block is 1 = valid, 0 = garbage
-        ulli    tag;         ///< maps a specific memory address to a block - multiple addresses map to same block
+        int     dirty;      ///< indicates whether a write has occurred
+        int     valid;      ///< indicates if the data in cache block is 1 = valid, 0 = garbage
+        ulli    tag;        ///< maps a specific memory address to a block - multiple addresses map to same block
     } block;
 
     /**
@@ -84,4 +84,4 @@
         ulli    VChitL2;        ///< victim cache hit ocunt L2 cache
     } performance;
 
-#endif // DIRECT_MAPPED_H
+#endif // CACHE_H
