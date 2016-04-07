@@ -18,6 +18,7 @@
      * @brief prints the results of the simulation to a file
      * @param[in] trace string containing the name of the currently running trace
      * @param[in] mem struct containing memory configuration parameters
+     * @param[in] stats struct containing statistics about the cache simulation
      * @return EXIT_SUCCESS or EXIT_FAILURE
      */
     int printResults(char *trace, memInfo *mem, performance *stats);
