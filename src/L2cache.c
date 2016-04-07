@@ -6,3 +6,13 @@
  */
 
 #include "L2cache.h"
+
+int checkL2(ulli addr)
+{
+    return HIT;
+}
+
+int insertL2(ulli addr)
+{
+    return EXIT_SUCCESS;
+}

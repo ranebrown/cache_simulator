@@ -5,7 +5,7 @@
  * @brief       Functions shared between cache levels
  */
 
-/**
+/*
  *
  * each address is broken down into msb - |tag|index|block offset| -  lsb
  * index: which set to select, middle bits of address

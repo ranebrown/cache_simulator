@@ -12,12 +12,16 @@
     #include <math.h>
     #include "config.h"
 
+    #define HIT 0   ///< used as a return value for a cache hit
+    #define MISS 1  ///< used as a return value for a cache miss
+
     /**
      * @typedef ulli
      * @brief typedef for an unsigned long long int because that is too much to write
      */
     typedef unsigned long long int ulli;
 
+    // TODO this it temporary - will be replaced with linked list
     /**
      * @struct block
      * @brief structure used to represent a cache block

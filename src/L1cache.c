@@ -6,3 +6,23 @@
  */
 
 #include "L1cache.h"
+
+int checkL1i(ulli addr)
+{
+    return HIT;
+}
+
+int checkL1d(ulli addr)
+{
+    return HIT;
+}
+
+int insertL1i(ulli addr)
+{
+    return EXIT_SUCCESS;
+}
+
+int insertL1d(ulli addr)
+{
+    return EXIT_SUCCESS;
+}
