@@ -1,8 +1,13 @@
 var searchData=
 [
-  ['printresults',['printResults',['../print_results_8c.html#ae5c08ae88a3104f7dd092ed2c0f4604d',1,'printResults(char *trace, memInfo *mem):&#160;printResults.c'],['../print_results_8h.html#ae5c08ae88a3104f7dd092ed2c0f4604d',1,'printResults(char *trace, memInfo *mem):&#160;printResults.c']]],
-  ['printresults_2ec',['printResults.c',['../print_results_8c.html',1,'']]],
-  ['printresults_2eh',['printResults.h',['../print_results_8h.html',1,'']]],
-  ['printresults_5fsuite',['printResults_suite',['../test__print_results_8c.html#ab113ed9923be724af2e7f32d3bac3ace',1,'test_printResults.c']]],
-  ['printvalues',['PRINTVALUES',['../config_8h.html#a43200dc681c1bb3d8df82e1857afb9e0',1,'config.h']]]
+  ['main',['main',['../main_8c.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.c'],['../test__print_results_8c.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main(void):&#160;test_printResults.c'],['../test__read_trace_8c.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main(void):&#160;test_readTrace.c']]],
+  ['main_2ec',['main.c',['../main_8c.html',1,'']]],
+  ['meminfo',['memInfo',['../structmem_info.html',1,'']]],
+  ['memorycost',['memoryCost',['../structmem_info.html#a55e2e27a05b3d7b04f6e110a7fd0dbc9',1,'memInfo']]],
+  ['missl1d',['missL1d',['../structperformance.html#a26e134187c61debc3806b894c09d6e66',1,'performance']]],
+  ['missl1i',['missL1i',['../structperformance.html#a661722edb7039a2f19ac8fd3e10b2310',1,'performance']]],
+  ['missl2',['missL2',['../structperformance.html#af20f1f6af5037b229f060602bbfa8367',1,'performance']]],
+  ['missratel1d',['missRateL1d',['../structperformance.html#a07f81856741d485e8bd9bdfa3697a0ec',1,'performance']]],
+  ['missratel1i',['missRateL1i',['../structperformance.html#a938cccfbb291e98472cac3ad48039535',1,'performance']]],
+  ['missratel2',['missRateL2',['../structperformance.html#afe1e4cfd29d6c9f55fe17ab65eb37e73',1,'performance']]]
 ];

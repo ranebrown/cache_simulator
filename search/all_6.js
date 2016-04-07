@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['main',['main',['../main_8c.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.c'],['../test__print_results_8c.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main(void):&#160;test_printResults.c'],['../test__read_trace_8c.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main(void):&#160;test_readTrace.c']]],
-  ['main_2ec',['main.c',['../main_8c.html',1,'']]],
-  ['meminfo',['memInfo',['../structmem_info.html',1,'']]],
-  ['memorycost',['memoryCost',['../structmem_info.html#a55e2e27a05b3d7b04f6e110a7fd0dbc9',1,'memInfo']]]
+  ['kickoutl1d',['kickoutL1d',['../structperformance.html#a6d2077416756c3707c64a4d9b3348455',1,'performance']]],
+  ['kickoutl1i',['kickoutL1i',['../structperformance.html#a64ab5846b6d316abfd0e687d1371ffc8',1,'performance']]],
+  ['kickoutl2',['kickoutL2',['../structperformance.html#a360e1eabff91dccfc6c346188e2560bd',1,'performance']]]
 ];

@@ -1,16 +1,10 @@
 var searchData=
 [
-  ['l1dblock',['L1dBlock',['../structmem_info.html#adbcb8d0f6cff9d14d7ec5f2af4b9051b',1,'memInfo']]],
-  ['l1dcost',['L1dCost',['../structmem_info.html#a44f38becd921a47d55bb7f3303731914',1,'memInfo']]],
-  ['l1dsize',['L1dSize',['../structmem_info.html#aaf6614b071e66cc3f8aa8afec24246bf',1,'memInfo']]],
-  ['l1dways',['L1dWays',['../structmem_info.html#a4defe4bd8c6798edcdf8ab5817992490',1,'memInfo']]],
-  ['l1iblock',['L1iBlock',['../structmem_info.html#a8b9171bd7116591a869a0f539c532030',1,'memInfo']]],
-  ['l1icost',['L1iCost',['../structmem_info.html#a229e850e9b47accb3f02ac7e126824a6',1,'memInfo']]],
-  ['l1isize',['L1iSize',['../structmem_info.html#a4d41d16be3b104307938f428d89daae5',1,'memInfo']]],
-  ['l1iways',['L1iWays',['../structmem_info.html#a7f8c4a1e48db2283e8da603abff6960a',1,'memInfo']]],
-  ['l1totcost',['L1TotCost',['../structmem_info.html#aaad81406ea88314743ee2dabb17b13f9',1,'memInfo']]],
-  ['l2block',['L2Block',['../structmem_info.html#a10a45bacca03211ab1e4809cc1ec5b7d',1,'memInfo']]],
-  ['l2cost',['L2Cost',['../structmem_info.html#a246ba94356a6d06523b8824cf709ee6d',1,'memInfo']]],
-  ['l2size',['L2Size',['../structmem_info.html#a84c86681321e80f10029647af067884c',1,'memInfo']]],
-  ['l2ways',['L2Ways',['../structmem_info.html#acf9b2df9d926d22e8e48091ac47f5b3c',1,'memInfo']]]
+  ['datareads',['dataReads',['../structperformance.html#a190f3ff52c2b6d0b8f43604173254439',1,'performance']]],
+  ['datarefs',['dataRefs',['../structperformance.html#a547fae07664a65a6e4736b59435b5986',1,'performance']]],
+  ['datawrites',['dataWrites',['../structperformance.html#a43f2abdf03b0bd1fc243ac2e997f1169',1,'performance']]],
+  ['dirty',['dirty',['../structblock.html#ac29e85c90bd3552c894f72aa77439f91',1,'block']]],
+  ['dirtykickl1d',['dirtyKickL1d',['../structperformance.html#a89e8ac14f58ac0047d3a1d788cee16b3',1,'performance']]],
+  ['dirtykickl1i',['dirtyKickL1i',['../structperformance.html#a4d36377738785d2e80d9ca96f0857526',1,'performance']]],
+  ['dirtykickl2',['dirtyKickL2',['../structperformance.html#a1e87fa64a4ac51a2747f66626ac024d7',1,'performance']]]
 ];
