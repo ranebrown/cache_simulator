@@ -11,5 +11,5 @@ Good information on how to setup a gh-pages branch:
 
 ## Hosting a pdf with gh-pages and doxygen
 1. Create a pdfs/ folder in the gh-pages branch
-2. Add a link to the pdf `[link_name]`(`username.github.io/project_name/pdfs/name_of_pdf.pdf`)
+2. Add a link to the pdf `[link_name](username.github.io/project_name/pdfs/name_of_pdf.pdf)`
 3. PDF should display in web browser
