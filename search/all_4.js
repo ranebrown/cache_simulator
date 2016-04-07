@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['hit',['HIT',['../cache_8h.html#afa32d865bca6209bdaf87e7b7ccc9e1a',1,'cache.h']]],
   ['hitl1d',['hitL1d',['../structperformance.html#a9fe33af69f4f5ea644ff3dd5a127e402',1,'performance']]],
   ['hitl1i',['hitL1i',['../structperformance.html#ae6c605848e73718063d18c70cfd836d4',1,'performance']]],
   ['hitl2',['hitL2',['../structperformance.html#aa92769c2647488fbdc44fc55c73769ff',1,'performance']]],

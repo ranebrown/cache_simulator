@@ -4,6 +4,7 @@ var searchData=
   ['main_2ec',['main.c',['../main_8c.html',1,'']]],
   ['meminfo',['memInfo',['../structmem_info.html',1,'']]],
   ['memorycost',['memoryCost',['../structmem_info.html#a55e2e27a05b3d7b04f6e110a7fd0dbc9',1,'memInfo']]],
+  ['miss',['MISS',['../cache_8h.html#a614c0d93bfbf181f442e30e1c27b27ae',1,'cache.h']]],
   ['missl1d',['missL1d',['../structperformance.html#a26e134187c61debc3806b894c09d6e66',1,'performance']]],
   ['missl1i',['missL1i',['../structperformance.html#a661722edb7039a2f19ac8fd3e10b2310',1,'performance']]],
   ['missl2',['missL2',['../structperformance.html#af20f1f6af5037b229f060602bbfa8367',1,'performance']]],
