@@ -100,7 +100,7 @@ run: $(MAIN)
 doc:
 	@echo "Generating documentation..."
 	@echo ""
-	@doxygen ../doc/config
+	@doxygen ../doc/doxygen.config
 	@echo ""
 
 # phony is used in case there is a file named clean
