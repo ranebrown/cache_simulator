@@ -2,7 +2,7 @@
  * @file        VCache.c
  * @authors     Rane Brown & Brian Douglass
  * @date        04-06-2016
- * @brief       Functions for the vicitm caches
+ * @brief       Functions for the victim caches
  */
 
 #include "VCache.h"
