@@ -8,3 +8,8 @@ Good information on how to setup a gh-pages branch:
 
 * <https://github.com/m-a-d-n-e-s-s/madness/issues/104>
 * <http://growworkinghard.com/2015/11/17/doxygen-documentation-on-github-using-gh-pages/>
+
+## Hosting a pdf with gh-pages and doxygen
+1. Create a pdfs/ folder in the gh-pages branch
+1. Add a link to the pdf `[link_name](https://username.github.io/project_name/pdfs/name_of_pdf.pdf)`
+1. PDF should display in web browser
