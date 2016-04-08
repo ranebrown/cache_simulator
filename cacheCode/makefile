@@ -17,4 +17,5 @@ cacheCodeTest.o: cacheCodeTest.c
 
 clean:
 	rm -f cacheCodeTest
+	rm -rf *.dSYM
 	rm -f *.o
