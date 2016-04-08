@@ -3,6 +3,7 @@ doc/html/
 
 # vim stuff
 .syntastic_clang_check_config
+.syntastic_c_config
 .tags
 .ycm_extra_conf.py
 .ycm_extra_conf.pyc
