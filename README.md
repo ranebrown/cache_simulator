@@ -6,6 +6,7 @@
 * **data types:** - very important - signed, unsigned, long int, long long int, etc.
     * any timing statistic - unsigned long long
     * use correct printf format specifier e.g. %llu or %Lu
+* on OSX it is necessary to use `zcat < trace_name.gz` to read in traces
 
 ## Setup
 1. tab size 4
