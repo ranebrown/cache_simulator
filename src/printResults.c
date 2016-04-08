@@ -27,6 +27,31 @@ int printResults(char *trace, memInfo *mem, performance *stats)
         return EXIT_FAILURE;
     }
 
+    /* calculate remaining values */
+    /* ulli    totExecT       =   0;       // total execution time for the simulation */
+    /* ulli    totRefs        =   0;       // total number of references = data + instruction */
+    /* ulli    dataRefs       =   0;       // number of data references = read + writes */
+    /* float   percRefInst    =   0;       // percentage of references that are instructions */
+    /* float   percRefDRead   =   0;       // percentage of references that are data reads */
+    /* float   percRefDWrite  =   0;       // percentage of references that are data writes */
+    /* float   percCycleDR    =   0;       // percentage of cycles that are data reads */
+    /* float   percCycleDW    =   0;       // percentage of cycles that are data writes */
+    /* float   percCycleInst  =   0;       // percentage of cycles that are instructions */
+    /* ulli    idealExecT     =   0;       // ideal execution time */
+    /* ulli    idealMisExecT  =   0;       // ideal mis-aligned exectition time */
+    /* float   cpi            =   0;       // actual CPI */
+    /* float   idealCpi       =   0;       // ideal CPI */
+    /* float   idealMisCpi    =   0;       // ideal mis-aligned CPI */
+    /* ulli    totalReqL1i    =   0;       // total requests L1 instruction cache */
+    /* ulli    totalReqL1d    =   0;       // total requests L1 data cache */
+    /* ulli    totalReqL2     =   0;       // total requests L2 cache */
+    /* float   hitRateL1i     =   0;       // hit rate percentage L1 instruction cache */
+    /* float   hitRateL1d     =   0;       // hit rate percentage L1 data cache */
+    /* float   hitRateL2      =   0;       // hit rate percentage L2 cache */
+    /* float   missRateL1i    =   0;       // miss rate percentage L1 instruction cache */
+    /* float   missRateL1d    =   0;       // miss rate percentage L1 data cache */
+    /* float   missRateL2     =   0;       // miss rate percentage L2 cache */
+
     // print to file
     fprintf( fp, "-----------------------------------------------------------------------------------------------\n");
     fprintf( fp, "%20s %40s\n", trace, "Simulation Results");
@@ -62,8 +87,8 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     fprintf( fp, "%90s\n", "-------------------------------------------------------------------------------------");
     fprintf( fp, "%25s %25s %25s\n", "type", "count", "percentage");
     fprintf( fp, "%25s %25s %25s\n", "----", "-----", "----------");
-    fprintf( fp, "%25s %25llu %25.2f\n", "reads", stats->dataReads, stats->percRefDRead);
-    fprintf( fp, "%25s %25llu %25.2f\n", "writes", stats->dataWrites, stats->percRefDWrite);
+    fprintf( fp, "%25s %25llu %25.2f\n", "reads", stats->dataReadRef, stats->percRefDRead);
+    fprintf( fp, "%25s %25llu %25.2f\n", "writes", stats->dataWriteRef, stats->percRefDWrite);
     fprintf( fp, "%25s %25llu %25.2f\n", "instruction", stats->instRefs, stats->percRefInst);
     fprintf( fp, "%25s %25s %25s\n", "", "--------------", "---------------");
     fprintf( fp, "%25s %25llu %25.2f\n", "total", stats->totRefs, 100.00);
