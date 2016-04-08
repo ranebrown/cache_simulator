@@ -11,16 +11,30 @@
 #include "readTrace.h"
 #include "config.h"
 
+/* #define DEBUG_PRINT_TRACE ///< print traces for debugging */
+
 int main(int argc, char *argv[])
 {
     /* Local Variables */
-    char op;                            /// type of operation - read or write or instruction
-    unsigned long long int addr;        /// memory address
-    unsigned int numBytes;              /// number of bytes referenced by request
-    int res = 0;                        /// result of trace read
+    char op         =   0;      // type of operation - read or write or instruction
+    ulli addr       =   0;      // memory address
+    ui numBytes     =   0;      // number of bytes referenced by request
+    int currIndx    =   0;      // cache index for an address
+    ulli currTag    =   0;      // cache tag for an address
+    ulli currAddr   =   0;      // address from trace
+    ulli endAddr    =   0;      // end address from trace (depends on number of bytes)
+    int bitsIndexL1 =   0;      // number of bits for L1 index
+    int bitsTagL1   =   0;      // number of bits for L1 tag
+    int bitsIndexL2 =   0;      // number of bits for L2 index
+    int bitsTagL2   =   0;      // number of bits for L2 tag
 
     // structure containing cache settings
     memInfo *cache = (memInfo *) malloc(sizeof(memInfo));
+
+    // structure containing statistics for simulation
+    performance *stats = malloc(sizeof(performance));
+    performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    *stats = zero; // zero all elements in stats
 
     /* Default values*/
     cache->L1dBlock  = 32;
@@ -73,18 +87,76 @@ int main(int argc, char *argv[])
     // calculate cost based on cache configuration
     calculateCost(cache);
 
+    // calulate number of tag bits and index bits for the cache configuration
+    calcBits(cache, &bitsIndexL1, &bitsTagL1, &bitsIndexL2, &bitsTagL2);
+
+    // TODO Initialize caches
+
     // read a trace from stdin and print it
-    while(res == 0)
+    while(readTrace(&op, &addr, &numBytes) == EXIT_SUCCESS)
     {
-        res = readTrace(&op, &addr, &numBytes);
-        if(res == 0)
-        {
+        #ifdef DEBUG_PRINT_TRACE
             printf("%c %llx %d\n" ,op ,addr ,numBytes);
+        #endif
+
+        // calculate the word (4 byte) aligned start address
+        currAddr = addr & 0xFFFFFFFFFFFFFFFC;
+
+        // calculate the end address (doesn't need to be word aligned since currAddr is incremented by 4)
+        endAddr = addr + numBytes-1;
+
+        // update the stats for the number of references
+        switch(op)
+        {
+            case 'I':
+                stats->instRefs++;
+                break;
+            case 'R':
+                stats->dataReads++;
+                break;
+            case 'W':
+                stats->dataWrites++;
+                break;
+            default:
+                printf("ERROR: invalid trace operation\n");
+                return EXIT_FAILURE;
+                break;
+        }
+
+        // loop for L1 access - 4 byte bus -> multiple accesses possible
+        while(currAddr <= endAddr)
+        {
+            // index and tag for the address
+            currIndx = (currAddr >> L1_OFFSET) | (2^(bitsIndexL1+1) - 1);
+            currTag = currAddr >> (bitsIndexL1 + L1_OFFSET);
+
+            // alternative method
+            /* currIndx = (currAddr / mem->L1dBlock) % (mem->L1dSize / mem->L1dBlock); */
+            /* currTag = currAddr >> (64 - ((int)log2(mem->L1dSize / mem->L1dBlock) + (int)log2(mem->L1dBlock))); */
+
+            // perform action based on type of reference (instruction, data read, data write)
+            switch(op)
+            {
+                case 'I':
+                    break;
+                case 'R':
+                    break;
+                case 'W':
+                    break;
+                default:
+                    printf("ERROR: invalid trace operation\n");
+                    return EXIT_FAILURE;
+                    break;
+            }
+
+            // increment to next address
+            currAddr += 4;
         }
     }
 
     // free any allocated memory
     free(cache);
+    free(stats);
 
     return EXIT_SUCCESS;
 }
