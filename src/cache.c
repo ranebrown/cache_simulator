@@ -15,7 +15,7 @@
 
 int calcBits(memInfo *mem, int *bitsIndexL1, int *bitsTagL1, int *bitsIndexL2, int *bitsTagL2)
 {
-    if(mem == NULL || bitsIndexL1 == NULL || bitsTagL1 == NULL || bitsIndexL2 == NULL || bitsTagL2 == NULL);
+    if(mem == NULL || bitsIndexL1 == NULL || bitsTagL1 == NULL || bitsIndexL2 == NULL || bitsTagL2 == NULL)
         return EXIT_FAILURE;
 
     // number of index bits L1 cache
