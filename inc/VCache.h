@@ -10,6 +10,7 @@
 
     #include <stdio.h>
     #include <stdlib.h>
+    #include "cache.h"
 
     /**
      * @brief check if miss from L1i is in the victim cache
