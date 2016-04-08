@@ -90,7 +90,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">cache.h File Reference</div>  </div>
 </div><!--header-->
@@ -124,18 +125,98 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8h.html#a614c0d93bfbf181f442e30e1c27b27ae">MISS</a>&#160;&#160;&#160;1</td></tr>
 <tr class="memdesc:a614c0d93bfbf181f442e30e1c27b27ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">used as a return value for a cache miss <br /></td></tr>
 <tr class="separator:a614c0d93bfbf181f442e30e1c27b27ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4c591a3b124fc76f1c986f6784a431d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae4c591a3b124fc76f1c986f6784a431d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8h.html#ae4c591a3b124fc76f1c986f6784a431d">L1OFFSET</a>&#160;&#160;&#160;5</td></tr>
+<tr class="memdesc:ae4c591a3b124fc76f1c986f6784a431d"><td class="mdescLeft">&#160;</td><td class="mdescRight">L1 is 32 bytes i.e. 2^5. <br /></td></tr>
+<tr class="separator:ae4c591a3b124fc76f1c986f6784a431d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60338a48ed3b0a8c8934a9044bd43b48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60338a48ed3b0a8c8934a9044bd43b48"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8h.html#a60338a48ed3b0a8c8934a9044bd43b48">L2OFFSET</a>&#160;&#160;&#160;6</td></tr>
+<tr class="memdesc:a60338a48ed3b0a8c8934a9044bd43b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">L2 is 64 bytes i.e. 2^6. <br /></td></tr>
+<tr class="separator:a60338a48ed3b0a8c8934a9044bd43b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ab03611f241c9a9e41e88045df86a140f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab03611f241c9a9e41e88045df86a140f"></a>
-typedef unsigned long long int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8h.html#ab03611f241c9a9e41e88045df86a140f">ulli</a></td></tr>
-<tr class="memdesc:ab03611f241c9a9e41e88045df86a140f"><td class="mdescLeft">&#160;</td><td class="mdescRight">typedef for an unsigned long long int because that is too much to write <br /></td></tr>
-<tr class="separator:ab03611f241c9a9e41e88045df86a140f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afebafa022413aaef27ce1b01cbfa9791"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afebafa022413aaef27ce1b01cbfa9791"></a>
+typedef unsigned long long int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a></td></tr>
+<tr class="memdesc:afebafa022413aaef27ce1b01cbfa9791"><td class="mdescLeft">&#160;</td><td class="mdescRight">shorten long type <br /></td></tr>
+<tr class="separator:afebafa022413aaef27ce1b01cbfa9791"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0f39ee33b87675e11229913d432ffe7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0f39ee33b87675e11229913d432ffe7"></a>
+typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8h.html#aa0f39ee33b87675e11229913d432ffe7">ui</a></td></tr>
+<tr class="memdesc:aa0f39ee33b87675e11229913d432ffe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">maintain same format as ulli <br /></td></tr>
+<tr class="separator:aa0f39ee33b87675e11229913d432ffe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ab4a7e024f65d360dee8b8219db3a07b5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8h.html#ab4a7e024f65d360dee8b8219db3a07b5">calcBits</a> (<a class="el" href="structmem_info.html">memInfo</a> *mem, int *bitsIndexL1, int *bitsTagL1, int *bitsIndexL2, int *bitsTagL2)</td></tr>
+<tr class="memdesc:ab4a7e024f65d360dee8b8219db3a07b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the number of index bits and tag bits for L1 and L2 cache.  <a href="#ab4a7e024f65d360dee8b8219db3a07b5">More...</a><br /></td></tr>
+<tr class="separator:ab4a7e024f65d360dee8b8219db3a07b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Authors</dt><dd>Rane Brown &amp; Brian Douglass </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>04-01-2016 </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ab4a7e024f65d360dee8b8219db3a07b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int calcBits </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmem_info.html">memInfo</a> *&#160;</td>
+          <td class="paramname"><em>mem</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>bitsIndexL1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>bitsTagL1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>bitsIndexL2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>bitsTagL2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The number of bits can be used in conjunction with bit shifting to calculate the tag and index for a specific address.</p>
+<p>Each address is broken down into msb - |tag|index|block offset| - lsb</p><ul>
+<li>number of offset bits = log2(byte size of a block in  cache)</li>
+<li>number of index bits = log2(# of blocks in the cache / divided by associativity)</li>
+<li>number of tags bits = total address bits - # index bits - # offset bits</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">mem</td><td>structure containing cache configuration options </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">bitsIndexL1</td><td>the number of index bits for L1 cache </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">bitsTagL1</td><td>the number of tag bits for L1 cache </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">bitsIndexL2</td><td>the number of index bits for L2 cache </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">bitsTagL2</td><td>the nubmer of tag bits for L2 cache </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS or EXIT_FAILURE </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

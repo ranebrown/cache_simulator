@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['project_20outline_20_28summary_20of_20project_20description_29',['Project Outline (Summary of Project Description)',['../md__Users_Rane_Documents_Classes_Spring16_Computer_Organization_cache_simulator_doc_project_outline.html',1,'']]],
   ['perccycledr',['percCycleDR',['../structperformance.html#a793e85fabd69a42b64ec6e54b9df5967',1,'performance']]],
   ['perccycledw',['percCycleDW',['../structperformance.html#aff8f57b43061644700d107b655985ef1',1,'performance']]],
   ['perccycleinst',['percCycleInst',['../structperformance.html#a3825a08b377483d59acde1df5e5b95a8',1,'performance']]],

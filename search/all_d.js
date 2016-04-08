@@ -1,8 +1,10 @@
 var searchData=
 [
   ['tag',['tag',['../structblock.html#a3003eba2dfcf2856f4c7ce4f00161bd0',1,'block']]],
+  ['test_5fcache_2ec',['test_cache.c',['../test__cache_8c.html',1,'']]],
   ['test_5fprintresults_2ec',['test_printResults.c',['../test__print_results_8c.html',1,'']]],
   ['test_5freadtrace_2ec',['test_readTrace.c',['../test__read_trace_8c.html',1,'']]],
+  ['test_5fsuite',['test_suite',['../test__cache_8c.html#ae4aa19c6b4884ed4acd2d0b8228e59ce',1,'test_cache.c']]],
   ['totalcost',['totalCost',['../structmem_info.html#afcd9f210027db998685e5ce99be9db20',1,'memInfo']]],
   ['totalreql1d',['totalReqL1d',['../structperformance.html#a855e7ab762a1980e0675237eebc77cd4',1,'performance']]],
   ['totalreql1i',['totalReqL1i',['../structperformance.html#a3b947222387d84e91d269ab2ba82f243',1,'performance']]],

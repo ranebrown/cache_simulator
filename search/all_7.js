@@ -12,7 +12,7 @@ var searchData=
   ['l1icost',['L1iCost',['../structmem_info.html#a229e850e9b47accb3f02ac7e126824a6',1,'memInfo']]],
   ['l1isize',['L1iSize',['../structmem_info.html#a4d41d16be3b104307938f428d89daae5',1,'memInfo']]],
   ['l1iways',['L1iWays',['../structmem_info.html#a7f8c4a1e48db2283e8da603abff6960a',1,'memInfo']]],
-  ['l1offset',['L1OFFSET',['../_l1cache_8h.html#ae4c591a3b124fc76f1c986f6784a431d',1,'L1cache.h']]],
+  ['l1offset',['L1OFFSET',['../cache_8h.html#ae4c591a3b124fc76f1c986f6784a431d',1,'cache.h']]],
   ['l1totcost',['L1TotCost',['../structmem_info.html#aaad81406ea88314743ee2dabb17b13f9',1,'memInfo']]],
   ['l2_5f16kb',['L2_16KB',['../config_8h.html#a0b1ef9aa85364cf1df4fc281706b0c1e',1,'config.h']]],
   ['l2_5fassoc',['L2_ASSOC',['../config_8h.html#a501bb4a979ca679ff4afdec5069c4476',1,'config.h']]],
@@ -20,7 +20,7 @@ var searchData=
   ['l2cache_2ec',['L2cache.c',['../_l2cache_8c.html',1,'']]],
   ['l2cache_2eh',['L2cache.h',['../_l2cache_8h.html',1,'']]],
   ['l2cost',['L2Cost',['../structmem_info.html#a246ba94356a6d06523b8824cf709ee6d',1,'memInfo']]],
-  ['l2offset',['L2OFFSET',['../_l2cache_8h.html#a60338a48ed3b0a8c8934a9044bd43b48',1,'L2cache.h']]],
+  ['l2offset',['L2OFFSET',['../cache_8h.html#a60338a48ed3b0a8c8934a9044bd43b48',1,'cache.h']]],
   ['l2size',['L2Size',['../structmem_info.html#a84c86681321e80f10029647af067884c',1,'memInfo']]],
   ['l2ways',['L2Ways',['../structmem_info.html#acf9b2df9d926d22e8e48091ac47f5b3c',1,'memInfo']]]
 ];
