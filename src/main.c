@@ -13,6 +13,9 @@
 
 /* #define DEBUG_PRINT_TRACE ///< print traces for debugging */
 
+/**
+ * @brief main function for cache simulator
+ */
 int main(int argc, char *argv[])
 {
     /* Local Variables */
