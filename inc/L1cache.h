@@ -12,8 +12,6 @@
     #include <stdlib.h>
     #include "cache.h"
 
-    #define L1OFFSET 5  ///< L1 is 32 bytes i.e. 2^5
-
     /**
      * @brief check if instruction reference is a hit or a miss
      * @param[in] addr address being checked

@@ -12,8 +12,6 @@
     #include <stdlib.h>
     #include "cache.h"
 
-    #define L2OFFSET 6  ///< L2 is 64 bytes i.e. 2^6
-
     /**
      * @brief check reference is a hit or a miss
      * @param[in] addr address being checked
