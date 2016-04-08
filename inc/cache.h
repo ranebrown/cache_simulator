@@ -12,14 +12,13 @@
     #include <math.h>
     #include "config.h"
 
-    #define HIT 0   ///< used as a return value for a cache hit
-    #define MISS 1  ///< used as a return value for a cache miss
+    #define HIT 0       ///< used as a return value for a cache hit
+    #define MISS 1      ///< used as a return value for a cache miss
+    #define L1OFFSET 5  ///< L1 is 32 bytes i.e. 2^5
+    #define L2OFFSET 6  ///< L2 is 64 bytes i.e. 2^6
 
-    /**
-     * @typedef ulli
-     * @brief typedef for an unsigned long long int because that is too much to write
-     */
-    typedef unsigned long long int ulli;
+    typedef unsigned long long int ulli;    ///< shorten long type
+    typedef unsigned int ui;                ///< maintain same format as ulli
 
     // TODO this it temporary - will be replaced with linked list
     /**
@@ -87,5 +86,25 @@
         ulli    VChitL1d;       ///< victim cache hit count L1 data cache
         ulli    VChitL2;        ///< victim cache hit ocunt L2 cache
     } performance;
+
+    /**
+    * @brief Calculates the number of index bits and tag bits for L1 and L2 cache
+    *
+    * The number of bits can be used in conjunction with bit shifting to calculate the tag and index for
+    * a specific address.
+    *
+    * Each address is broken down into msb - |tag|index|block offset| -  lsb
+    * - number of offset bits = log2(byte size of a block in  cache)
+    * - number of index bits = log2(# of blocks in the cache / divided by associativity)
+    * - number of tags bits = total address bits - # index bits - # offset bits
+    *
+    * @param[in] mem structure containing cache configuration options
+    * @param[out] bitsIndexL1 the number of index bits for L1 cache
+    * @param[out] bitsTagL1 the number of tag bits for L1 cache
+    * @param[out] bitsIndexL2 the number of index bits for L2 cache
+    * @param[out] bitsTagL2 the nubmer of tag bits for L2 cache
+    * @returns EXIT_SUCCESS or EXIT_FAILURE
+    */
+    int calcBits(memInfo *mem, int *bitsIndexL1, int *bitsTagL1, int *bitsIndexL2, int *bitsTagL2);
 
 #endif // CACHE_H
