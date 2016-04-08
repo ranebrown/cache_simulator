@@ -14,17 +14,19 @@
 
     /**
      * @brief check if instruction reference is a hit or a miss
-     * @param[in] addr address being checked
+     * @param[in] currIndx the index for block to check
+     * @param[in] currTag the tag to be checked for
      * @return 0 hit, 1 miss
      */
-    int checkL1i(ulli addr);
+    int checkL1i(ui currIndx, ulli currTag);
 
     /**
      * @brief check if data read/write reference is a hit or a miss
-     * @param[in] addr address being checked
+     * @param[in] currIndx the index for block to check
+     * @param[in] currTag the tag to be checked for
      * @return 0 hit, 1 miss
      */
-    int checkL1d(ulli addr);
+    int checkL1d(ui currIndx, ulli currTag);
 
     /**
      * @brief insert a new value into L1 instruction cache

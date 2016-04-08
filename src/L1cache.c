@@ -7,12 +7,12 @@
 
 #include "L1cache.h"
 
-int checkL1i(ulli addr)
+int checkL1i(ui currIndx, ulli currTag)
 {
     return HIT;
 }
 
-int checkL1d(ulli addr)
+int checkL1d(ui currIndx, ulli currTag)
 {
     return HIT;
 }

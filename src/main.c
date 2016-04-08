@@ -10,6 +10,10 @@
 #include "printResults.h"
 #include "readTrace.h"
 #include "config.h"
+#include "cache.h"
+#include "L1cache.h"
+#include "L2cache.h"
+#include "VCache.h"
 
 /* #define DEBUG_PRINT_TRACE ///< print traces for debugging */
 
@@ -22,7 +26,7 @@ int main(int argc, char *argv[])
     char op         =   0;      // type of operation - read or write or instruction
     ulli addr       =   0;      // memory address
     ui numBytes     =   0;      // number of bytes referenced by request
-    int currIndx    =   0;      // cache index for an address
+    ui currIndx     =   0;      // cache index for an address
     ulli currTag    =   0;      // cache tag for an address
     ulli currAddr   =   0;      // address from trace
     ulli endAddr    =   0;      // end address from trace (depends on number of bytes)
@@ -31,10 +35,10 @@ int main(int argc, char *argv[])
     int bitsIndexL2 =   0;      // number of bits for L2 index
     int bitsTagL2   =   0;      // number of bits for L2 tag
 
-    // structure containing cache settings
+    /* structure containing cache settings */
     memInfo *cache = (memInfo *) malloc(sizeof(memInfo));
 
-    // structure containing statistics for simulation
+    /* structure containing statistics for simulation */
     performance *stats = malloc(sizeof(performance));
     performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     *stats = zero; // zero all elements in stats
@@ -87,38 +91,38 @@ int main(int argc, char *argv[])
         cache->L2Block   = 64;
     }
 
-    // calculate cost based on cache configuration
+    /* calculate cost based on cache configuration */
     calculateCost(cache);
 
-    // calulate number of tag bits and index bits for the cache configuration
+    /* calulate number of tag bits and index bits for the cache configuration */
     calcBits(cache, &bitsIndexL1, &bitsTagL1, &bitsIndexL2, &bitsTagL2);
 
-    // TODO Initialize caches
+    /* TODO Initialize caches */
 
-    // read a trace from stdin and print it
+    /* read a trace from stdin and print it */
     while(readTrace(&op, &addr, &numBytes) == EXIT_SUCCESS)
     {
         #ifdef DEBUG_PRINT_TRACE
             printf("%c %llx %d\n" ,op ,addr ,numBytes);
         #endif
 
-        // calculate the word (4 byte) aligned start address
+        /* calculate the word (4 byte) aligned start address */
         currAddr = addr & 0xFFFFFFFFFFFFFFFC;
 
-        // calculate the end address (doesn't need to be word aligned since currAddr is incremented by 4)
+        /* calculate the end address (doesn't need to be word aligned since currAddr is incremented by 4) */
         endAddr = addr + numBytes-1;
 
-        // update the stats for the number of references
+        /* update the stats for the number of references */
         switch(op)
         {
             case 'I':
                 stats->instRefs++;
                 break;
             case 'R':
-                stats->dataReads++;
+                stats->dataReadRef++;
                 break;
             case 'W':
-                stats->dataWrites++;
+                stats->dataWriteRef++;
                 break;
             default:
                 printf("ERROR: invalid trace operation\n");
@@ -126,25 +130,56 @@ int main(int argc, char *argv[])
                 break;
         }
 
-        // loop for L1 access - 4 byte bus -> multiple accesses possible
+         /* loop for L1 access - 4 byte bus -> multiple accesses possible */
         while(currAddr <= endAddr)
         {
-            // index and tag for the address
-            currIndx = (currAddr >> L1_OFFSET) | (2^(bitsIndexL1+1) - 1);
+            /* index and tag for the address */
+            currIndx = (currAddr << bitsTagL1) >> (bitsTagL1 + L1_OFFSET);
             currTag = currAddr >> (bitsIndexL1 + L1_OFFSET);
 
-            // alternative method
+            /* alternative methods (untested) */
+            /* currIndx = (currAddr >> L1_OFFSET) | (2^(bitsIndexL1+1) - 1); */
             /* currIndx = (currAddr / mem->L1dBlock) % (mem->L1dSize / mem->L1dBlock); */
             /* currTag = currAddr >> (64 - ((int)log2(mem->L1dSize / mem->L1dBlock) + (int)log2(mem->L1dBlock))); */
 
-            // perform action based on type of reference (instruction, data read, data write)
+            /* perform action based on type of reference (instruction, data read, data write) */
             switch(op)
             {
                 case 'I':
+                    if(checkL1i(currIndx, currTag) == HIT)
+                    {
+                        /* increment statistics for simulation */
+                        stats->hitL1i++;
+                        stats->cycleInst += L1_HIT_TIME;
+                    }
+                    else /* L1i miss */
+                    {
+
+                    }
                     break;
                 case 'R':
+                    if(checkL1d(currIndx, currTag) == HIT)
+                    {
+                        /* increment statistics for simulation */
+                        stats->hitL1d++;
+                        stats->cycleDRead += L1_HIT_TIME;
+                    }
+                    else /* L1d miss */
+                    {
+
+                    }
                     break;
                 case 'W':
+                    if(checkL1d(currIndx, currTag) == HIT)
+                    {
+                        /* increment statistics for simulation */
+                        stats->hitL1d++;
+                        stats->cycleDWrite += L1_HIT_TIME;
+                    }
+                    else /* L1d miss */
+                    {
+
+                    }
                     break;
                 default:
                     printf("ERROR: invalid trace operation\n");
@@ -152,12 +187,12 @@ int main(int argc, char *argv[])
                     break;
             }
 
-            // increment to next address
+            /* increment to next address */
             currAddr += 4;
         }
     }
 
-    // free any allocated memory
+    /* free any allocated memory */
     free(cache);
     free(stats);
 

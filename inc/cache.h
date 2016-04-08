@@ -12,10 +12,14 @@
     #include <math.h>
     #include "config.h"
 
-    #define HIT 0       ///< used as a return value for a cache hit
-    #define MISS 1      ///< used as a return value for a cache miss
-    #define L1OFFSET 5  ///< L1 is 32 bytes i.e. 2^5
-    #define L2OFFSET 6  ///< L2 is 64 bytes i.e. 2^6
+    #define HIT 0               ///< used as a return value for a cache hit
+    #define MISS 1              ///< used as a return value for a cache miss
+    #define L1_OFFSET 5         ///< L1 is 32 bytes i.e. 2^5
+    #define L2_OFFSET 6         ///< L2 is 64 bytes i.e. 2^6
+    #define L1_HIT_TIME 1       ///< number of cycles to return an L1 hit
+    #define L1_MISS_TIME 1      ///< number of cycles to determine an L1 request is a miss and make request to L2
+    #define L2_HIT_TIME 20      ///< number of cycles to return an L2 hit
+    #define L2_MISS_TIME 180    ///< number of cycles to determine an L2 request is a miss and make request to main memory
 
     typedef unsigned long long int ulli;    ///< shorten long type
     typedef unsigned int ui;                ///< maintain same format as ulli
@@ -42,8 +46,8 @@
         ulli    totRefs;        ///< total number of references = data + instruction
         ulli    instRefs;       ///< number of instruction references
         ulli    dataRefs;       ///< number of data references = read + writes
-        ulli    dataReads;      ///< number of data reads
-        ulli    dataWrites;     ///< number of data writes
+        ulli    dataReadRef;    ///< number of data read references
+        ulli    dataWriteRef;   ///< number of data write references
         float   percRefInst;    ///< percentage of references that are instructions
         float   percRefDRead;   ///< percentage of references that are data reads
         float   percRefDWrite;  ///< percentage of references that are data writes
