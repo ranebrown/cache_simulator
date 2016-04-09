@@ -28,6 +28,10 @@
      */
     int checkL1d(ui currIndx, ulli currTag);
 
+    int L1iMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2);
+    int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, int dirtyBit);
+    int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, int dirtyBit);
+
     /**
      * @brief insert a new value into L1 instruction cache
      * @param[in] addr address being inserted

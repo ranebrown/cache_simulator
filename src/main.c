@@ -26,8 +26,10 @@ int main(int argc, char *argv[])
     char op         =   0;      // type of operation - read or write or instruction
     ulli addr       =   0;      // memory address
     ui numBytes     =   0;      // number of bytes referenced by request
-    ui currIndx     =   0;      // cache index for an address
-    ulli currTag    =   0;      // cache tag for an address
+    ui currIndxL1   =   0;      // cache index for an address
+    ui currIndxL2   =   0;      // cache index for an address
+    ulli currTagL1  =   0;      // cache tag for an address
+    ulli currTagL2  =   0;      // cache tag for an address
     ulli currAddr   =   0;      // address from trace
     ulli endAddr    =   0;      // end address from trace (depends on number of bytes)
     int bitsIndexL1 =   0;      // number of bits for L1 index
@@ -98,6 +100,31 @@ int main(int argc, char *argv[])
     calcBits(cache, &bitsIndexL1, &bitsTagL1, &bitsIndexL2, &bitsTagL2);
 
     /* TODO Initialize caches */
+    int i,j;
+    int numLines = 256;
+    int numWays = 1;
+    block **line = malloc(numLines * sizeof(block*));
+    for(i=0; i<numLines; i++)
+        line[i] = malloc(numLines * sizeof(block));
+    for(i=0; i<numLines; i++)
+    {
+        blockNode *firstNode = malloc(sizeof(blockNode));
+        line[i]->first = firstNode;
+        line[i]->last = firstNode;
+        line[i]->nodeCount = 1;
+        for(j=0; j<numWays; j++)
+        {
+            blockNode *node = malloc(sizeof(blockNode));
+            node->valid = 0;
+            node-> dirty = 0;
+            node->tag = 0;
+            node->next = NULL;
+            line[i]->last->next = node;
+            node->prev = line[i]->last;
+            line[i]->last = node;
+            line[i]->nodeCount++;
+        }
+    }
 
     /* read a trace from stdin and print it */
     while(readTrace(&op, &addr, &numBytes) == EXIT_SUCCESS)
@@ -134,51 +161,57 @@ int main(int argc, char *argv[])
         while(currAddr <= endAddr)
         {
             /* index and tag for the address */
-            currIndx = (currAddr << bitsTagL1) >> (bitsTagL1 + L1_OFFSET);
-            currTag = currAddr >> (bitsIndexL1 + L1_OFFSET);
+            currIndxL1 = (currAddr << bitsTagL1) >> (bitsTagL1 + L1_OFFSET);
+            currIndxL2 = (currAddr << bitsTagL2) >> (bitsTagL2 + L2_OFFSET);
+            currTagL1 = currAddr >> (bitsIndexL1 + L1_OFFSET);
+            currTagL2 = currAddr >> (bitsIndexL2 + L2_OFFSET);
 
             /* alternative methods (untested) */
-            /* currIndx = (currAddr >> L1_OFFSET) | (2^(bitsIndexL1+1) - 1); */
-            /* currIndx = (currAddr / mem->L1dBlock) % (mem->L1dSize / mem->L1dBlock); */
-            /* currTag = currAddr >> (64 - ((int)log2(mem->L1dSize / mem->L1dBlock) + (int)log2(mem->L1dBlock))); */
+            /* currIndxL1 = (currAddr >> L1_OFFSET) | (2^(bitsIndexL1+1) - 1); */
+            /* currIndxL1 = (currAddr / mem->L1dBlock) % (mem->L1dSize / mem->L1dBlock); */
+            /* currTagL1 = currAddr >> (64 - ((int)log2(mem->L1dSize / mem->L1dBlock) + (int)log2(mem->L1dBlock))); */
 
             /* perform action based on type of reference (instruction, data read, data write) */
             switch(op)
             {
+                // TODO how access cache global or pass to function
                 case 'I':
-                    if(checkL1i(currIndx, currTag) == HIT)
+                    if(checkL1i(currIndxL1, currTagL1) == HIT)
                     {
                         /* increment statistics for simulation */
                         stats->hitL1i++;
                         stats->cycleInst += L1_HIT_TIME;
                     }
-                    else /* L1i miss */
+                    else
                     {
-
+                        /* check up the memory hierarchy for the requested value */
+                        L1iMiss(currTagL1, currTagL2, currIndxL1, currIndxL2);
                     }
                     break;
                 case 'R':
-                    if(checkL1d(currIndx, currTag) == HIT)
+                    if(checkL1d(currIndxL1, currTagL1) == HIT)
                     {
                         /* increment statistics for simulation */
                         stats->hitL1d++;
                         stats->cycleDRead += L1_HIT_TIME;
                     }
-                    else /* L1d miss */
+                    else
                     {
-
+                        /* check up the memory hierarchy for the requested value */
+                        L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, CLEAN);
                     }
                     break;
                 case 'W':
-                    if(checkL1d(currIndx, currTag) == HIT)
+                    if(checkL1d(currIndxL1, currTagL1) == HIT)
                     {
                         /* increment statistics for simulation */
                         stats->hitL1d++;
                         stats->cycleDWrite += L1_HIT_TIME;
                     }
-                    else /* L1d miss */
+                    else
                     {
-
+                        /* check up the memory hierarchy for the requested value */
+                        L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, DIRTY);
                     }
                     break;
                 default:
@@ -195,6 +228,21 @@ int main(int argc, char *argv[])
     /* free any allocated memory */
     free(cache);
     free(stats);
+
+    // free linked list memory
+    for(i=0; i<numLines; i++)
+    {
+        blockNode *temp1 = line[i]->first;
+        blockNode *temp2;
+        while(temp1 != NULL)
+        {
+            temp2 = temp1;
+            temp1 = temp1->next;
+            free(temp2);
+        }
+        free(line[i]);
+    }
+    free(line);
 
     return EXIT_SUCCESS;
 }

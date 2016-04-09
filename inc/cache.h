@@ -20,24 +20,30 @@
     #define L1_MISS_TIME 1      ///< number of cycles to determine an L1 request is a miss and make request to L2
     #define L2_HIT_TIME 20      ///< number of cycles to return an L2 hit
     #define L2_MISS_TIME 180    ///< number of cycles to determine an L2 request is a miss and make request to main memory
+    #define CLEAN 0             ///< dirty bit status
+    #define DIRTY 1             ///< dirty bit status
 
     typedef unsigned long long int ulli;    ///< shorten long type
     typedef unsigned int ui;                ///< maintain same format as ulli
 
-    // TODO this it temporary - will be replaced with linked list
-    /**
-     * @struct block
-     * @brief structure used to represent a cache block
-     */
+    struct blockNode;
+    typedef struct blockNode
+    {
+        short valid;
+        short dirty;
+        ulli tag;
+        struct blockNode *next;
+        struct blockNode *prev;
+    } blockNode;
+
     typedef struct
     {
-        int     dirty;      ///< indicates whether a write has occurred
-        int     valid;      ///< indicates if the data in cache block is 1 = valid, 0 = garbage
-        ulli    tag;        ///< maps a specific memory address to a block - multiple addresses map to same block
+        blockNode *first; //not nodes, just pointers to the first and last nodes
+        blockNode *last;
+        int nodeCount;
     } block;
 
     /**
-     * @struct performance
      * @brief structure used to hold results of simulation such as times, CPI, cost, etc.
      */
     typedef struct
