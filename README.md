@@ -45,7 +45,7 @@
 1. commentary on simulation results - "several pages"
 1. Additional simulation - sjeng trace only
     1. use default config
-    1. run simulations increasing main memory bandwidth by powrs of 2
+    1. run simulations increasing main memory bandwidth by powers of 2
     1. run for 8, 16, 32, 64
     1. create plots of performance vs. cost
     1. discuss best main memory system model
