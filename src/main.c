@@ -154,7 +154,6 @@ int main(int argc, char *argv[])
             default:
                 printf("ERROR: invalid trace operation\n");
                 return EXIT_FAILURE;
-                break;
         }
 
          /* loop for L1 access - 4 byte bus -> multiple accesses possible */
@@ -217,7 +216,6 @@ int main(int argc, char *argv[])
                 default:
                     printf("ERROR: invalid trace operation\n");
                     return EXIT_FAILURE;
-                    break;
             }
 
             /* increment to next address */
