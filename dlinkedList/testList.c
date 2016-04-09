@@ -31,7 +31,8 @@ int main()
 }
 
 // An array of pointers to lists
-// list **q = initList(20); ///malloc size/blocks
+// list **q;// = initList(20); ///malloc size/blocks
+// memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));
 //
 // strcpy(cacheCnfg->cacheName,"default.txt");
 // cacheCnfg->L1dBlock  = 32;
@@ -39,12 +40,12 @@ int main()
 // cacheCnfg->L2Block   = 64;
 //
 // /* L1 data */
-// cacheCnfg->L1dWays   = 1;
+// cacheCnfg->L1dWays   = 8;
 // cacheCnfg->L1dSize   = 8192;
 // cacheCnfg->L1dBlock  = 32;
 //
 // /* L1 instruction */
-// cacheCnfg->L1iWays   = 1;
+// cacheCnfg->L1iWays   = 8;
 // cacheCnfg->L1iSize   = 8192;
 // cacheCnfg->L1iBlock  = 32;
 //
@@ -53,10 +54,31 @@ int main()
 // cacheCnfg->L2Size    = 32768;
 // cacheCnfg->L2Block   = 64;
 //
+// int numIdx = cacheCnfg->L1dSize / cacheCnfg->L1dBlock;
+// printf("number of indices: %d\n", numIdx);
 //
-// q = (list *) malloc(sizeof(list) * );
+// q = (list *) malloc(sizeof(list) * numIdx);
 //
+// for(int i=0; i<numIdx; i++)
+// {
+//     q[i] = initList(cacheCnfg->L1dWays);
+//     for (int i=0; i<cacheCnfg->L1dWays; i++)
+//     {
+//         putFirst(q[i], i*numIdx);
+//     }
+// }
 //
+// for(int i=0; i<numIdx; i++)
+// {
+//     printList(q[i]);
+//     printf("\n");
+// }
+//
+// for(int i=0; i<numIdx; i++)
+// {
+//     deleteList(q[i]);
+// }
+
 
 
 
