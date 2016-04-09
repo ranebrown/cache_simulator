@@ -1,4 +1,4 @@
-#include "doubleLinkedList.h"
+#include "dlinkedList.h"
 
 list *initList(int maxSize)
 {
@@ -11,9 +11,6 @@ list *initList(int maxSize)
     q->nodeCount = 0;
     q->maxSize= maxSize;
 
-    #ifdef DEBUG
-        printf("Done initiating list.\n");
-    #endif
     return q;
 }
 
@@ -66,7 +63,7 @@ int putLast(list *q, ulli tag)
         return EXIT_FAILURE;
     }
 
-    /* create the node on the heap */
+    /* Create the node on the heap */
     node *newnode = NULL;
     if( (newnode = (node*) malloc(sizeof(node))) == NULL )
     {
@@ -119,11 +116,6 @@ int removeFirst(list *q)
         return EXIT_FAILURE;
     }
 
-    #ifdef DEBUG
-        printf("In removeFirst, nodeCount: %d, isEmpty: %d\n", q->nodeCount,isEmpty(q));
-        printf("q->tagtag :%llu\n", q->first->tag);
-    #endif
-
     /* Create and point a temp node to the node to be removed */
     node *temp = NULL;
     if( (temp = q->first) == NULL )
@@ -150,7 +142,7 @@ int removeFirst(list *q)
 
     free(temp);
     (q->nodeCount)--;
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int removeLast(list *q)
@@ -176,11 +168,6 @@ int removeLast(list *q)
         return EXIT_FAILURE;
     }
 
-    #ifdef DEBUG
-        printf("In removeLast, nodeCount: %d, isEmpty: %d\n", q->nodeCount,isEmpty(q));
-        printf("q->tag :%llu\n", q->last->tag);
-    #endif
-
 
     /* Create and point a temp node to the node to be removed */
     node *temp = NULL;
@@ -190,21 +177,27 @@ int removeLast(list *q)
         return EXIT_FAILURE;
     }
 
+    // printf("temp     @ %p\n",temp);
+    // printf("q->last  @ %p\n",q->last);
+
     /* Check if temp is the only node, if so set the last and first to NULL */
     if(q->nodeCount == 1)
     {
+
         q->first = NULL;
         q->last  = NULL;
+
     }
-    /* If not, remove from the list and make next node the first */
     else
     {
-        //printf("\nHERE\n\n");
-        printf("%p\tthen\t%p\tthen\t%p\n ",q->last->prev, q->last,q->last->next);//, q->last->prev->tag);
-        q->last = q->last->prev;
-
+        q->last       = q->last->prev;
         q->last->next = NULL;
+
     }
+
+    // printf("temp2    @ %p\n",temp);
+
+    //printf("%p <-> ... <-> %p\n",q->first->prev, q->last->next);
 
     free(temp);
 
@@ -260,11 +253,12 @@ int bumpToFirst(list *q, ulli tag)
     else if(cursor->next == NULL)
     {
         /* Tag is at the end of the list */
-        cursor->prev->next = NULL;
-        cursor->next = q->first;
+        q->last        = q->last->prev;
+        q->last->next  = NULL;
+        cursor->next   = q->first;
         q->first->prev = cursor;
-        q->first = cursor;
-        cursor->prev = NULL;
+        q->first       = cursor;
+        cursor->prev   = NULL;
     }
     else
     {
@@ -278,6 +272,11 @@ int bumpToFirst(list *q, ulli tag)
 
     return EXIT_SUCCESS;
 }
+
+// int replaceNode(list *q, ulli tag, ulli newTag)
+// {
+//     return 0;
+// }
 
 int isEmpty(list *q)
 {
@@ -318,27 +317,27 @@ void printList(list *q)
     }
     /* Create cursor to go down list */
     node *cursor = NULL;
-    if( !(cursor = q->last) )//first) )
+    if( !(cursor = q->first) )
     {
         printf("ERROR: Could not get next node. printList failed\n");
         return;
     }
     #ifdef DEBUG
-        printf("%p -> ",cursor->next);//prev);
+        printf("%p -> ",cursor->prev);
     #endif
 
     while(1)
     {
         printf("%llu", cursor->tag);
-        if(cursor->prev)//next)
+        if(cursor->next)
         {
-            cursor = cursor->prev;//next;
-            printf(" -> ");
+            cursor = cursor->next;
+            printf(" <-> ");
         }
         else
         {
             #ifdef DEBUG
-                printf(" -> %p", cursor->prev);//next);
+                printf(" -> %p", cursor->next);
             #endif
             break;
         }
@@ -355,12 +354,10 @@ int deleteList(list *q)
         return EXIT_FAILURE;
     }
 
-    if(isEmpty(q))
-        free(q);
-    else
+    while(q->nodeCount)
     {
-        printf("List is not empty!\n");
-        return EXIT_FAILURE;
+        removeFirst(q);
     }
+    free(q);
     return EXIT_SUCCESS;
 }
