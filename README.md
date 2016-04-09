@@ -1,5 +1,6 @@
 # Cache Simulator
 ![](report/images/cache_layout.png = 400x400)
+<img src="report/images/cache_layout.png" width="400" height="400">
 ## Important Information
 * **Hard Deadline:** 5 pm on Friday, April 29
 * traces on eces server `/scratch/arp/ecen4593-sp16`
