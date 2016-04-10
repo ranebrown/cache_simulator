@@ -14,8 +14,10 @@
 #include "L1cache.h"
 #include "L2cache.h"
 #include "VCache.h"
+#include "dlinkedList.h"
 
 /* #define DEBUG_PRINT_TRACE ///< print traces for debugging */
+/* #define DEBUG_ADDR */
 
 /**
  * @brief main function for cache simulator
@@ -38,100 +40,106 @@ int main(int argc, char *argv[])
     int bitsTagL2   =   0;      // number of bits for L2 tag
 
     /* structure containing cache settings */
-    memInfo *cache = (memInfo *) malloc(sizeof(memInfo));
+    memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));
 
     /* structure containing statistics for simulation */
     performance *stats = malloc(sizeof(performance));
     performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     *stats = zero; // zero all elements in stats
 
+    /* structure used to represent each cache level (doubly linked list) */
+    allCache *cacheHier = malloc(sizeof(allCache));
+
     /* Default values*/
-    cache->L1dBlock  = 32;
-    cache->L1iBlock  = 32;
-    cache->L2Block   = 64;
+    cacheCnfg->L1dBlock  = 32;
+    cacheCnfg->L1iBlock  = 32;
+    cacheCnfg->L2Block   = 64;
 
     /* Main Memory (default values) */
-    cache->addrsendT = 10;
-    cache->readyT    = 50;
-    cache->chunkT    = 15;
-    cache->chunkS    = 8;
+    cacheCnfg->addrsendT = 10;
+    cacheCnfg->readyT    = 50;
+    cacheCnfg->chunkT    = 15;
+    cacheCnfg->chunkS    = 8;
 
     /* If there is a file included, it is the config needed */
     if(argc == 2)
     {
-        strcpy(cache->cacheName,argv[1]);
+        strcpy(cacheCnfg->cacheName,argv[1]);
         /* Set the values from the file */
-        if( setCacheValues(cache) )
+        if( setCacheValues(cacheCnfg) )
         {
             printf("Error setting values.\n");
         }
         else
         {
-            printf("\nCache name: %s\n",cache->cacheName);
+            printf("\nCache name: %s\n",cacheCnfg->cacheName);
             printf("Done setting values.\n");
         }
     }
     else
     {
         /***** Default cache values *****/
-        strcpy(cache->cacheName,"../config/default.txt");
-        printf("\nCache name: %s\n",cache->cacheName);
+        strcpy(cacheCnfg->cacheName,"../config/default.txt");
+        printf("\nCache name: %s\n",cacheCnfg->cacheName);
 
         /* L1 data */
-        cache->L1dWays   = 1;
-        cache->L1dSize   = 8192;
-        cache->L1dBlock  = 32;
+        cacheCnfg->L1dWays   = 1;
+        cacheCnfg->L1dSize   = 8192;
+        cacheCnfg->L1dBlock  = 32;
 
         /* L1 instruction */
-        cache->L1iWays   = 1;
-        cache->L1iSize   = 8192;
-        cache->L1iBlock  = 32;
+        cacheCnfg->L1iWays   = 1;
+        cacheCnfg->L1iSize   = 8192;
+        cacheCnfg->L1iBlock  = 32;
 
         /* L2 */
-        cache->L2Ways    = 1;
-        cache->L2Size    = 32768;
-        cache->L2Block   = 64;
+        cacheCnfg->L2Ways    = 1;
+        cacheCnfg->L2Size    = 32768;
+        cacheCnfg->L2Block   = 64;
     }
 
     /* calculate cost based on cache configuration */
-    calculateCost(cache);
+    calculateCost(cacheCnfg);
 
     /* calulate number of tag bits and index bits for the cache configuration */
-    calcBits(cache, &bitsIndexL1, &bitsTagL1, &bitsIndexL2, &bitsTagL2);
+    calcBits(cacheCnfg, &bitsIndexL1, &bitsTagL1, &bitsIndexL2, &bitsTagL2);
 
-    /* TODO Initialize caches */
+    /* TODO Initialize caches (write functions) */
+    /* initCache(cacheCnfg, cacheHier); */
     int i,j;
-    int numLines = 256;
-    int numWays = 1;
-    block **line = malloc(numLines * sizeof(block*));
+    int numLines = cacheCnfg->L1dSize / cacheCnfg->L1dBlock / cacheCnfg->L1dWays;
+    int numWays = cacheCnfg->L1dWays;
+    list **L1i = malloc(numLines * sizeof(list*));
     for(i=0; i<numLines; i++)
-        line[i] = malloc(numLines * sizeof(block));
+        L1i[i] = malloc(sizeof(list));
     for(i=0; i<numLines; i++)
     {
-        blockNode *firstNode = malloc(sizeof(blockNode));
-        line[i]->first = firstNode;
-        line[i]->last = firstNode;
-        line[i]->nodeCount = 1;
+        node *firstNode = malloc(sizeof(node));
+        L1i[i]->first = firstNode;
+        L1i[i]->last = firstNode;
+        L1i[i]->nodeCount = 1;
         for(j=0; j<numWays; j++)
         {
-            blockNode *node = malloc(sizeof(blockNode));
+            node *node = malloc(sizeof(node));
             node->valid = 0;
             node-> dirty = 0;
             node->tag = 0;
             node->next = NULL;
-            line[i]->last->next = node;
-            node->prev = line[i]->last;
-            line[i]->last = node;
-            line[i]->nodeCount++;
+            L1i[i]->last->next = node;
+            node->prev = L1i[i]->last;
+            L1i[i]->last = node;
+            L1i[i]->nodeCount++;
         }
     }
+    cacheHier->L1i = L1i;
+    cacheHier->L1d = L1i;
 
     /* read a trace from stdin and print it */
     while(readTrace(&op, &addr, &numBytes) == EXIT_SUCCESS)
     {
-        #ifdef DEBUG_PRINT_TRACE
+#ifdef DEBUG_PRINT_TRACE
             printf("%c %llx %d\n" ,op ,addr ,numBytes);
-        #endif
+#endif
 
         /* calculate the word (4 byte) aligned start address */
         currAddr = addr & 0xFFFFFFFFFFFFFFFC;
@@ -165,6 +173,12 @@ int main(int argc, char *argv[])
             currTagL1 = currAddr >> (bitsIndexL1 + L1_OFFSET);
             currTagL2 = currAddr >> (bitsIndexL2 + L2_OFFSET);
 
+#ifdef DEBUG_ADDR
+            printf("current address: %llu\n",currAddr);
+            printf("current index: %d\n",currIndxL1);
+            printf("current tag: %llu\n",currTagL1);
+#endif
+
             /* alternative methods (untested) */
             /* currIndxL1 = (currAddr >> L1_OFFSET) | (2^(bitsIndexL1+1) - 1); */
             /* currIndxL1 = (currAddr / mem->L1dBlock) % (mem->L1dSize / mem->L1dBlock); */
@@ -173,45 +187,44 @@ int main(int argc, char *argv[])
             /* perform action based on type of reference (instruction, data read, data write) */
             switch(op)
             {
-                // TODO how access cache global or pass to function
                 case 'I':
-                    if(checkL1i(currIndxL1, currTagL1) == HIT)
+                    if(checkL1i(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
                         stats->hitL1i++;
                         stats->cycleInst += L1_HIT_TIME;
                     }
-                    else
-                    {
-                        /* check up the memory hierarchy for the requested value */
-                        L1iMiss(currTagL1, currTagL2, currIndxL1, currIndxL2);
-                    }
+                    /* else */
+                    /* { */
+                    /*     /1* check up the memory hierarchy for the requested value *1/ */
+                    /*     L1iMiss(currTagL1, currTagL2, currIndxL1, currIndxL2); */
+                    /* } */
                     break;
                 case 'R':
-                    if(checkL1d(currIndxL1, currTagL1) == HIT)
+                    if(checkL1dR(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
                         stats->hitL1d++;
                         stats->cycleDRead += L1_HIT_TIME;
                     }
-                    else
-                    {
-                        /* check up the memory hierarchy for the requested value */
-                        L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, CLEAN);
-                    }
+                    /* else */
+                    /* { */
+                    /*     /1* check up the memory hierarchy for the requested value *1/ */
+                    /*     L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, CLEAN); */
+                    /* } */
                     break;
                 case 'W':
-                    if(checkL1d(currIndxL1, currTagL1) == HIT)
+                    if(checkL1dW(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
                         stats->hitL1d++;
                         stats->cycleDWrite += L1_HIT_TIME;
                     }
-                    else
-                    {
-                        /* check up the memory hierarchy for the requested value */
-                        L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, DIRTY);
-                    }
+                    /* else */
+                    /* { */
+                    /*     /1* check up the memory hierarchy for the requested value *1/ */
+                    /*     L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, DIRTY); */
+                    /* } */
                     break;
                 default:
                     printf("ERROR: invalid trace operation\n");
@@ -224,23 +237,25 @@ int main(int argc, char *argv[])
     }
 
     /* free any allocated memory */
-    free(cache);
+    free(cacheCnfg);
     free(stats);
 
     // free linked list memory
     for(i=0; i<numLines; i++)
     {
-        blockNode *temp1 = line[i]->first;
-        blockNode *temp2;
+        node *temp1 = L1i[i]->first;
+        node *temp2;
         while(temp1 != NULL)
         {
             temp2 = temp1;
             temp1 = temp1->next;
             free(temp2);
         }
-        free(line[i]);
+        free(L1i[i]);
     }
-    free(line);
+    free(L1i);
+
+    free(cacheHier);
 
     return EXIT_SUCCESS;
 }
