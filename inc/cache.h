@@ -11,6 +11,7 @@
     #include <stdlib.h>
     #include <math.h>
     #include "config.h"
+    #include "dlinkedList.h"
 
     #define HIT 0               ///< used as a return value for a cache hit
     #define MISS 1              ///< used as a return value for a cache miss
@@ -26,22 +27,26 @@
     typedef unsigned long long int ulli;    ///< shorten long type
     typedef unsigned int ui;                ///< maintain same format as ulli
 
-    struct blockNode;
-    typedef struct blockNode
-    {
-        short valid;
-        short dirty;
-        ulli tag;
-        struct blockNode *next;
-        struct blockNode *prev;
-    } blockNode;
-
+    /**
+     * @brief structure to hold pointers to all cache levels
+     */
     typedef struct
     {
-        blockNode *first; //not nodes, just pointers to the first and last nodes
-        blockNode *last;
-        int nodeCount;
-    } block;
+       list ** L1i;
+       list ** L1d;
+       list ** L2;
+       list ** VCL1i;
+       list ** VCL1d;
+       list ** VCL2;
+    } allCache;
+
+    /**
+     * @brief function to initialize cache levels
+     * @param[in] cacheCnfg structure containing cache configuration options
+     * @param[in,out] cacheHier pointer to a struct containing doubly linked lists for each memory hierarchy
+     * @returns EXIT_SUCCESS or EXIT_FAILURE
+     */
+    int initCache(memInfo *cacheCnfg, allCache *cacheHier);
 
     /**
      * @brief structure used to hold results of simulation such as times, CPI, cost, etc.
