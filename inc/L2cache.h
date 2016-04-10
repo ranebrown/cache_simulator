@@ -14,8 +14,10 @@
 
     /**
      * @brief check reference is a hit or a miss
-     * @param[in] addr address being checked
-     * @return 0 hit, 1 miss
+     * @param[in] currTag the calculated tag for the L2 cache
+     * @param[in] currIndx the calculated index for the L2 cache
+     * @param[in] cacheHier structure containing pointers to each cache level in the hierarchy
+     * @return 0 hit, 1 miss EXIT_FAILURE any other error
      */
     int checkL2(ulli currTag, ulli currIndx, allCache *cacheHier);
 

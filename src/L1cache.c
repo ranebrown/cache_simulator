@@ -112,6 +112,14 @@ int checkL1dW(ui currIndx, ulli currTag, allCache *cacheHier)
 
 int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier)
 {
+    /* check for bad input */
+    if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
+        || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
+    {
+        printf("ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
+        return EXIT_FAILURE;
+    }
+
     /* get the first entry in the L1 victim cache */
     node *VCNode = cacheHier->VCL1i[0]->first;
 
@@ -209,5 +217,13 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
 int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier, int dirtyBit)
 {
+    /* check for bad input */
+    if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
+        || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
+    {
+        printf("ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
+        return EXIT_FAILURE;
+    }
+
     return EXIT_SUCCESS;
 }

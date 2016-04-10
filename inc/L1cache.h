@@ -18,7 +18,7 @@
      * @param[in] currIndx the index for block to check
      * @param[in] currTag the tag to be checked for
      * @param[in] cacheHier pointer to strucute holding the caches
-     * @return 0 hit, 1 miss
+     * @return 0 hit, 1 miss, EXIT_FAILURE any other error
      */
     int checkL1i(ui currIndx, ulli currTag, allCache *cacheHier);
 
@@ -27,7 +27,7 @@
      * @param[in] currIndx the index for block to check
      * @param[in] currTag the tag to be checked for
      * @param[in] cacheHier pointer to strucute holding the caches
-     * @return 0 hit, 1 miss
+     * @return 0 hit, 1 miss EXIT_FAILURE any other error
      */
     int checkL1dR(ui currIndx, ulli currTag, allCache *cacheHier);
 
@@ -36,7 +36,7 @@
      * @param[in] currIndx the index for block to check
      * @param[in] currTag the tag to be checked for
      * @param[in] cacheHier pointer to strucute holding the caches
-     * @return 0 hit, 1 miss
+     * @return 0 hit, 1 miss EXIT_FAILURE any other error
      */
     int checkL1dW(ui currIndx, ulli currTag, allCache *cacheHier);
 

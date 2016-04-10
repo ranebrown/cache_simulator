@@ -137,7 +137,12 @@ int main(int argc, char *argv[])
             L1i[i]->nodeCount++;
         }
     }
-    cacheHier->L1i = L1i;
+    /* cacheHier->L1i = L1i; */
+    /* cacheHier->L1d = L1i; */
+    /* cacheHier->VCL1i = L1i; */
+    /* cacheHier->VCL1d = L1i; */
+    /* cacheHier->L2 = L1i; */
+    /* cacheHier->VCL2 = L1i; */
 
     /* read a trace from stdin and print it */
     while(readTrace(&op, &addr, &numBytes) == EXIT_SUCCESS)
