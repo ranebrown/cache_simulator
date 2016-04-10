@@ -22,13 +22,21 @@ int calcBits(memInfo *mem, int *bitsIndexL1, int *bitsTagL1, int *bitsIndexL2, i
     *bitsIndexL1 = log2((mem->L1dSize / mem->L1dBlock) / mem->L1dWays);
 
     // number of tag bits L1 cache
-    *bitsTagL1 = log2(64 - *bitsIndexL1 - L1_OFFSET);
+    *bitsTagL1 = 64 - *bitsIndexL1 - L1_OFFSET;
 
     // number of index bits L2 cache
     *bitsIndexL2 = log2((mem->L2Size / mem->L2Block) / mem->L2Ways);
 
     // number of tag bits L2 cache
-    *bitsTagL2 = log2(64 - *bitsIndexL2 - L2_OFFSET);
+    *bitsTagL2 = 64 - *bitsIndexL2 - L2_OFFSET;
 
     return EXIT_SUCCESS;
 }
+
+int initCache(memInfo *cacheCnfg, allCache *cacheHier)
+{
+    (void) cacheCnfg; // silence compiler warnings
+    (void) cacheHier; // silence compiler warnings
+    return EXIT_SUCCESS;
+}
+
