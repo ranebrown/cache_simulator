@@ -11,23 +11,38 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include "cache.h"
+    #include "dlinkedList.h"
 
     /**
      * @brief check if instruction reference is a hit or a miss
      * @param[in] currIndx the index for block to check
      * @param[in] currTag the tag to be checked for
+     * @param[in] cacheHier pointer to strucute holding the caches
      * @return 0 hit, 1 miss
      */
-    int checkL1i(ui currIndx, ulli currTag);
+    int checkL1i(ui currIndx, ulli currTag, allCache *cacheHier);
 
     /**
-     * @brief check if data read/write reference is a hit or a miss
+     * @brief check if data read reference is a hit or a miss
      * @param[in] currIndx the index for block to check
      * @param[in] currTag the tag to be checked for
+     * @param[in] cacheHier pointer to strucute holding the caches
      * @return 0 hit, 1 miss
      */
-    int checkL1d(ui currIndx, ulli currTag);
+    int checkL1dR(ui currIndx, ulli currTag, allCache *cacheHier);
 
+    /**
+     * @brief check if data write reference is a hit or a miss, sets dirty bit if hit occurs
+     * @param[in] currIndx the index for block to check
+     * @param[in] currTag the tag to be checked for
+     * @param[in] cacheHier pointer to strucute holding the caches
+     * @return 0 hit, 1 miss
+     */
+    int checkL1dW(ui currIndx, ulli currTag, allCache *cacheHier);
+
+/*******************************
+ * BELOW FUNCTIONS INCOMPLETE
+ * ******************************/
     int L1iMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2);
     int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, int dirtyBit);
     int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, int dirtyBit);
