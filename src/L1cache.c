@@ -9,6 +9,14 @@
 
 int checkL1i(ui currIndx, ulli currTag, allCache *cacheHier)
 {
+    /* check for bad input */
+    if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
+        || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
+    {
+        printf("ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
+        return EXIT_FAILURE;
+    }
+
     /* get the first block in the list */
     node *tmpNode = cacheHier->L1i[currIndx]->first;
 
@@ -25,6 +33,14 @@ int checkL1i(ui currIndx, ulli currTag, allCache *cacheHier)
 
 int checkL1dR(ui currIndx, ulli currTag, allCache *cacheHier)
 {
+    /* check for bad input */
+    if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
+        || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
+    {
+        printf("ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
+        return EXIT_FAILURE;
+    }
+
     /* get the first block in the list */
     node *tmpNode = cacheHier->L1d[currIndx]->first;
 
@@ -41,6 +57,14 @@ int checkL1dR(ui currIndx, ulli currTag, allCache *cacheHier)
 
 int checkL1dW(ui currIndx, ulli currTag, allCache *cacheHier)
 {
+    /* check for bad input */
+    if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
+        || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
+    {
+        printf("ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
+        return EXIT_FAILURE;
+    }
+
     /* get the first block in the list */
     node *tmpNode = cacheHier->L1d[currIndx]->first;
 

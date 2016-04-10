@@ -49,6 +49,12 @@ int main(int argc, char *argv[])
 
     /* structure used to represent each cache level (doubly linked list) */
     allCache *cacheHier = malloc(sizeof(allCache));
+    cacheHier->VCL1i = NULL;
+    cacheHier->VCL1d = NULL;
+    cacheHier->VCL2 = NULL;
+    cacheHier->L1i = NULL;
+    cacheHier->L1d = NULL;
+    cacheHier->L2 = NULL;
 
     /* Default values*/
     cacheCnfg->L1dBlock  = 32;
@@ -132,7 +138,6 @@ int main(int argc, char *argv[])
         }
     }
     cacheHier->L1i = L1i;
-    cacheHier->L1d = L1i;
 
     /* read a trace from stdin and print it */
     while(readTrace(&op, &addr, &numBytes) == EXIT_SUCCESS)
@@ -160,7 +165,7 @@ int main(int argc, char *argv[])
                 stats->dataWriteRef++;
                 break;
             default:
-                printf("ERROR: invalid trace operation\n");
+                printf("ERROR: invalid trace operation in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
                 return EXIT_FAILURE;
         }
 
@@ -227,7 +232,7 @@ int main(int argc, char *argv[])
                     /* } */
                     break;
                 default:
-                    printf("ERROR: invalid trace operation\n");
+                    printf("ERROR: invalid trace operation in %s: line %d\n", __FILE__, __LINE__);
                     return EXIT_FAILURE;
             }
 
