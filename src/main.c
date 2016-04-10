@@ -170,7 +170,7 @@ int main(int argc, char *argv[])
                 stats->dataWriteRef++;
                 break;
             default:
-                printf("ERROR: invalid trace operation in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
+                fprintf(stderr,"ERROR: invalid trace operation in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
                 return EXIT_FAILURE;
         }
 
@@ -212,7 +212,7 @@ int main(int argc, char *argv[])
                         /* check up the memory hierarchy for the requested value */
                         if(L1iMiss(stats, currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier) == EXIT_FAILURE)
                         {
-                            printf("ERROR: %s: %d", __FILE__, __LINE__);
+                            fprintf(stderr,"ERROR: %s: %d", __FILE__, __LINE__);
                             return EXIT_FAILURE;
                         }
                     }
@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
                         /* check up the memory hierarchy for the requested value */
                         if(L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier,  CLEAN) == EXIT_FAILURE)
                         {
-                            printf("ERROR: %s: %d", __FILE__, __LINE__);
+                            fprintf(stderr,"ERROR: %s: %d", __FILE__, __LINE__);
                             return EXIT_FAILURE;
                         }
                     }
@@ -252,13 +252,13 @@ int main(int argc, char *argv[])
                         /* check up the memory hierarchy for the requested value */
                         if(L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, DIRTY) == EXIT_FAILURE)
                         {
-                            printf("ERROR: %s: %d", __FILE__, __LINE__);
+                            fprintf(stderr,"ERROR: %s: %d", __FILE__, __LINE__);
                             return EXIT_FAILURE;
                         }
                     }
                     break;
                 default:
-                    printf("ERROR: invalid trace operation in %s: line %d\n", __FILE__, __LINE__);
+                    fprintf(stderr,"ERROR: invalid trace operation in %s: line %d\n", __FILE__, __LINE__);
                     return EXIT_FAILURE;
             }
 

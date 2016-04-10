@@ -19,7 +19,7 @@ int putFirst(list *q, ulli tag)
     /* Check for malformed input */
     if(!q)
     {
-        printf("ERROR: NULL pointer passed. putFirst failed.\n");
+        fprintf(stderr,"ERROR: NULL pointer passed. putFirst failed.\n");
         return EXIT_FAILURE;
     }
 
@@ -27,7 +27,7 @@ int putFirst(list *q, ulli tag)
     node *newnode = NULL;
     if( (newnode = (node*) malloc(sizeof(node))) == NULL)
     {
-        printf("ERROR: Could not allocate memory. putFirst failed.\n");
+        fprintf(stderr,"ERROR: Could not allocate memory. putFirst failed.\n");
         return EXIT_FAILURE;
     }
 
@@ -59,7 +59,7 @@ int putLast(list *q, ulli tag)
     /* Check for malformed input */
     if(!q)
     {
-        printf("ERROR: NULL pointer passed. putLast failed.\n");
+        fprintf(stderr,"ERROR: NULL pointer passed. putLast failed.\n");
         return EXIT_FAILURE;
     }
 
@@ -67,7 +67,7 @@ int putLast(list *q, ulli tag)
     node *newnode = NULL;
     if( (newnode = (node*) malloc(sizeof(node))) == NULL )
     {
-        printf("ERROR: Could not allocate memory. putLast failed.\n");
+        fprintf(stderr,"ERROR: Could not allocate memory. putLast failed.\n");
         return EXIT_FAILURE;
     }
 
@@ -98,7 +98,7 @@ int removeFirst(list *q)
     /* Check for malformed input */
     if(!q)
     {
-        printf("ERROR: NULL pointer passed. removeFirst failed.\n");
+        fprintf(stderr,"ERROR: NULL pointer passed. removeFirst failed.\n");
         return EXIT_FAILURE;
     }
 
@@ -112,7 +112,7 @@ int removeFirst(list *q)
     /* Check to make sure there is a first node */
     if( q->first == NULL )
     {
-        printf("ERROR: No node to remove. removeFirst failed.\n");
+        fprintf(stderr,"ERROR: No node to remove. removeFirst failed.\n");
         return EXIT_FAILURE;
     }
 
@@ -120,7 +120,7 @@ int removeFirst(list *q)
     node *temp = NULL;
     if( (temp = q->first) == NULL )
     {
-        printf("ERROR: Could not get first node. removeFirst failed\n");
+        fprintf(stderr,"ERROR: Could not get first node. removeFirst failed\n");
         return EXIT_FAILURE;
     }
 
@@ -150,7 +150,7 @@ int removeLast(list *q)
     /* Check for malformed input */
     if(!q)
     {
-        printf("ERROR: NULL pointer passed. removeLast failed.\n");
+        fprintf(stderr,"ERROR: NULL pointer passed. removeLast failed.\n");
         return EXIT_FAILURE;
     }
 
@@ -164,7 +164,7 @@ int removeLast(list *q)
     /* Check to make sure there is a last node */
     if( q->last == NULL )
     {
-        printf("ERROR: No node to remove. removeLast failed.\n");
+        fprintf(stderr,"ERROR: No node to remove. removeLast failed.\n");
         return EXIT_FAILURE;
     }
 
@@ -173,7 +173,7 @@ int removeLast(list *q)
     node *temp = NULL;
     if( (temp = q->last) == NULL )
     {
-        printf("ERROR: Could not get last node. removeLast failed\n");
+        fprintf(stderr,"ERROR: Could not get last node. removeLast failed\n");
         return EXIT_FAILURE;
     }
 
@@ -211,14 +211,14 @@ int bumpToFirst(list *q, ulli tag)
     /* Check for malformed input */
     if(!q)
     {
-        printf("ERROR: NULL pointer passed. bumpToFirst failed.\n");
+        fprintf(stderr,"ERROR: NULL pointer passed. bumpToFirst failed.\n");
         return -1;
     }
 
     /* Check that the list has nodes */
     if( isEmpty(q) )
     {
-        printf("ERROR: The list is empty. bumpToFirst failed.\n");
+        fprintf(stderr,"ERROR: The list is empty. bumpToFirst failed.\n");
         return -1;
     }
 
@@ -226,7 +226,7 @@ int bumpToFirst(list *q, ulli tag)
     node *cursor = NULL;
     if( !(cursor = q->first) )
     {
-        printf("ERROR: Could not get first node. bumpToFirst failed\n");
+        fprintf(stderr,"ERROR: Could not get first node. bumpToFirst failed\n");
         return -1;
     }
 
@@ -283,7 +283,7 @@ int isEmpty(list *q)
     /* Check for malformed input */
     if(!q)
     {
-        printf("ERROR: NULL pointer passed. isEmpty failed.\n");
+        fprintf(stderr,"ERROR: NULL pointer passed. isEmpty failed.\n");
         return -1;
     }
     return ((q->nodeCount == 0) || (q->first==NULL && q->last==NULL));
@@ -294,7 +294,7 @@ int isFull(list *q)
     /* Check for malformed input */
     if(!q)
     {
-        printf("ERROR: NULL pointer passed. isFull failed.\n");
+        fprintf(stderr,"ERROR: NULL pointer passed. isFull failed.\n");
         return -1;
     }
     return (q->nodeCount == q->maxSize);
@@ -305,7 +305,7 @@ void printList(list *q)
     /* Check for malformed input */
     if(!q)
     {
-        printf("ERROR: NULL pointer passed. printList failed.\n");
+        fprintf(stderr,"ERROR: NULL pointer passed. printList failed.\n");
         return;
     }
 
@@ -319,7 +319,7 @@ void printList(list *q)
     node *cursor = NULL;
     if( !(cursor = q->first) )
     {
-        printf("ERROR: Could not get next node. printList failed\n");
+        fprintf(stderr,"ERROR: Could not get next node. printList failed\n");
         return;
     }
     #ifdef DEBUG
@@ -350,7 +350,7 @@ int deleteList(list *q)
     /* Check for malformed input */
     if(!q)
     {
-        printf("ERROR: NULL pointer passed. deleteList failed.\n");
+        fprintf(stderr,"ERROR: NULL pointer passed. deleteList failed.\n");
         return EXIT_FAILURE;
     }
 

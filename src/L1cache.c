@@ -13,7 +13,7 @@ int checkL1i(ui currIndx, ulli currTag, allCache *cacheHier)
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
     {
-        printf("ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
+        fprintf(stderr,"ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
         return EXIT_FAILURE;
     }
 
@@ -28,7 +28,7 @@ int checkL1i(ui currIndx, ulli currTag, allCache *cacheHier)
             // move node to first way (LRU policy)
             if(bumpToFirst(cacheHier->L1i[currIndx], currTag) != 0)
             {
-                printf("ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
+                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
                 return EXIT_FAILURE;
             }
 
@@ -46,7 +46,7 @@ int checkL1dR(ui currIndx, ulli currTag, allCache *cacheHier)
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
     {
-        printf("ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
+        fprintf(stderr,"ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
         return EXIT_FAILURE;
     }
 
@@ -61,7 +61,7 @@ int checkL1dR(ui currIndx, ulli currTag, allCache *cacheHier)
             // move node to first way (LRU policy)
             if(bumpToFirst(cacheHier->L1d[currIndx], currTag) != 0)
             {
-                printf("ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
+                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
                 return EXIT_FAILURE;
             }
 
@@ -80,7 +80,7 @@ int checkL1dW(ui currIndx, ulli currTag, allCache *cacheHier)
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
     {
-        printf("ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
+        fprintf(stderr,"ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
         return EXIT_FAILURE;
     }
 
@@ -98,7 +98,7 @@ int checkL1dW(ui currIndx, ulli currTag, allCache *cacheHier)
             // move node to first way (LRU policy)
            if(bumpToFirst(cacheHier->L1d[currIndx], currTag) != 0)
            {
-               printf("ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
+               fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
                return EXIT_FAILURE;
            }
 
@@ -116,7 +116,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
     {
-        printf("ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
+        fprintf(stderr,"ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
         return EXIT_FAILURE;
     }
 
@@ -135,7 +135,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
             // move found entry to front of list (LRU policy)
             if(bumpToFirst(cacheHier->VCL1i[0], currTagL1) != 0)
             {
-                printf("ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
+                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
                 return EXIT_FAILURE;
             }
 
@@ -159,7 +159,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
                     // move the new L1i entry to be the LRU
                     if(bumpToFirst(cacheHier->L1i[currIndxL1], currTagL1) != 0)
                     {
-                        printf("ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
+                        fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
                         return EXIT_FAILURE;
                     }
                     return EXIT_SUCCESS;
@@ -173,7 +173,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
             ulli swapTag = cacheHier->L1i[currIndxL1]->last->tag;
             if(bumpToFirst(cacheHier->L1i[currIndxL1], swapTag) != 0)
             {
-                printf("ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
+                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
                 return EXIT_FAILURE;
             }
 
@@ -207,7 +207,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
         // check the up the memory hierarchy for the requested value
         if(L2miss(currTagL2, currIndxL2, cacheHier) == EXIT_FAILURE)
         {
-            printf("ERROR: %s: %d", __FILE__, __LINE__);
+            fprintf(stderr,"ERROR: %s: %d", __FILE__, __LINE__);
             return EXIT_FAILURE;
         }
 
@@ -221,7 +221,7 @@ int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allC
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
     {
-        printf("ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
+        fprintf(stderr,"ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
         return EXIT_FAILURE;
     }
 
