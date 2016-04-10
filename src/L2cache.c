@@ -7,12 +7,12 @@
 
 #include "L2cache.h"
 
-int checkL2(ulli addr)
+int checkL2(ulli currTag, ulli currIndx, allCache *cacheHier)
 {
     return HIT;
 }
 
-int insertL2(ulli addr)
+int L2miss(ulli currTagL2, ulli currIndxL2, allCache *cacheHier)
 {
     return EXIT_SUCCESS;
 }

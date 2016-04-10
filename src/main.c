@@ -205,7 +205,11 @@ int main(int argc, char *argv[])
                         stats->missL1i++;
 
                         /* check up the memory hierarchy for the requested value */
-                        L1iMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier);
+                        if(L1iMiss(stats, currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier) == EXIT_FAILURE)
+                        {
+                            printf("ERROR: %s: %d", __FILE__, __LINE__);
+                            return EXIT_FAILURE;
+                        }
                     }
                     break;
                 case 'R':
@@ -221,7 +225,11 @@ int main(int argc, char *argv[])
                         stats->missL1d++;
 
                         /* check up the memory hierarchy for the requested value */
-                        L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, CLEAN);
+                        if(L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier,  CLEAN) == EXIT_FAILURE)
+                        {
+                            printf("ERROR: %s: %d", __FILE__, __LINE__);
+                            return EXIT_FAILURE;
+                        }
                     }
                     break;
                 case 'W':
@@ -237,7 +245,11 @@ int main(int argc, char *argv[])
                         stats->missL1d++;
 
                         /* check up the memory hierarchy for the requested value */
-                        L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, DIRTY);
+                        if(L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, DIRTY) == EXIT_FAILURE)
+                        {
+                            printf("ERROR: %s: %d", __FILE__, __LINE__);
+                            return EXIT_FAILURE;
+                        }
                     }
                     break;
                 default:

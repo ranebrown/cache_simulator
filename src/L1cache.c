@@ -184,22 +184,30 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
         VCNode = VCNode->next;
     }
 
-    // entry was not in the L1i victim cache
+    // entry was not in the L1i victim cache -> check L2
+    if(checkL2(currTagL2, currIndxL2, cacheHier) == HIT)
+    {
+        // TODO increment stats
 
-    return EXIT_SUCCESS;
+        // TODO check for a kickout when moving entry to L1
+
+        return EXIT_SUCCESS;
+    }
+    // L2 miss
+    else
+    {
+        // check the up the memory hierarchy for the requested value
+        if(L2miss(currTagL2, currIndxL2, cacheHier) == EXIT_FAILURE)
+        {
+            printf("ERROR: %s: %d", __FILE__, __LINE__);
+            return EXIT_FAILURE;
+        }
+
+        return EXIT_SUCCESS;
+    }
 }
 
-int insertL1i(ulli currIndxL1, ulli currTagL1, allCache *cacheHier)
-{
-    return EXIT_SUCCESS;
-}
-
-int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, int dirtyBit)
-{
-    return EXIT_SUCCESS;
-}
-
-int insertL1d(ulli addr)
+int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier, int dirtyBit)
 {
     return EXIT_SUCCESS;
 }

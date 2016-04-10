@@ -10,6 +10,7 @@
 
     #include <stdio.h>
     #include <stdlib.h>
+    #include "L2cache.h"
     #include "cache.h"
 
     /**
@@ -39,25 +40,28 @@
      */
     int checkL1dW(ui currIndx, ulli currTag, allCache *cacheHier);
 
+    /**
+     * @brief upon a miss in the L1 instruction cache this function is called
+     *
+     * First the L1i victim cache is checked and if the desired value is found then it is moved into the L1i cache.
+     * If the desired value is not found in the victim cache then the function calls an additional function to check the L2 cache.
+     * If misses continue to occure in each cache level the desired value will eventually be brought in from main memory.
+     * This Function returns EXIT_SUCCESS upon successful completion which indicates there was a hit in one of the cache levels
+     * or the value was brought in from main memory. It will return EXIT_FAILURE if there is a problem at any memory level.
+     *
+     * @param[in] stats structure containing statistics for the simulation, necessary for any updates
+     * @param[in] currTagL1 the calcualted tag value for L1 cache
+     * @param[in] currTagL2 the calculated tag value for L2 cache
+     * @param[in] currIndxL1 the calculated index for L1 cache
+     * @param[in] currIndxL2 the calculated index for the L2 cache
+     * @param[in] cacheHier structure containing linked lists for each cache level in the hierarchy
+     * @returns EXIT_SUCCESS or EXIT_FAILURE
+     */
     int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier);
 
 /*******************************
  * BELOW FUNCTIONS INCOMPLETE
  * ******************************/
-    int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, int dirtyBit);
-
-    /**
-     * @brief insert a new value into L1 instruction cache
-     * @param[in] addr address being inserted
-     * @return EXIT_SUCCESS or EXIT_FAILURE
-     */
-    int insertL1i(ulli currIndxL1, ulli currTagL1, allCache *cacheHier);
-
-    /**
-     * @brief insert a new value into L1 data cache
-     * @param[in] addr address being inserted
-     * @return EXIT_SUCCESS or EXIT_FAILURE
-     */
-    int insertL1d(ulli addr);
+    int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier, int dirtyBit);
 
 #endif // L1_CACHE_H

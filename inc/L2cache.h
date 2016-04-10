@@ -17,13 +17,8 @@
      * @param[in] addr address being checked
      * @return 0 hit, 1 miss
      */
-    int checkL2(ulli addr);
+    int checkL2(ulli currTag, ulli currIndx, allCache *cacheHier);
 
-    /**
-     * @brief insert a new value into L2 cache
-     * @param[in] addr address being inserted
-     * @return EXIT_SUCCESS or EXIT_FAILURE
-     */
-    int insertL2(ulli addr);
+    int L2miss(ulli currTagL2, ulli currIndxL2, allCache *cacheHier);
 
 #endif // L2_CACHE_H
