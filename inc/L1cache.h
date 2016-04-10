@@ -11,7 +11,6 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include "cache.h"
-    #include "dlinkedList.h"
 
     /**
      * @brief check if instruction reference is a hit or a miss
@@ -40,10 +39,11 @@
      */
     int checkL1dW(ui currIndx, ulli currTag, allCache *cacheHier);
 
+    int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier);
+
 /*******************************
  * BELOW FUNCTIONS INCOMPLETE
  * ******************************/
-    int L1iMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2);
     int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, int dirtyBit);
 
     /**
@@ -51,7 +51,7 @@
      * @param[in] addr address being inserted
      * @return EXIT_SUCCESS or EXIT_FAILURE
      */
-    int insertL1i(ulli addr);
+    int insertL1i(ulli currIndxL1, ulli currTagL1, allCache *cacheHier);
 
     /**
      * @brief insert a new value into L1 data cache

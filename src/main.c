@@ -199,11 +199,14 @@ int main(int argc, char *argv[])
                         stats->hitL1i++;
                         stats->cycleInst += L1_HIT_TIME;
                     }
-                    /* else */
-                    /* { */
-                    /*     /1* check up the memory hierarchy for the requested value *1/ */
-                    /*     L1iMiss(currTagL1, currTagL2, currIndxL1, currIndxL2); */
-                    /* } */
+                    else
+                    {
+                        /* increment miss count */
+                        stats->missL1i++;
+
+                        /* check up the memory hierarchy for the requested value */
+                        L1iMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier);
+                    }
                     break;
                 case 'R':
                     if(checkL1dR(currIndxL1, currTagL1, cacheHier) == HIT)
@@ -212,11 +215,14 @@ int main(int argc, char *argv[])
                         stats->hitL1d++;
                         stats->cycleDRead += L1_HIT_TIME;
                     }
-                    /* else */
-                    /* { */
-                    /*     /1* check up the memory hierarchy for the requested value *1/ */
-                    /*     L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, CLEAN); */
-                    /* } */
+                    else
+                    {
+                        /* increment miss count */
+                        stats->missL1d++;
+
+                        /* check up the memory hierarchy for the requested value */
+                        L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, CLEAN);
+                    }
                     break;
                 case 'W':
                     if(checkL1dW(currIndxL1, currTagL1, cacheHier) == HIT)
@@ -225,11 +231,14 @@ int main(int argc, char *argv[])
                         stats->hitL1d++;
                         stats->cycleDWrite += L1_HIT_TIME;
                     }
-                    /* else */
-                    /* { */
-                    /*     /1* check up the memory hierarchy for the requested value *1/ */
-                    /*     L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, DIRTY); */
-                    /* } */
+                    else
+                    {
+                        /* increment miss count */
+                        stats->missL1d++;
+
+                        /* check up the memory hierarchy for the requested value */
+                        L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, DIRTY);
+                    }
                     break;
                 default:
                     printf("ERROR: invalid trace operation in %s: line %d\n", __FILE__, __LINE__);
