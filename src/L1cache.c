@@ -58,6 +58,16 @@ int checkL1dW(ui currIndx, ulli currTag, allCache *cacheHier)
     return MISS;
 }
 
+int L1iMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2)
+{
+    return EXIT_SUCCESS;
+}
+
+int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, int dirtyBit)
+{
+    return EXIT_SUCCESS;
+}
+
 int insertL1i(ulli addr)
 {
     return EXIT_SUCCESS;
