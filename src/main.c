@@ -17,7 +17,8 @@
 #include "dlinkedList.h"
 
 /* #define DEBUG_PRINT_TRACE ///< print traces for debugging */
-/* #define DEBUG_ADDR */
+/* #define DEBUG_ADDR ///< print the tag and index info */
+#define DEBUG_MAIN
 
 /**
  * @brief main function for cache simulator
@@ -137,12 +138,12 @@ int main(int argc, char *argv[])
             L1i[i]->nodeCount++;
         }
     }
-    /* cacheHier->L1i = L1i; */
-    /* cacheHier->L1d = L1i; */
-    /* cacheHier->VCL1i = L1i; */
-    /* cacheHier->VCL1d = L1i; */
-    /* cacheHier->L2 = L1i; */
-    /* cacheHier->VCL2 = L1i; */
+    cacheHier->L1i = L1i;
+    cacheHier->L1d = L1i;
+    cacheHier->L2 = L1i;
+    cacheHier->VCL1i = L1i[0];
+    cacheHier->VCL1d = L1i[0];
+    cacheHier->VCL2 = L1i[0];
 
     /* read a trace from stdin and print it */
     while(readTrace(&op, &addr, &numBytes) == EXIT_SUCCESS)
@@ -202,7 +203,10 @@ int main(int argc, char *argv[])
                     {
                         /* increment statistics for simulation */
                         stats->hitL1i++;
-                        stats->cycleInst += L1_HIT_TIME;
+                        stats->cycleInst += L1_HIT_T;
+#ifdef DEBUG_MAIN
+                        printf("hit!!\n");
+#endif
                     }
                     else
                     {
@@ -222,7 +226,7 @@ int main(int argc, char *argv[])
                     {
                         /* increment statistics for simulation */
                         stats->hitL1d++;
-                        stats->cycleDRead += L1_HIT_TIME;
+                        stats->cycleDRead += L1_HIT_T;
                     }
                     else
                     {
@@ -242,7 +246,7 @@ int main(int argc, char *argv[])
                     {
                         /* increment statistics for simulation */
                         stats->hitL1d++;
-                        stats->cycleDWrite += L1_HIT_TIME;
+                        stats->cycleDWrite += L1_HIT_T;
                     }
                     else
                     {
