@@ -121,7 +121,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
     }
 
     /* get the first entry in the L1 victim cache */
-    node *VCNode = cacheHier->VCL1i[0]->first;
+    node *VCNode = cacheHier->VCL1i->first;
 
     /* get the node from the L1 cache */
     node *L1iNode = cacheHier->L1i[currIndxL1]->first;
@@ -133,17 +133,17 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
         if(VCNode->valid && VCNode->tag == currTagL1)
         {
             // move found entry to front of list (LRU policy)
-            if(bumpToFirst(cacheHier->VCL1i[0], currTagL1) != 0)
+            if(bumpToFirst(cacheHier->VCL1i, currTagL1) != 0)
             {
                 fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
                 return EXIT_FAILURE;
             }
 
             // reset VCNode to its new location
-            VCNode = cacheHier->VCL1i[0]->first;
+            VCNode = cacheHier->VCL1i->first;
 
             // increment statistics for simulation
-            stats->cycleInst += L1_HIT_TIME; // VC to L1 same time as an L1 hit
+            stats->cycleInst += L1_HIT_T; // VC to L1 same time as an L1 hit
             stats->VChitL1i++;
             stats->transfersL1i++;
 
@@ -195,9 +195,79 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
     // entry was not in the L1i victim cache -> check L2
     if(checkL2(currTagL2, currIndxL2, cacheHier) == HIT)
     {
-        // TODO increment stats
+        // increment stats
+        stats->hitL2++;
+        stats->cycleInst += L2_HIT_T;
+        stats->totExecT += L2_TRANSFER_T;
 
         // TODO check for a kickout when moving entry to L1
+        // check if there is an empty spot (not valid) in L1i
+        node *L1iNode = cacheHier->L1i[currIndxL1]->first;
+        while(L1iNode != NULL)
+        {
+            if(!L1iNode->valid)
+            {
+                // mark as valid and insert into L1i
+                L1iNode->valid = 1;
+                L1iNode->tag = currTagL1;
+
+                // adhere to LRU policy
+                bumpToFirst(cacheHier->L1i[currIndxL1], currTagL1);
+
+                return EXIT_SUCCESS;
+            }
+            // a kickout occurs
+            else
+            {
+                VCNode = cacheHier->VCL1i->first;
+                while(VCNode != NULL)
+                {
+                    // case 1: VCL1i has an available spot for the kickout form L1i
+                    if(!VCNode->valid)
+                    {
+                        // transfer tag from L1i to VCL1i (L1i kickout)
+                        VCNode->tag = L1iNode->tag;
+                        VCNode->valid = 1;
+
+                        // check if the entry from L1i is was dirty
+                        if(L1iNode->dirty == DIRTY)
+                        {
+                            VCNode->dirty = DIRTY;
+                        }
+
+                        // LRU policy VCL1i
+                        bumpToFirst(cacheHier->VCL1i, currTagL1);
+
+                        // transfer from L2 to L1i
+                        L1iNode->valid = 1;
+                        L1iNode->tag = currTagL1;
+                        L1iNode->dirty = CLEAN;
+
+                        // LRU policy L1i
+                        bumpToFirst(cacheHier->L1i[currIndxL1], currTagL1);
+
+                        // LRU policy L2
+                        bumpToFirst(cacheHier->L2[currIndxL2], currTagL2);
+
+                        return EXIT_SUCCESS;
+                    }
+                }
+                // case 2: kickout from L1i causes a kickout from VCL1i -> move entry to L2
+                node *lastVC = cacheHier->VCL1i->last;
+                node *L2Node = cacheHier->VCL2->first;
+                node *temp;
+                if(lastVC->dirty == DIRTY)
+                {
+                   // TODO select correct way to place entry
+                }
+                // TODO check if kickout is dirty
+                // TODO if not room for a kickout transfer a value to to L2 from VCL1i
+                // TODO could this cause a kickout from L2 (further ripple back?)???
+                // TODO copy line from VCL1i to L2
+
+            }
+            L1iNode = L1iNode->next;
+        }
 
         return EXIT_SUCCESS;
     }
