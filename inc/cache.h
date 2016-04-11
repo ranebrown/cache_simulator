@@ -13,16 +13,22 @@
     #include "config.h"
     #include "dlinkedList.h"
 
-    #define HIT 0               ///< used as a return value for a cache hit
-    #define MISS 1              ///< used as a return value for a cache miss
-    #define L1_OFFSET 5         ///< L1 is 32 bytes i.e. 2^5
-    #define L2_OFFSET 6         ///< L2 is 64 bytes i.e. 2^6
-    #define L1_HIT_TIME 1       ///< number of cycles to return an L1 hit
-    #define L1_MISS_TIME 1      ///< number of cycles to determine an L1 request is a miss and make request to L2
-    #define L2_HIT_TIME 20      ///< number of cycles to return an L2 hit
-    #define L2_MISS_TIME 180    ///< number of cycles to determine an L2 request is a miss and make request to main memory
-    #define CLEAN 0             ///< dirty bit status
-    #define DIRTY 1             ///< dirty bit status
+    /**
+     * @brief The hit time is the time to return an item that is a hit in a cache.
+     * The miss time is the time to determine that an item has missed and the time to make the request to the next cache level.
+     */
+    #define HIT 0                   ///< used as a return value for a cache hit
+    #define MISS 1                  ///< used as a return value for a cache miss
+    #define L1_OFFSET 5             ///< L1 is 32 bytes i.e. 2^5
+    #define L2_OFFSET 6             ///< L2 is 64 bytes i.e. 2^6
+    #define CLEAN 0                 ///< dirty bit status
+    #define DIRTY 1                 ///< dirty bit status
+    #define L1_HIT_T 1              ///< number of cycles to return an L1 hit
+    #define L1_MISS_T 1             ///< number of cycles to determine an L1 request is a miss and make request to L2
+    #define L2_HIT_T 8              ///< number of cycles to return an L2 hit
+    #define L2_MISS_T 10            ///< number of cycles to determine an L2 request is a miss and make request to main memory
+    #define L2_TRANSFER_T 20        ///< time to transfer a value from L2 to L1 cache (based on 16 byte bus)
+    #define MAIN_MEM_TRANSFER_T     ///< time to transfer a value from main memory to L2 cache
 
     typedef unsigned long long int ulli;    ///< shorten long type
     typedef unsigned int ui;                ///< maintain same format as ulli
@@ -35,9 +41,9 @@
        list ** L1i;
        list ** L1d;
        list ** L2;
-       list ** VCL1i;
-       list ** VCL1d;
-       list ** VCL2;
+       list * VCL1i;
+       list * VCL1d;
+       list * VCL2;
     } allCache;
 
     /**
