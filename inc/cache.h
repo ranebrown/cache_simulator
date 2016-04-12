@@ -30,6 +30,8 @@
     #define L2_TRANSFER_T 20        ///< time to transfer a value from L2 to L1 cache (based on 16 byte bus)
     #define MAIN_MEM_TRANSFER_T     ///< time to transfer a value from main memory to L2 cache
 
+    #define PERR fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__); return EXIT_FAILURE;
+
     typedef unsigned long long int ulli;    ///< shorten long type
     typedef unsigned int ui;                ///< maintain same format as ulli
 
@@ -53,6 +55,8 @@
      * @returns EXIT_SUCCESS or EXIT_FAILURE
      */
     int initCache(memInfo *cacheCnfg, allCache *cacheHier);
+
+    int deleteCache(memInfo *cacheCnfg, allCache *cacheHier);
 
     /**
      * @brief structure used to hold results of simulation such as times, CPI, cost, etc.

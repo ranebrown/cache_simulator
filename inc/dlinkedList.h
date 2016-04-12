@@ -51,7 +51,7 @@
      * @param[in] the tag of node to be added
      * @return EXIT_SUCCESS or EXIT_FAILURE
      */
-    int putFirst(list *q, ulli tag);
+    int putFirst(list *q);
 
     /**
      * @brief Puts a new node at the end of the list

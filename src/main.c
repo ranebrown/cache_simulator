@@ -18,7 +18,7 @@
 
 /* #define DEBUG_PRINT_TRACE ///< print traces for debugging */
 /* #define DEBUG_ADDR ///< print the tag and index info */
-#define DEBUG_MAIN
+/* #define DEBUG_MAIN */
 
 /**
  * @brief main function for cache simulator
@@ -50,12 +50,6 @@ int main(int argc, char *argv[])
 
     /* structure used to represent each cache level (doubly linked list) */
     allCache *cacheHier = malloc(sizeof(allCache));
-    cacheHier->VCL1i = NULL;
-    cacheHier->VCL1d = NULL;
-    cacheHier->VCL2 = NULL;
-    cacheHier->L1i = NULL;
-    cacheHier->L1d = NULL;
-    cacheHier->L2 = NULL;
 
     /* Default values*/
     cacheCnfg->L1dBlock  = 32;
@@ -111,39 +105,8 @@ int main(int argc, char *argv[])
     /* calulate number of tag bits and index bits for the cache configuration */
     calcBits(cacheCnfg, &bitsIndexL1, &bitsTagL1, &bitsIndexL2, &bitsTagL2);
 
-    /* TODO Initialize caches (write functions) */
-    /* initCache(cacheCnfg, cacheHier); */
-    int i,j;
-    int numLines = cacheCnfg->L1dSize / cacheCnfg->L1dBlock / cacheCnfg->L1dWays;
-    int numWays = cacheCnfg->L1dWays;
-    list **L1i = malloc(numLines * sizeof(list*));
-    for(i=0; i<numLines; i++)
-        L1i[i] = malloc(sizeof(list));
-    for(i=0; i<numLines; i++)
-    {
-        node *firstNode = malloc(sizeof(node));
-        L1i[i]->first = firstNode;
-        L1i[i]->last = firstNode;
-        L1i[i]->nodeCount = 1;
-        for(j=0; j<numWays; j++)
-        {
-            node *node = malloc(sizeof(node));
-            node->valid = 0;
-            node-> dirty = 0;
-            node->tag = 0;
-            node->next = NULL;
-            L1i[i]->last->next = node;
-            node->prev = L1i[i]->last;
-            L1i[i]->last = node;
-            L1i[i]->nodeCount++;
-        }
-    }
-    cacheHier->L1i = L1i;
-    cacheHier->L1d = L1i;
-    cacheHier->L2 = L1i;
-    cacheHier->VCL1i = L1i[0];
-    cacheHier->VCL1d = L1i[0];
-    cacheHier->VCL2 = L1i[0];
+    // initialize and allocate memory for all cache levels
+    initCache(cacheCnfg, cacheHier);
 
     /* read a trace from stdin and print it */
     while(readTrace(&op, &addr, &numBytes) == EXIT_SUCCESS)
@@ -199,7 +162,6 @@ int main(int argc, char *argv[])
             switch(op)
             {
                 case 'I':
-                    printf("inst.\n");
                     if(checkL1i(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
@@ -226,7 +188,6 @@ int main(int argc, char *argv[])
                     }
                     break;
                 case 'R':
-                    printf("read\n");
                     /* if(checkL1dR(currIndxL1, currTagL1, cacheHier) == HIT) */
                     /* { */
                     /*     /1* increment statistics for simulation *1/ */
@@ -247,7 +208,6 @@ int main(int argc, char *argv[])
                     /* } */
                     break;
                 case 'W':
-                    printf("write\n");
                     /* if(checkL1dW(currIndxL1, currTagL1, cacheHier) == HIT) */
                     /* { */
                     /*     /1* increment statistics for simulation *1/ */
@@ -277,24 +237,13 @@ int main(int argc, char *argv[])
         }
     }
 
+    printf("hits: %llu\n",stats->hitL1i);
     /* free any allocated memory */
     free(cacheCnfg);
     free(stats);
 
-    // free linked list memory
-    for(i=0; i<numLines; i++)
-    {
-        node *temp1 = L1i[i]->first;
-        node *temp2;
-        while(temp1 != NULL)
-        {
-            temp2 = temp1;
-            temp1 = temp1->next;
-            free(temp2);
-        }
-        free(L1i[i]);
-    }
-    free(L1i);
+    // free cache memory
+    deleteCache(cacheCnfg, cacheHier);
 
     free(cacheHier);
 

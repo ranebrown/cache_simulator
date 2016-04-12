@@ -14,7 +14,7 @@ list *initList(int maxSize)
     return q;
 }
 
-int putFirst(list *q, ulli tag)
+int putFirst(list *q)
 {
     /* Check for malformed input */
     if(!q)
@@ -48,7 +48,9 @@ int putFirst(list *q, ulli tag)
         newnode->prev  = NULL;
     }
 
-    newnode->tag = tag;
+    newnode->tag = 0;
+    newnode->valid = 0;
+    newnode->dirty = 0;
     (q->nodeCount)++;
 
     return EXIT_SUCCESS;
