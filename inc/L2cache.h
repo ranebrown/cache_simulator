@@ -21,6 +21,6 @@
      */
     int checkL2(ulli currTag, ulli currIndx, allCache *cacheHier);
 
-    int L2miss(ulli currTagL2, ulli currIndxL2, allCache *cacheHier);
+    int L2miss(ulli currTagL2, ulli currIndxL2, allCache *cacheHier, performance *stats);
 
 #endif // L2_CACHE_H

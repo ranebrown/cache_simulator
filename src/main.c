@@ -199,17 +199,21 @@ int main(int argc, char *argv[])
             switch(op)
             {
                 case 'I':
+                    printf("inst.\n");
                     if(checkL1i(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
                         stats->hitL1i++;
                         stats->cycleInst += L1_HIT_T;
 #ifdef DEBUG_MAIN
-                        printf("hit!!\n");
+                        printf("hit!!\n\n");
 #endif
                     }
                     else
                     {
+#ifdef DEBUG_MAIN
+                        printf("miss!!\n\n");
+#endif
                         /* increment miss count */
                         stats->missL1i++;
 
@@ -222,44 +226,46 @@ int main(int argc, char *argv[])
                     }
                     break;
                 case 'R':
-                    if(checkL1dR(currIndxL1, currTagL1, cacheHier) == HIT)
-                    {
-                        /* increment statistics for simulation */
-                        stats->hitL1d++;
-                        stats->cycleDRead += L1_HIT_T;
-                    }
-                    else
-                    {
-                        /* increment miss count */
-                        stats->missL1d++;
+                    printf("read\n");
+                    /* if(checkL1dR(currIndxL1, currTagL1, cacheHier) == HIT) */
+                    /* { */
+                    /*     /1* increment statistics for simulation *1/ */
+                    /*     stats->hitL1d++; */
+                    /*     stats->cycleDRead += L1_HIT_T; */
+                    /* } */
+                    /* else */
+                    /* { */
+                    /*     /1* increment miss count *1/ */
+                    /*     stats->missL1d++; */
 
-                        /* check up the memory hierarchy for the requested value */
-                        if(L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier,  CLEAN) == EXIT_FAILURE)
-                        {
-                            fprintf(stderr,"ERROR: %s: %d", __FILE__, __LINE__);
-                            return EXIT_FAILURE;
-                        }
-                    }
+                    /*     /1* check up the memory hierarchy for the requested value *1/ */
+                    /*     if(L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier,  CLEAN) == EXIT_FAILURE) */
+                    /*     { */
+                    /*         fprintf(stderr,"ERROR: %s: %d", __FILE__, __LINE__); */
+                    /*         return EXIT_FAILURE; */
+                    /*     } */
+                    /* } */
                     break;
                 case 'W':
-                    if(checkL1dW(currIndxL1, currTagL1, cacheHier) == HIT)
-                    {
-                        /* increment statistics for simulation */
-                        stats->hitL1d++;
-                        stats->cycleDWrite += L1_HIT_T;
-                    }
-                    else
-                    {
-                        /* increment miss count */
-                        stats->missL1d++;
+                    printf("write\n");
+                    /* if(checkL1dW(currIndxL1, currTagL1, cacheHier) == HIT) */
+                    /* { */
+                    /*     /1* increment statistics for simulation *1/ */
+                    /*     stats->hitL1d++; */
+                    /*     stats->cycleDWrite += L1_HIT_T; */
+                    /* } */
+                    /* else */
+                    /* { */
+                    /*     /1* increment miss count *1/ */
+                    /*     stats->missL1d++; */
 
-                        /* check up the memory hierarchy for the requested value */
-                        if(L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, DIRTY) == EXIT_FAILURE)
-                        {
-                            fprintf(stderr,"ERROR: %s: %d", __FILE__, __LINE__);
-                            return EXIT_FAILURE;
-                        }
-                    }
+                    /*     /1* check up the memory hierarchy for the requested value *1/ */
+                    /*     if(L1dMiss(currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, DIRTY) == EXIT_FAILURE) */
+                    /*     { */
+                    /*         fprintf(stderr,"ERROR: %s: %d", __FILE__, __LINE__); */
+                    /*         return EXIT_FAILURE; */
+                    /*     } */
+                    /* } */
                     break;
                 default:
                     fprintf(stderr,"ERROR: invalid trace operation in %s: line %d\n", __FILE__, __LINE__);
