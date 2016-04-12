@@ -286,7 +286,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
     VCL1iNode = cacheHier->VCL1i->last;         // item being kicked out from L1i
     L1iNode = cacheHier->L1i[currIndxL1]->last; // item being kicked out from VCL1i
     node *kickVCL1i = VCL1iNode;                // temp node
-    node *L2Node = cacheHier->VCL2->first;
+    node *L2Node = cacheHier->L2[currIndxL2]->first;
 
     // kickout from L1i to VCL1i
     VCL1iNode->tag = L1iNode->tag;
@@ -300,6 +300,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
     // kickout from VCL1i to L2
     // case 2a: there is a spot available in L2
+    int i = 0;
     while(L2Node != NULL)
     {
         if(!L2Node->valid)
