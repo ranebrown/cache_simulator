@@ -21,6 +21,15 @@
      */
     int checkL2(ulli currTag, ulli currIndx, allCache *cacheHier);
 
-    int L2miss(ulli currTagL2, ulli currIndxL2, allCache *cacheHier, performance *stats);
+    /**
+     * @brief if a miss occurs in the L2 cache this function is called to check the victim cache.
+     *  If the desired tag is not in the victim cache it is brought in from main memory
+     * @param[in] stats structure containing statistics for the simulation, necessary for any updates
+     * @param[in] currTagL2 the calculated tag value for L2 cache
+     * @param[in] currIndxL2 the calculated index for the L2 cache
+     * @param[in] cacheHier structure containing linked lists for each cache level in the hierarchy
+     * @returns EXIT_SUCCESS or EXIT_FAILURE
+     */
+    int L2miss(performance *stats, ulli currTagL2, ulli currIndxL2, allCache *cacheHier);
 
 #endif // L2_CACHE_H

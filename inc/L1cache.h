@@ -59,9 +59,16 @@
      */
     int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier);
 
-/*******************************
- * BELOW FUNCTIONS INCOMPLETE
- * ******************************/
-    int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier, int dirtyBit);
+    /**
+     * @brief upon a miss in the L1 data cache this function is called
+     * @param[in] stats structure containing statistics for the simulation, necessary for any updates
+     * @param[in] currTagL1 the calcualted tag value for L1 cache
+     * @param[in] currTagL2 the calculated tag value for L2 cache
+     * @param[in] currIndxL1 the calculated index for L1 cache
+     * @param[in] currIndxL2 the calculated index for the L2 cache
+     * @param[in] cacheHier structure containing linked lists for each cache level in the hierarchy
+     * @returns EXIT_SUCCESS or EXIT_FAILURE
+     */
+    int L1dMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier);
 
 #endif // L1_CACHE_H

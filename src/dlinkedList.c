@@ -1,3 +1,10 @@
+/**
+ * @file        dlinkedlist.c
+ * @authors     Rane Brown & Brian Douglass
+ * @date        03-20-2016
+ * @brief       Header file with function prototypes for double linked list.
+ */
+
 #include "dlinkedList.h"
 
 list *initList(int maxSize)
@@ -274,11 +281,6 @@ int bumpToFirst(list *q, ulli tag)
 
     return EXIT_SUCCESS;
 }
-
-// int replaceNode(list *q, ulli tag, ulli newTag)
-// {
-//     return 0;
-// }
 
 int isEmpty(list *q)
 {

@@ -199,7 +199,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
         // L2 miss
         // check the up the memory hierarchy for the requested value
-        if(L2miss(currTagL2, currIndxL2, cacheHier, stats) == EXIT_FAILURE)
+        if(L2miss(stats, currTagL2, currIndxL2, cacheHier) == EXIT_FAILURE)
         {
             fprintf(stderr,"ERROR: %s: %d", __FILE__, __LINE__);
             return EXIT_FAILURE;
@@ -300,7 +300,6 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
     // kickout from VCL1i to L2
     // case 2a: there is a spot available in L2
-    int i = 0;
     while(L2Node != NULL)
     {
         if(!L2Node->valid)
@@ -436,7 +435,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
     return EXIT_SUCCESS;
 }
 
-int L1dMiss(ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier, int dirtyBit)
+int L1dMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier)
 {
     /* check for bad input */
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL

@@ -13,16 +13,18 @@
     #include "config.h"
     #include "dlinkedList.h"
 
-    /**
-     * @brief The hit time is the time to return an item that is a hit in a cache.
-     * The miss time is the time to determine that an item has missed and the time to make the request to the next cache level.
-     */
     #define HIT 0                   ///< used as a return value for a cache hit
     #define MISS 1                  ///< used as a return value for a cache miss
     #define L1_OFFSET 5             ///< L1 is 32 bytes i.e. 2^5
     #define L2_OFFSET 6             ///< L2 is 64 bytes i.e. 2^6
     #define CLEAN 0                 ///< dirty bit status
     #define DIRTY 1                 ///< dirty bit status
+
+    /*
+     * Defines used for tracking simulation times
+     * The hit time is the time to return an item that is a hit in a cache.
+     * The miss time is the time to determine that an item has missed and the time to make the request to the next cache level.
+     */
     #define L1_HIT_T 1              ///< number of cycles to return an L1 hit
     #define L1_MISS_T 1             ///< number of cycles to determine an L1 request is a miss and make request to L2
     #define L2_HIT_T 8              ///< number of cycles to return an L2 hit
@@ -30,33 +32,32 @@
     #define L2_TRANSFER_T 20        ///< time to transfer a value from L2 to L1 cache (based on 16 byte bus)
     #define MAIN_MEM_TRANSFER_T     ///< time to transfer a value from main memory to L2 cache
 
-    #define PERR fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__); return EXIT_FAILURE;
+    /**
+     * @brief macro to print an error message to stderr, uses var args to accept printf format input
+     */
+    #define PERR(M, ...) fprintf(stderr, "ERROR: --- FILE:%s LINE:%d FUNCTION:%s --- " M "\n", \
+            __FILE__, __LINE__, __func__,  ##__VA_ARGS__); return EXIT_FAILURE;
 
     typedef unsigned long long int ulli;    ///< shorten long type
     typedef unsigned int ui;                ///< maintain same format as ulli
 
     /**
      * @brief structure to hold pointers to all cache levels
+     *
+     * Caches are implemented as and array of linked lists. Each element of the array is
+     * a block in the cache. Each node represents a way for that block.
+     * A direct mapped cache is an array of blocks with each element having a single node while a fully associative cache
+     * has a single array element and the same number of nodes that would be in the direct mapped array.
      */
     typedef struct
     {
-       list ** L1i;
-       list ** L1d;
-       list ** L2;
-       list * VCL1i;
-       list * VCL1d;
-       list * VCL2;
+       list ** L1i;     ///< the L1 instruction cache
+       list ** L1d;     ///< the L1 data cache
+       list ** L2;      ///< the L2 cache
+       list * VCL1i;    ///< the L1 instruction victim cache
+       list * VCL1d;    ///< the L1 data victim cache
+       list * VCL2;     ///< the L2 victim cache
     } allCache;
-
-    /**
-     * @brief function to initialize cache levels
-     * @param[in] cacheCnfg structure containing cache configuration options
-     * @param[in,out] cacheHier pointer to a struct containing doubly linked lists for each memory hierarchy
-     * @returns EXIT_SUCCESS or EXIT_FAILURE
-     */
-    int initCache(memInfo *cacheCnfg, allCache *cacheHier);
-
-    int deleteCache(memInfo *cacheCnfg, allCache *cacheHier);
 
     /**
      * @brief structure used to hold results of simulation such as times, CPI, cost, etc.
@@ -133,5 +134,21 @@
     * @returns EXIT_SUCCESS or EXIT_FAILURE
     */
     int calcBits(memInfo *mem, int *bitsIndexL1, int *bitsTagL1, int *bitsIndexL2, int *bitsTagL2);
+
+    /**
+     * @brief function to initialize cache levels
+     * @param[in] cacheCnfg structure containing cache configuration options
+     * @param[in,out] cacheHier pointer to a struct containing doubly linked lists for each memory hierarchy
+     * @returns EXIT_SUCCESS or EXIT_FAILURE
+     */
+    int initCache(memInfo *cacheCnfg, allCache *cacheHier);
+
+    /**
+     * @brief function to free the memory allocated for all cache levels
+     * @param[in] cacheCnfg structure that contains the configuration settings for each cache level
+     * @param[in] cacheHier strucutre that contains pointers to the linked lists for each cache level
+     * @returns EXIT_SUCCESS or EXIT_FAILURE
+     */
+    int deleteCache(memInfo *cacheCnfg, allCache *cacheHier);
 
 #endif // CACHE_H

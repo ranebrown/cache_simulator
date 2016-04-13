@@ -40,7 +40,7 @@ int checkL2(ulli currTag, ulli currIndx, allCache *cacheHier)
     return MISS;
 }
 
-int L2miss(ulli currTagL2, ulli currIndxL2, allCache *cacheHier, performance *stats)
+int L2miss(performance *stats, ulli currTagL2, ulli currIndxL2, allCache *cacheHier)
 {
     /* check for bad input */
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL

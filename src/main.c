@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     }
 
     /* calculate cost based on cache configuration */
-    calculateCost(cacheCnfg);
+    /* calculateCost(cacheCnfg); */
 
     /* calulate number of tag bits and index bits for the cache configuration */
     calcBits(cacheCnfg, &bitsIndexL1, &bitsTagL1, &bitsIndexL2, &bitsTagL2);
