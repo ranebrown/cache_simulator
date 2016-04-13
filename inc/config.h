@@ -8,7 +8,6 @@
  #ifndef CONFIG_H
     #define CONFIG_H
 
-    #define PRINTVALUES         ///< print statements for debugging
     #define L1_4KB      100     ///< cost value
     #define L1_ASSOC    100     ///< cost value
     #define L2_16KB     50      ///< cost value
@@ -20,6 +19,7 @@
     #include <stdlib.h>
     #include <string.h>
     #include <math.h>
+    #include "common.h"
 
     /**
      * @struct memInfo

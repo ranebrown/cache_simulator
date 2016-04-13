@@ -11,6 +11,7 @@
     #include <stdlib.h>
     #include <sys/select.h>
     #include <errno.h>
+    #include "common.h"
 
     /**
      * @brief reads a single trace line from stdin

@@ -6,6 +6,8 @@
  */
 #include "config.h"
 
+/* #define PRINTVALUES         ///< print statements for debugging */
+
 int setCacheValues (memInfo *cache)
 {
     /* Local variables */
@@ -19,10 +21,7 @@ int setCacheValues (memInfo *cache)
 
     /* Open the file */
     if( !(config = fopen(cache->cacheName,"r")) )
-    {
-        printf("Error opening file.\n");
-        return EXIT_FAILURE;
-    }
+        PERR("error opening file");
 
     /* Read the line from the file */
     fscanf(config, "%s", inStr);
@@ -33,10 +32,7 @@ int setCacheValues (memInfo *cache)
 
     /* Close the file */
     if( fclose(config) )
-    {
-        printf("Error closing file.\n");
-        return EXIT_FAILURE;
-    }
+        PERR("error closing file");
 
     /** Set the cache parameters from the file **/
     /* L1 data */

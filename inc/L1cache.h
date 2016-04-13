@@ -12,6 +12,7 @@
     #include <stdlib.h>
     #include "L2cache.h"
     #include "cache.h"
+    #include "common.h"
 
     /**
      * @brief check if instruction reference is a hit or a miss

@@ -29,10 +29,7 @@ int readTrace(char *op, unsigned long long int *addr, unsigned int *numBytes)
     retval = select(1, &rfds, NULL, NULL, &tv);
 
     if (retval == -1)   // error with select function
-    {
-        perror("select()");
-        return EXIT_FAILURE;
-    }
+        PERR("using select function");
     else if (retval)    // data is ready to be read
     {
         // read a trace from stdin

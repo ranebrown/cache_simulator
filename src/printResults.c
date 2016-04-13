@@ -12,7 +12,7 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     char name[128];         // directory path to write to
 
     if(trace == NULL || mem == NULL)
-        return EXIT_FAILURE;
+        PERR("null input");
 
     // concatenate trace to file path
     strcpy(name,"../sim_results/");
@@ -22,10 +22,7 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     // open file for writing
     fp = fopen(name, "w+");
     if(fp == NULL)
-    {
-        perror("error opening file to print simulation results");
-        return EXIT_FAILURE;
-    }
+        PERR("error opening file");
 
     /* calculate remaining values */
     /* ulli    totExecT       =   0;       // total execution time for the simulation */
@@ -73,7 +70,6 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     fprintf( fp, "\n");
     fprintf( fp, "\n");
 
-    // TODO - correct data types for below items - replace with variables
     fprintf( fp, "%60s\n", "Overall Performance");
     fprintf( fp, "%90s\n", "-------------------------------------------------------------------------------------");
     fprintf( fp, "%40s %30llu\n", "Execution time", stats->totExecT);
@@ -146,9 +142,8 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     fprintf( fp, "\n");
 
     // close file
-    int close = fclose(fp);
-    if(close == 0)
-        return EXIT_SUCCESS;
+    if(fclose(fp))
+        PERR("error closing file");
     else
-        return EXIT_FAILURE;
+        return EXIT_SUCCESS;
 }

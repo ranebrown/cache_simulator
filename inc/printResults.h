@@ -13,6 +13,7 @@
     #include <errno.h>
     #include "config.h"
     #include "cache.h"
+    #include "common.h"
 
     /**
      * @brief prints the results of the simulation to a file

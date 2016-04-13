@@ -12,10 +12,7 @@ int checkL1i(ui currIndx, ulli currTag, allCache *cacheHier)
     /* check for bad input */
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
-    {
-        fprintf(stderr,"ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("cache not initialized");
 
     /* get the first block in the list */
     node *tmpNode = cacheHier->L1i[currIndx]->first;
@@ -27,10 +24,7 @@ int checkL1i(ui currIndx, ulli currTag, allCache *cacheHier)
         {
             // move node to first way (LRU policy)
             if(bumpToFirst(cacheHier->L1i[currIndx], currTag) != 0)
-            {
-                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             return HIT;
         }
@@ -45,10 +39,7 @@ int checkL1dR(ui currIndx, ulli currTag, allCache *cacheHier)
     /* check for bad input */
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
-    {
-        fprintf(stderr,"ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("cache not initialized");
 
     /* get the first block in the list */
     node *tmpNode = cacheHier->L1d[currIndx]->first;
@@ -60,10 +51,7 @@ int checkL1dR(ui currIndx, ulli currTag, allCache *cacheHier)
         {
             // move node to first way (LRU policy)
             if(bumpToFirst(cacheHier->L1d[currIndx], currTag) != 0)
-            {
-                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             return HIT;
         }
@@ -79,10 +67,7 @@ int checkL1dW(ui currIndx, ulli currTag, allCache *cacheHier)
     /* check for bad input */
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
-    {
-        fprintf(stderr,"ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("cache not initialized");
 
     /* get the first block in the list */
     node *tmpNode = cacheHier->L1d[currIndx]->first;
@@ -97,10 +82,7 @@ int checkL1dW(ui currIndx, ulli currTag, allCache *cacheHier)
 
             // move node to first way (LRU policy)
            if(bumpToFirst(cacheHier->L1d[currIndx], currTag) != 0)
-           {
-               fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-               return EXIT_FAILURE;
-           }
+               PERR("bumpToFirst failed");
 
             return HIT;
         }
@@ -115,10 +97,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
     /* check for bad input */
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
-    {
-        fprintf(stderr,"ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("cache not initialzed");
 
     /* get the first entry in the L1 victim cache */
     node *VCL1iNode = cacheHier->VCL1i->first;
@@ -134,10 +113,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
         {
             // move found entry to front of list (LRU policy)
             if(bumpToFirst(cacheHier->VCL1i, currTagL1) != 0)
-            {
-                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             // reset VCL1iNode to its new location
             VCL1iNode = cacheHier->VCL1i->first;
@@ -158,10 +134,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
                     // LRU policy L1i
                     if(bumpToFirst(cacheHier->L1i[currIndxL1], currTagL1) != 0)
-                    {
-                        fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                        return EXIT_FAILURE;
-                    }
+                        PERR("bumpToFirst failed");
                     return EXIT_SUCCESS;
                 }
 
@@ -172,10 +145,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
             // otherwise all ways have a valid tag so a swap is necesary
             ulli swapTag = cacheHier->L1i[currIndxL1]->last->tag;
             if(bumpToFirst(cacheHier->L1i[currIndxL1], swapTag) != 0)
-            {
-                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             // swap VCL1i and L1i
             ulli tempTag = VCL1iNode->tag;
@@ -200,10 +170,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
         // L2 miss
         // check the up the memory hierarchy for the requested value
         if(L2miss(stats, currTagL2, currIndxL2, cacheHier) == EXIT_FAILURE)
-        {
-            fprintf(stderr,"ERROR: %s: %d", __FILE__, __LINE__);
-            return EXIT_FAILURE;
-        }
+            PERR("problem L2 miss");
     }
     // otherwise hit
     else
@@ -227,10 +194,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
             // adhere to LRU policy
             if(bumpToFirst(cacheHier->L1i[currIndxL1], currTagL1))
-            {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
             return EXIT_SUCCESS;
         }
 
@@ -252,10 +216,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
             // LRU policy VCL1i
             if(bumpToFirst(cacheHier->VCL1i, VCL1iNode->tag))
-            {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             // transfer from L2 to L1i
             L1iNode->valid = 1;
@@ -264,17 +225,11 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
             // LRU policy L1i
             if(bumpToFirst(cacheHier->L1i[currIndxL1], currTagL1))
-            {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             // LRU policy L2
             if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2))
-            {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             return EXIT_SUCCESS;
         }
@@ -293,10 +248,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
     VCL1iNode->valid = 1;
     VCL1iNode->dirty = L1iNode->dirty;
     if(bumpToFirst(cacheHier->VCL1i, VCL1iNode->tag))
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("bumpToFirst failed");
 
     // kickout from VCL1i to L2
     // case 2a: there is a spot available in L2
@@ -311,10 +263,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
             // LRU policy L2
             if(bumpToFirst(cacheHier->L2[currIndxL2], L2Node->tag))
-            {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             // transfer tag from L2 to L1i
             L1iNode->tag = currTagL1;
@@ -323,10 +272,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
             // LRU policy L1i
             if(bumpToFirst(cacheHier->L1i[currIndxL1], currTagL1))
-            {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             return EXIT_SUCCESS;
         }
@@ -349,10 +295,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
             // LRU policy VCL2
             if(bumpToFirst(cacheHier->VCL2, VCL2Node->tag))
-            {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             // transfer VCL1i to L2
             L2Node->tag = kickVCL1i->tag;
@@ -361,10 +304,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
             // LRU policy L2
             if(bumpToFirst(cacheHier->L2[currIndxL2], L2Node->tag))
-            {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             // transfer tag from L2 to L1i
             L1iNode->tag = currTagL1;
@@ -373,10 +313,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
             // LRU policy L1i
             if(bumpToFirst(cacheHier->L1i[currIndxL1], currTagL1))
-            {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             return EXIT_SUCCESS;
         }
@@ -396,10 +333,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
     // LRU policy VCL2
     if(bumpToFirst(cacheHier->VCL2, VCL2Node->tag))
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("bumpToFirst failed");
 
     // transfer VCL1i to L2
     L2Node->tag = kickVCL1i->tag;
@@ -408,10 +342,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
     // LRU policy L2
     if(bumpToFirst(cacheHier->L2[currIndxL2], L2Node->tag))
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("bumpToFirst failed");
 
     // transfer tag from L2 to L1i
     L1iNode->tag = currTagL1;
@@ -420,10 +351,7 @@ int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
 
     // LRU policy L1i
     if(bumpToFirst(cacheHier->L1i[currIndxL1], currTagL1))
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("bumpToFirst failed");
 
     // check if item evicted from VCL2 was dirty and needs written to main mem
     // if clean then value is discarded -> no transfer time
@@ -440,10 +368,7 @@ int L1dMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, 
     /* check for bad input */
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
-    {
-        fprintf(stderr,"ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("cache not initialized");
 
     return EXIT_SUCCESS;
 }

@@ -11,6 +11,7 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include "cache.h"
+    #include "common.h"
 
     /**
      * @brief check reference is a hit or a miss

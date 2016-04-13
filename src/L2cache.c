@@ -12,10 +12,7 @@ int checkL2(ulli currTag, ulli currIndx, allCache *cacheHier)
     /* check for bad input */
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
-    {
-        fprintf(stderr,"ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("cache not initialized");
 
     /* get the first block in the list */
     node *tmpNode = cacheHier->L2[currIndx]->first;
@@ -27,10 +24,7 @@ int checkL2(ulli currTag, ulli currIndx, allCache *cacheHier)
         {
             // move node to first way (LRU policy)
             if(bumpToFirst(cacheHier->L2[currIndx], currTag) != 0)
-            {
-                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             return HIT;
         }
@@ -45,10 +39,7 @@ int L2miss(performance *stats, ulli currTagL2, ulli currIndxL2, allCache *cacheH
     /* check for bad input */
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
-    {
-        fprintf(stderr,"ERROR: cache not initialized in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("cache not initialized");
 
     // check the victim cache
     node *VCL2Node = cacheHier->VCL2->first;
@@ -62,10 +53,7 @@ int L2miss(performance *stats, ulli currTagL2, ulli currIndxL2, allCache *cacheH
         {
             // move found entry to front of list (LRU policy)
             if(bumpToFirst(cacheHier->VCL2, currTagL2) != 0)
-            {
-                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             // reset VCL2Node to its new location
             VCL2Node = cacheHier->VCL2->first;
@@ -86,10 +74,7 @@ int L2miss(performance *stats, ulli currTagL2, ulli currIndxL2, allCache *cacheH
 
                     // move the new L2 entry to be the LRU
                     if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2) != 0)
-                    {
-                        fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                        return EXIT_FAILURE;
-                    }
+                        PERR("bumpToFirst failed");
                     return EXIT_SUCCESS;
                 }
 
@@ -100,10 +85,7 @@ int L2miss(performance *stats, ulli currTagL2, ulli currIndxL2, allCache *cacheH
             // otherwise all ways have a valid tag so a swap is necesary
             ulli swapTag = cacheHier->L2[currIndxL2]->last->tag;
             if(bumpToFirst(cacheHier->L2[currIndxL2], swapTag) != 0)
-            {
-                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             // swap VCL2 and L2
             ulli tempTag = VCL2Node->tag;
@@ -133,10 +115,7 @@ int L2miss(performance *stats, ulli currTagL2, ulli currIndxL2, allCache *cacheH
 
             // move the new L2 entry to be the LRU
             if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2) != 0)
-            {
-                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
             return EXIT_SUCCESS;
         }
 
@@ -158,10 +137,7 @@ int L2miss(performance *stats, ulli currTagL2, ulli currIndxL2, allCache *cacheH
 
             // LRU policy VCL2
             if(bumpToFirst(cacheHier->VCL2, VCL2Node->tag) != 0)
-            {
-                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             // transfer item from main memory to L2
             L2Node->tag = currTagL2;
@@ -170,10 +146,7 @@ int L2miss(performance *stats, ulli currTagL2, ulli currIndxL2, allCache *cacheH
 
             // LRU policy L2
             if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2) != 0)
-            {
-                fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("bumpToFirst failed");
 
             return EXIT_SUCCESS;
         }
@@ -196,10 +169,7 @@ int L2miss(performance *stats, ulli currTagL2, ulli currIndxL2, allCache *cacheH
 
     // LRU policy VCL2
     if(bumpToFirst(cacheHier->VCL2, VCL2Node->tag) != 0)
-    {
-        fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("bumpToFirst failed");
 
     // transfer item from main memory to L2
     L2Node->tag = currTagL2;
@@ -208,10 +178,7 @@ int L2miss(performance *stats, ulli currTagL2, ulli currIndxL2, allCache *cacheH
 
     // LRU policy L2
     if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2) != 0)
-    {
-        fprintf(stderr,"ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("bumpToFirst failed");
 
     return EXIT_SUCCESS;
 }

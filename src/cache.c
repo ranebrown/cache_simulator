@@ -98,35 +98,17 @@ int initCache(memInfo *cacheCnfg, allCache *cacheHier)
 
     // allocate memory for fields
     if((cacheHier->L1i = malloc(numLinesL1 * sizeof(list*))) == NULL)
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("malloc failed");
     if((cacheHier->L1d = malloc(numLinesL1 * sizeof(list*))) == NULL)
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("malloc failed");
     if((cacheHier->L2 = malloc(numLinesL2 * sizeof(list*))) == NULL)
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("malloc failed");
     if((cacheHier->VCL1i = malloc(sizeof(list*))) == NULL)
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("malloc failed");
     if((cacheHier->VCL1d = malloc(sizeof(list*))) == NULL)
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("malloc failed");
     if((cacheHier->VCL2 = malloc(sizeof(list*))) == NULL)
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        return EXIT_FAILURE;
-    }
+        PERR("malloc failed");
 
     // initialize L1 caches
     for(i=0; i< numLinesL1; i++)
@@ -139,15 +121,9 @@ int initCache(memInfo *cacheCnfg, allCache *cacheHier)
         for(j=0; j<numWaysL1; j++)
         {
             if(putFirst(cacheHier->L1i[i]) == EXIT_FAILURE)
-            {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("putFirst failed");
             if(putFirst(cacheHier->L1d[i]) == EXIT_FAILURE)
-            {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("putFirst failed");
         }
     }
 
@@ -161,10 +137,7 @@ int initCache(memInfo *cacheCnfg, allCache *cacheHier)
         for(j=0; j<numWaysL2; j++)
         {
             if(putFirst(cacheHier->L2[i]) == EXIT_FAILURE)
-            {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-            }
+                PERR("putFirst failed");
         }
     }
 
@@ -176,20 +149,11 @@ int initCache(memInfo *cacheCnfg, allCache *cacheHier)
     for(i=0; i<8; i++)
     {
         if(putFirst(cacheHier->VCL1i) == EXIT_FAILURE)
-        {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-        }
+            PERR("putFirst failed");
         if(putFirst(cacheHier->VCL1d) == EXIT_FAILURE)
-        {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-        }
+            PERR("putFirst failed");
         if(putFirst(cacheHier->VCL2) == EXIT_FAILURE)
-        {
-                fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
-        }
+            PERR("putFirst failed");
     }
 
     return EXIT_SUCCESS;
@@ -218,43 +182,25 @@ int deleteCache(memInfo *cacheCnfg, allCache *cacheHier)
     for(i=0; i<numLinesL1; i++)
     {
         if(deleteList(cacheHier->L1i[i]) == EXIT_FAILURE)
-        {
-            fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-            return EXIT_FAILURE;
-        }
+            PERR("delete list failed");
         if(deleteList(cacheHier->L1d[i]) == EXIT_FAILURE)
-        {
-            fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-            EXIT_FAILURE;
-        }
+            PERR("delete list failed");
     }
 
     // delete L2 cache
     for(i=0; i<numLinesL2; i++)
     {
         if(deleteList(cacheHier->L2[i]) == EXIT_FAILURE)
-        {
-            fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-            EXIT_FAILURE;
-        }
+            PERR("delete list failed");
     }
 
     // delete VC caches
     if(deleteList(cacheHier->VCL1i) == EXIT_FAILURE)
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        EXIT_FAILURE;
-    }
+        PERR("delete list failed");
     if(deleteList(cacheHier->VCL1d) == EXIT_FAILURE)
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        EXIT_FAILURE;
-    }
+        PERR("delete list failed");
     if(deleteList(cacheHier->VCL2) == EXIT_FAILURE)
-    {
-        fprintf(stderr, "ERROR: %s: %s: %d\n", __FILE__, __func__, __LINE__);
-        EXIT_FAILURE;
-    }
+        PERR("delete list failed");
 
     return EXIT_SUCCESS;
 }

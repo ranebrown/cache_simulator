@@ -12,6 +12,7 @@
     #include <math.h>
     #include "config.h"
     #include "dlinkedList.h"
+    #include "common.h"
 
     #define HIT 0                   ///< used as a return value for a cache hit
     #define MISS 1                  ///< used as a return value for a cache miss
@@ -31,12 +32,6 @@
     #define L2_MISS_T 10            ///< number of cycles to determine an L2 request is a miss and make request to main memory
     #define L2_TRANSFER_T 20        ///< time to transfer a value from L2 to L1 cache (based on 16 byte bus)
     #define MAIN_MEM_TRANSFER_T     ///< time to transfer a value from main memory to L2 cache
-
-    /**
-     * @brief macro to print an error message to stderr, uses var args to accept printf format input
-     */
-    #define PERR(M, ...) fprintf(stderr, "ERROR: --- FILE:%s LINE:%d FUNCTION:%s --- " M "\n", \
-            __FILE__, __LINE__, __func__,  ##__VA_ARGS__); return EXIT_FAILURE;
 
     typedef unsigned long long int ulli;    ///< shorten long type
     typedef unsigned int ui;                ///< maintain same format as ulli

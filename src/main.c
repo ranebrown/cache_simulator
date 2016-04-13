@@ -42,14 +42,20 @@ int main(int argc, char *argv[])
 
     /* structure containing cache settings */
     memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));
+    if(cacheCnfg == NULL)
+        PERR("malloc error");
 
     /* structure containing statistics for simulation */
     performance *stats = malloc(sizeof(performance));
+    if(stats == NULL)
+        PERR("malloc errro");
     performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     *stats = zero; // zero all elements in stats
 
     /* structure used to represent each cache level (doubly linked list) */
     allCache *cacheHier = malloc(sizeof(allCache));
+    if(cacheHier == NULL)
+        PERR("malloc error");
 
     /* Default values*/
     cacheCnfg->L1dBlock  = 32;
@@ -68,9 +74,7 @@ int main(int argc, char *argv[])
         strcpy(cacheCnfg->cacheName,argv[1]);
         /* Set the values from the file */
         if( setCacheValues(cacheCnfg) )
-        {
-            printf("Error setting values.\n");
-        }
+            PERR("config issue: error setting values");
         else
         {
             printf("\nCache name: %s\n",cacheCnfg->cacheName);
@@ -100,7 +104,7 @@ int main(int argc, char *argv[])
     }
 
     /* calculate cost based on cache configuration */
-    /* calculateCost(cacheCnfg); */
+    calculateCost(cacheCnfg);
 
     /* calulate number of tag bits and index bits for the cache configuration */
     calcBits(cacheCnfg, &bitsIndexL1, &bitsTagL1, &bitsIndexL2, &bitsTagL2);
@@ -134,10 +138,8 @@ int main(int argc, char *argv[])
                 stats->dataWriteRef++;
                 break;
             default:
-                fprintf(stderr,"ERROR: invalid trace operation in %s function: %s: line %d\n", __FILE__, __func__, __LINE__);
-                return EXIT_FAILURE;
+                PERR("invalid trace operation");
         }
-
          /* loop for L1 access - 4 byte bus -> multiple accesses possible */
         while(currAddr <= endAddr)
         {
@@ -228,8 +230,7 @@ int main(int argc, char *argv[])
                     /* } */
                     break;
                 default:
-                    fprintf(stderr,"ERROR: invalid trace operation in %s: line %d\n", __FILE__, __LINE__);
-                    return EXIT_FAILURE;
+                    PERR("invalid trace operation");
             }
 
             /* increment to next address */
@@ -238,6 +239,7 @@ int main(int argc, char *argv[])
     }
 
     printf("hits: %llu\n",stats->hitL1i);
+
     /* free any allocated memory */
     free(cacheCnfg);
     free(stats);
