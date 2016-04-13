@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['meminfo',['memInfo',['../structmem_info.html',1,'']]]
+  ['list',['list',['../structlist.html',1,'']]]
 ];

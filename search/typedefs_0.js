@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['ui',['ui',['../cache_8h.html#aa0f39ee33b87675e11229913d432ffe7',1,'cache.h']]],
-  ['ulli',['ulli',['../cache_8h.html#afebafa022413aaef27ce1b01cbfa9791',1,'cache.h']]]
+  ['node',['node',['../dlinked_list_8h.html#ace29f146c273d2654669dc2c710603e2',1,'dlinkedList.h']]]
 ];

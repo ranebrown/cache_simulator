@@ -100,18 +100,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a45afb83143a653216292b7b0b2a97334"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l2cache_8c.html#a45afb83143a653216292b7b0b2a97334">checkL2</a> (<a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> addr)</td></tr>
-<tr class="memdesc:a45afb83143a653216292b7b0b2a97334"><td class="mdescLeft">&#160;</td><td class="mdescRight">check reference is a hit or a miss  <a href="#a45afb83143a653216292b7b0b2a97334">More...</a><br /></td></tr>
-<tr class="separator:a45afb83143a653216292b7b0b2a97334"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d43fc30b0ec386f449bef7331a7e4e7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l2cache_8c.html#a9d43fc30b0ec386f449bef7331a7e4e7">insertL2</a> (<a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> addr)</td></tr>
-<tr class="memdesc:a9d43fc30b0ec386f449bef7331a7e4e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">insert a new value into L2 cache  <a href="#a9d43fc30b0ec386f449bef7331a7e4e7">More...</a><br /></td></tr>
-<tr class="separator:a9d43fc30b0ec386f449bef7331a7e4e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8162cf53102ad94e21478ce8c7c16e7a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l2cache_8c.html#a8162cf53102ad94e21478ce8c7c16e7a">checkL2</a> (<a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> currTag, <a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> currIndx, <a class="el" href="structall_cache.html">allCache</a> *cacheHier)</td></tr>
+<tr class="memdesc:a8162cf53102ad94e21478ce8c7c16e7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">check reference is a hit or a miss  <a href="#a8162cf53102ad94e21478ce8c7c16e7a">More...</a><br /></td></tr>
+<tr class="separator:a8162cf53102ad94e21478ce8c7c16e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8e6892d42aea4d1831eea0287fac3e8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l2cache_8c.html#ae8e6892d42aea4d1831eea0287fac3e8">L2miss</a> (<a class="el" href="structperformance.html">performance</a> *stats, <a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> currTagL2, <a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> currIndxL2, <a class="el" href="structall_cache.html">allCache</a> *cacheHier)</td></tr>
+<tr class="memdesc:ae8e6892d42aea4d1831eea0287fac3e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">if a miss occurs in the L2 cache this function is called to check the victim cache. If the desired tag is not in the victim cache it is brought in from main memory  <a href="#ae8e6892d42aea4d1831eea0287fac3e8">More...</a><br /></td></tr>
+<tr class="separator:ae8e6892d42aea4d1831eea0287fac3e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Authors</dt><dd>Rane Brown &amp; Brian Douglass </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>04-06-2016 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a45afb83143a653216292b7b0b2a97334"></a>
+<a class="anchor" id="a8162cf53102ad94e21478ce8c7c16e7a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -119,37 +119,80 @@ Functions</h2></td></tr>
           <td class="memname">int checkL2 </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
-          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td class="paramname"><em>currTag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
+          <td class="paramname"><em>currIndx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structall_cache.html">allCache</a> *&#160;</td>
+          <td class="paramname"><em>cacheHier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>address being checked </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currTag</td><td>the calculated tag for the L2 cache </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currIndx</td><td>the calculated index for the L2 cache </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cacheHier</td><td>structure containing pointers to each cache level in the hierarchy </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 hit, 1 miss </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 hit, 1 miss EXIT_FAILURE any other error </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a9d43fc30b0ec386f449bef7331a7e4e7"></a>
+<a class="anchor" id="ae8e6892d42aea4d1831eea0287fac3e8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int insertL2 </td>
+          <td class="memname">int L2miss </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
-          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structperformance.html">performance</a> *&#160;</td>
+          <td class="paramname"><em>stats</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
+          <td class="paramname"><em>currTagL2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
+          <td class="paramname"><em>currIndxL2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structall_cache.html">allCache</a> *&#160;</td>
+          <td class="paramname"><em>cacheHier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>address being inserted </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stats</td><td>structure containing statistics for the simulation, necessary for any updates </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currTagL2</td><td>the calculated tag value for L2 cache </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currIndxL2</td><td>the calculated index for the L2 cache </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cacheHier</td><td>structure containing linked lists for each cache level in the hierarchy </td></tr>
   </table>
   </dd>
 </dl>

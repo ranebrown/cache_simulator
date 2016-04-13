@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['performance',['performance',['../structperformance.html',1,'']]]
+  ['meminfo',['memInfo',['../structmem_info.html',1,'']]]
 ];

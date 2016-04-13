@@ -100,85 +100,204 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ad011812a862f263252bace5120a6ea4c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l1cache_8c.html#ad011812a862f263252bace5120a6ea4c">checkL1i</a> (<a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> addr)</td></tr>
-<tr class="memdesc:ad011812a862f263252bace5120a6ea4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if instruction reference is a hit or a miss  <a href="#ad011812a862f263252bace5120a6ea4c">More...</a><br /></td></tr>
-<tr class="separator:ad011812a862f263252bace5120a6ea4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6458654e749f84432d96aee9d78b981d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l1cache_8c.html#a6458654e749f84432d96aee9d78b981d">checkL1d</a> (<a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> addr)</td></tr>
-<tr class="memdesc:a6458654e749f84432d96aee9d78b981d"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if data read/write reference is a hit or a miss  <a href="#a6458654e749f84432d96aee9d78b981d">More...</a><br /></td></tr>
-<tr class="separator:a6458654e749f84432d96aee9d78b981d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f4fa4af02cecbfc9e1d328c61035d65"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l1cache_8c.html#a1f4fa4af02cecbfc9e1d328c61035d65">insertL1i</a> (<a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> addr)</td></tr>
-<tr class="memdesc:a1f4fa4af02cecbfc9e1d328c61035d65"><td class="mdescLeft">&#160;</td><td class="mdescRight">insert a new value into L1 instruction cache  <a href="#a1f4fa4af02cecbfc9e1d328c61035d65">More...</a><br /></td></tr>
-<tr class="separator:a1f4fa4af02cecbfc9e1d328c61035d65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a352a155d45297f98edf29cda85f8dedd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l1cache_8c.html#a352a155d45297f98edf29cda85f8dedd">insertL1d</a> (<a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> addr)</td></tr>
-<tr class="memdesc:a352a155d45297f98edf29cda85f8dedd"><td class="mdescLeft">&#160;</td><td class="mdescRight">insert a new value into L1 data cache  <a href="#a352a155d45297f98edf29cda85f8dedd">More...</a><br /></td></tr>
-<tr class="separator:a352a155d45297f98edf29cda85f8dedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8f57e09b6c32f5eb15115bbd7683ce5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l1cache_8c.html#af8f57e09b6c32f5eb15115bbd7683ce5">checkL1i</a> (<a class="el" href="cache_8h.html#aa0f39ee33b87675e11229913d432ffe7">ui</a> currIndx, <a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> currTag, <a class="el" href="structall_cache.html">allCache</a> *cacheHier)</td></tr>
+<tr class="memdesc:af8f57e09b6c32f5eb15115bbd7683ce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if instruction reference is a hit or a miss  <a href="#af8f57e09b6c32f5eb15115bbd7683ce5">More...</a><br /></td></tr>
+<tr class="separator:af8f57e09b6c32f5eb15115bbd7683ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab20d28ba68db5178fb0aa64e018bfe5f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l1cache_8c.html#ab20d28ba68db5178fb0aa64e018bfe5f">checkL1dR</a> (<a class="el" href="cache_8h.html#aa0f39ee33b87675e11229913d432ffe7">ui</a> currIndx, <a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> currTag, <a class="el" href="structall_cache.html">allCache</a> *cacheHier)</td></tr>
+<tr class="memdesc:ab20d28ba68db5178fb0aa64e018bfe5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if data read reference is a hit or a miss  <a href="#ab20d28ba68db5178fb0aa64e018bfe5f">More...</a><br /></td></tr>
+<tr class="separator:ab20d28ba68db5178fb0aa64e018bfe5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62d0a4d2eba025550b0ee336b27937ab"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l1cache_8c.html#a62d0a4d2eba025550b0ee336b27937ab">checkL1dW</a> (<a class="el" href="cache_8h.html#aa0f39ee33b87675e11229913d432ffe7">ui</a> currIndx, <a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> currTag, <a class="el" href="structall_cache.html">allCache</a> *cacheHier)</td></tr>
+<tr class="memdesc:a62d0a4d2eba025550b0ee336b27937ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if data write reference is a hit or a miss, sets dirty bit if hit occurs  <a href="#a62d0a4d2eba025550b0ee336b27937ab">More...</a><br /></td></tr>
+<tr class="separator:a62d0a4d2eba025550b0ee336b27937ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5093fcbb81d63b9c80fb3da12dda8a91"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l1cache_8c.html#a5093fcbb81d63b9c80fb3da12dda8a91">L1iMiss</a> (<a class="el" href="structperformance.html">performance</a> *stats, <a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> currTagL1, <a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> currTagL2, int currIndxL1, int currIndxL2, <a class="el" href="structall_cache.html">allCache</a> *cacheHier)</td></tr>
+<tr class="memdesc:a5093fcbb81d63b9c80fb3da12dda8a91"><td class="mdescLeft">&#160;</td><td class="mdescRight">upon a miss in the L1 instruction cache this function is called  <a href="#a5093fcbb81d63b9c80fb3da12dda8a91">More...</a><br /></td></tr>
+<tr class="separator:a5093fcbb81d63b9c80fb3da12dda8a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56bf5ed6d3b1da1c390dedb7e7cfbb01"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l1cache_8c.html#a56bf5ed6d3b1da1c390dedb7e7cfbb01">L1dMiss</a> (<a class="el" href="structperformance.html">performance</a> *stats, <a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> currTagL1, <a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a> currTagL2, int currIndxL1, int currIndxL2, <a class="el" href="structall_cache.html">allCache</a> *cacheHier)</td></tr>
+<tr class="memdesc:a56bf5ed6d3b1da1c390dedb7e7cfbb01"><td class="mdescLeft">&#160;</td><td class="mdescRight">upon a miss in the L1 data cache this function is called  <a href="#a56bf5ed6d3b1da1c390dedb7e7cfbb01">More...</a><br /></td></tr>
+<tr class="separator:a56bf5ed6d3b1da1c390dedb7e7cfbb01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Authors</dt><dd>Rane Brown &amp; Brian Douglass </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>04-06-2016 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a6458654e749f84432d96aee9d78b981d"></a>
+<a class="anchor" id="ab20d28ba68db5178fb0aa64e018bfe5f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int checkL1d </td>
+          <td class="memname">int checkL1dR </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
-          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#aa0f39ee33b87675e11229913d432ffe7">ui</a>&#160;</td>
+          <td class="paramname"><em>currIndx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
+          <td class="paramname"><em>currTag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structall_cache.html">allCache</a> *&#160;</td>
+          <td class="paramname"><em>cacheHier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>address being checked </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currIndx</td><td>the index for block to check </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currTag</td><td>the tag to be checked for </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cacheHier</td><td>pointer to strucute holding the caches </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 hit, 1 miss </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 hit, 1 miss EXIT_FAILURE any other error </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ad011812a862f263252bace5120a6ea4c"></a>
+<a class="anchor" id="a62d0a4d2eba025550b0ee336b27937ab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int checkL1dW </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#aa0f39ee33b87675e11229913d432ffe7">ui</a>&#160;</td>
+          <td class="paramname"><em>currIndx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
+          <td class="paramname"><em>currTag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structall_cache.html">allCache</a> *&#160;</td>
+          <td class="paramname"><em>cacheHier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">currIndx</td><td>the index for block to check </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currTag</td><td>the tag to be checked for </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cacheHier</td><td>pointer to strucute holding the caches </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 hit, 1 miss EXIT_FAILURE any other error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af8f57e09b6c32f5eb15115bbd7683ce5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int checkL1i </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
-          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#aa0f39ee33b87675e11229913d432ffe7">ui</a>&#160;</td>
+          <td class="paramname"><em>currIndx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
+          <td class="paramname"><em>currTag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structall_cache.html">allCache</a> *&#160;</td>
+          <td class="paramname"><em>cacheHier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>address being checked </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currIndx</td><td>the index for block to check </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currTag</td><td>the tag to be checked for </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cacheHier</td><td>pointer to strucute holding the caches </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>0 hit, 1 miss </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 hit, 1 miss, EXIT_FAILURE any other error </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a352a155d45297f98edf29cda85f8dedd"></a>
+<a class="anchor" id="a56bf5ed6d3b1da1c390dedb7e7cfbb01"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int insertL1d </td>
+          <td class="memname">int L1dMiss </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
-          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structperformance.html">performance</a> *&#160;</td>
+          <td class="paramname"><em>stats</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
+          <td class="paramname"><em>currTagL1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
+          <td class="paramname"><em>currTagL2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>currIndxL1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>currIndxL2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structall_cache.html">allCache</a> *&#160;</td>
+          <td class="paramname"><em>cacheHier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>address being inserted </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stats</td><td>structure containing statistics for the simulation, necessary for any updates </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currTagL1</td><td>the calcualted tag value for L1 cache </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currTagL2</td><td>the calculated tag value for L2 cache </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currIndxL1</td><td>the calculated index for L1 cache </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currIndxL2</td><td>the calculated index for the L2 cache </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cacheHier</td><td>structure containing linked lists for each cache level in the hierarchy </td></tr>
   </table>
   </dd>
 </dl>
@@ -186,22 +305,62 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1f4fa4af02cecbfc9e1d328c61035d65"></a>
+<a class="anchor" id="a5093fcbb81d63b9c80fb3da12dda8a91"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int insertL1i </td>
+          <td class="memname">int L1iMiss </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
-          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structperformance.html">performance</a> *&#160;</td>
+          <td class="paramname"><em>stats</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
+          <td class="paramname"><em>currTagL1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a>&#160;</td>
+          <td class="paramname"><em>currTagL2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>currIndxL1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>currIndxL2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structall_cache.html">allCache</a> *&#160;</td>
+          <td class="paramname"><em>cacheHier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>First the L1i victim cache is checked and if the desired value is found then it is moved into the L1i cache. If the desired value is not found in the victim cache then the function calls an additional function to check the L2 cache. If misses continue to occure in each cache level the desired value will eventually be brought in from main memory. This Function returns EXIT_SUCCESS upon successful completion which indicates there was a hit in one of the cache levels or the value was brought in from main memory. It will return EXIT_FAILURE if there is a problem at any memory level.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">addr</td><td>address being inserted </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stats</td><td>structure containing statistics for the simulation, necessary for any updates </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currTagL1</td><td>the calcualted tag value for L1 cache </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currTagL2</td><td>the calculated tag value for L2 cache </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currIndxL1</td><td>the calculated index for L1 cache </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">currIndxL2</td><td>the calculated index for the L2 cache </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cacheHier</td><td>structure containing linked lists for each cache level in the hierarchy </td></tr>
   </table>
   </dd>
 </dl>

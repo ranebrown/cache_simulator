@@ -103,6 +103,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ab4a7e024f65d360dee8b8219db3a07b5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8c.html#ab4a7e024f65d360dee8b8219db3a07b5">calcBits</a> (<a class="el" href="structmem_info.html">memInfo</a> *mem, int *bitsIndexL1, int *bitsTagL1, int *bitsIndexL2, int *bitsTagL2)</td></tr>
 <tr class="memdesc:ab4a7e024f65d360dee8b8219db3a07b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the number of index bits and tag bits for L1 and L2 cache.  <a href="#ab4a7e024f65d360dee8b8219db3a07b5">More...</a><br /></td></tr>
 <tr class="separator:ab4a7e024f65d360dee8b8219db3a07b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a797dca5dc7c93dd3b087911369c2894f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8c.html#a797dca5dc7c93dd3b087911369c2894f">initCache</a> (<a class="el" href="structmem_info.html">memInfo</a> *cacheCnfg, <a class="el" href="structall_cache.html">allCache</a> *cacheHier)</td></tr>
+<tr class="memdesc:a797dca5dc7c93dd3b087911369c2894f"><td class="mdescLeft">&#160;</td><td class="mdescRight">function to initialize cache levels  <a href="#a797dca5dc7c93dd3b087911369c2894f">More...</a><br /></td></tr>
+<tr class="separator:a797dca5dc7c93dd3b087911369c2894f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9743f5f20f51caf20c393cfb24d47af"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8c.html#ae9743f5f20f51caf20c393cfb24d47af">deleteCache</a> (<a class="el" href="structmem_info.html">memInfo</a> *cacheCnfg, <a class="el" href="structall_cache.html">allCache</a> *cacheHier)</td></tr>
+<tr class="memdesc:ae9743f5f20f51caf20c393cfb24d47af"><td class="mdescLeft">&#160;</td><td class="mdescRight">function to free the memory allocated for all cache levels  <a href="#ae9743f5f20f51caf20c393cfb24d47af">More...</a><br /></td></tr>
+<tr class="separator:ae9743f5f20f51caf20c393cfb24d47af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Authors</dt><dd>Rane Brown &amp; Brian Douglass </dd></dl>
@@ -162,6 +168,74 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">bitsTagL1</td><td>the number of tag bits for L1 cache </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">bitsIndexL2</td><td>the number of index bits for L2 cache </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">bitsTagL2</td><td>the nubmer of tag bits for L2 cache </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS or EXIT_FAILURE </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae9743f5f20f51caf20c393cfb24d47af"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int deleteCache </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmem_info.html">memInfo</a> *&#160;</td>
+          <td class="paramname"><em>cacheCnfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structall_cache.html">allCache</a> *&#160;</td>
+          <td class="paramname"><em>cacheHier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cacheCnfg</td><td>structure that contains the configuration settings for each cache level </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cacheHier</td><td>strucutre that contains pointers to the linked lists for each cache level </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS or EXIT_FAILURE </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a797dca5dc7c93dd3b087911369c2894f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int initCache </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmem_info.html">memInfo</a> *&#160;</td>
+          <td class="paramname"><em>cacheCnfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structall_cache.html">allCache</a> *&#160;</td>
+          <td class="paramname"><em>cacheHier</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cacheCnfg</td><td>structure containing cache configuration options </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">cacheHier</td><td>pointer to a struct containing doubly linked lists for each memory hierarchy </td></tr>
   </table>
   </dd>
 </dl>

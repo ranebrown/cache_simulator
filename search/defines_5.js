@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['printvalues',['PRINTVALUES',['../config_8h.html#a43200dc681c1bb3d8df82e1857afb9e0',1,'config.h']]]
+  ['main_5fmem_5ftransfer_5ft',['MAIN_MEM_TRANSFER_T',['../cache_8h.html#a3ead52922295e2f96e792a4a76237a6c',1,'cache.h']]],
+  ['miss',['MISS',['../cache_8h.html#a614c0d93bfbf181f442e30e1c27b27ae',1,'cache.h']]]
 ];

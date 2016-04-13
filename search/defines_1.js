@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['decmemlat',['DECMEMLAT',['../config_8h.html#a248de5d1eca094767b305b01d26189d1',1,'config.h']]]
+  ['clean',['CLEAN',['../cache_8h.html#a35321edda7ad4639415e2461e6ffee97',1,'cache.h']]]
 ];
