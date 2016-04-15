@@ -14,6 +14,8 @@
     #include "cache.h"
     #include "common.h"
 
+    #define READ 0  ///< data read operation
+    #define WRITE 1 ///< data write operation
     /**
      * @brief check if instruction reference is a hit or a miss
      * @param[in] currIndx the index for block to check
@@ -51,25 +53,31 @@
      * or the value was brought in from main memory. It will return EXIT_FAILURE if there is a problem at any memory level.
      *
      * @param[in] stats structure containing statistics for the simulation, necessary for any updates
+     * @param[in] cacheCnfg structure containing cache configuration parameters
      * @param[in] currTagL1 the calcualted tag value for L1 cache
      * @param[in] currTagL2 the calculated tag value for L2 cache
      * @param[in] currIndxL1 the calculated index for L1 cache
      * @param[in] currIndxL2 the calculated index for the L2 cache
      * @param[in] cacheHier structure containing linked lists for each cache level in the hierarchy
+     * @param[in] addr the current full address, used when placing item in victim cache
      * @returns EXIT_SUCCESS or EXIT_FAILURE
      */
-    int L1iMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier);
+    int L1iMiss(performance *stats, memInfo* cacheCnfg, ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier, ulli addr);
 
     /**
      * @brief upon a miss in the L1 data cache this function is called
      * @param[in] stats structure containing statistics for the simulation, necessary for any updates
+     * @param[in] cacheCnfg structure containing cache configuration parameters
      * @param[in] currTagL1 the calcualted tag value for L1 cache
      * @param[in] currTagL2 the calculated tag value for L2 cache
      * @param[in] currIndxL1 the calculated index for L1 cache
      * @param[in] currIndxL2 the calculated index for the L2 cache
      * @param[in] cacheHier structure containing linked lists for each cache level in the hierarchy
+     * @param[in] addr the current full address, used when placing item in victim cache
+     * @param[in] rw determines if request is a read or write 0 = read, 1 = write
      * @returns EXIT_SUCCESS or EXIT_FAILURE
      */
-    int L1dMiss(performance *stats, ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier);
+    int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2,
+                allCache *cacheHier, ulli addr, int rw);
 
 #endif // L1_CACHE_H

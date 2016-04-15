@@ -110,6 +110,8 @@
         float   missRateL2     ;       ///< miss rate percentage L2 cache
     } performance;
 
+    int printCurrCache(memInfo *cacheCnfg, allCache *cacheHier);
+
     /**
     * @brief Calculates the number of index bits and tag bits for L1 and L2 cache
     *
@@ -121,14 +123,10 @@
     * - number of index bits = log2(# of blocks in the cache / divided by associativity)
     * - number of tags bits = total address bits - # index bits - # offset bits
     *
-    * @param[in] mem structure containing cache configuration options
-    * @param[out] bitsIndexL1 the number of index bits for L1 cache
-    * @param[out] bitsTagL1 the number of tag bits for L1 cache
-    * @param[out] bitsIndexL2 the number of index bits for L2 cache
-    * @param[out] bitsTagL2 the nubmer of tag bits for L2 cache
+    * @param[in] mem structure containing cache configuration options, and number of bits for tag and index of each level
     * @returns EXIT_SUCCESS or EXIT_FAILURE
     */
-    int calcBits(memInfo *mem, int *bitsIndexL1, int *bitsTagL1, int *bitsIndexL2, int *bitsTagL2);
+    int calcBits(memInfo *mem);
 
     /**
      * @brief function to initialize cache levels

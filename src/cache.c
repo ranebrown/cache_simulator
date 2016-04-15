@@ -13,49 +13,192 @@
 
 #include "cache.h"
 
-int calcBits(memInfo *mem, int *bitsIndexL1, int *bitsTagL1, int *bitsIndexL2, int *bitsTagL2)
+int calcBits(memInfo *mem)
 {
-    if(mem == NULL || bitsIndexL1 == NULL || bitsTagL1 == NULL || bitsIndexL2 == NULL || bitsTagL2 == NULL)
-        return EXIT_FAILURE;
+    if(mem == NULL)
+        PERR("null value passed");
 
     // handle fully associative case for L1 cache
     if(mem->L1iWays == 0)
     {
         // number of index bits L1 cache
-        *bitsIndexL1 = 0;
+        mem->bitsIndexL1 = 0;
 
         // number of tag bits L1 cache
-        *bitsTagL1 = 64 - L1_OFFSET;
+        mem->bitsTagL1 = 64 - L1_OFFSET;
 
     }
     // all other configurations
     else
     {
         // number of index bits L1 cache
-        *bitsIndexL1 = log2((mem->L1dSize / mem->L1dBlock) / mem->L1dWays);
+        mem->bitsIndexL1 = log2((mem->L1dSize / mem->L1dBlock) / mem->L1dWays);
 
         // number of tag bits L1 cache
-        *bitsTagL1 = 64 - *bitsIndexL1 - L1_OFFSET;
+        mem->bitsTagL1 = 64 - mem->bitsIndexL1 - L1_OFFSET;
     }
 
     // handle fully associative case for L2 cache
     if(mem->L2Ways == 0)
     {
         // number of index bits L2 cache
-        *bitsIndexL2 = 0;
+        mem->bitsIndexL2 = 0;
 
         // number of tag bits L2 cache
-        *bitsTagL2 = 64 - L2_OFFSET;
+        mem->bitsTagL2 = 64 - L2_OFFSET;
     }
     // all other configurations
     else
     {
         // number of index bits L2 cache
-        *bitsIndexL2 = log2((mem->L2Size / mem->L2Block) / mem->L2Ways);
+        mem->bitsIndexL2 = log2((mem->L2Size / mem->L2Block) / mem->L2Ways);
 
         // number of tag bits L2 cache
-        *bitsTagL2 = 64 - *bitsIndexL2 - L2_OFFSET;
+        mem->bitsTagL2 = 64 - mem->bitsIndexL2 - L2_OFFSET;
     }
+
+    return EXIT_SUCCESS;
+}
+
+int printCurrCache(memInfo *cacheCnfg, allCache *cacheHier)
+{
+    /* check for bad input */
+    if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
+        || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
+        PERR("cache not initialized");
+
+    int i             =    0;
+    int j             =    0;
+    int numLinesL1    =    0;
+    int numLinesL2    =    0;
+    int numWaysL1     =    0;
+    int numWaysL2     =    0;
+
+    // handle fully associative case L1
+    if(cacheCnfg->L1iWays == 0)
+    {
+        numLinesL1 = 1;
+        numWaysL1 = cacheCnfg->L1dSize / cacheCnfg->L1dBlock;
+    }
+    // all other configurations
+    else
+    {
+        numLinesL1    =    cacheCnfg->L1dSize / cacheCnfg->L1dBlock / cacheCnfg->L1dWays;
+        numWaysL1     =    cacheCnfg->L1dWays;
+    }
+    // handle fully associative case L2
+    if(cacheCnfg->L2Ways == 0)
+    {
+        numLinesL2 = 1;
+        numWaysL2 = cacheCnfg->L2Size / cacheCnfg->L2Block;
+    }
+    // all other configurations
+    else
+    {
+        numLinesL2  =   cacheCnfg->L2Size / cacheCnfg->L2Block / cacheCnfg->L2Ways;
+        numWaysL2   =   cacheCnfg->L2Ways;
+    }
+
+    node *L1iNode      =    NULL;
+    node *L1dNode      =    NULL;
+    node *L2Node       =    NULL;
+    node *VCL1iNode    =    NULL;
+    node *VCL1dNode    =    NULL;
+    node *VCL2Node     =    NULL;
+
+    // print L1i cache values
+    printf("L1i\n");
+    for(i=0; i<numLinesL1; i++)
+    {
+        L1iNode = cacheHier->L1i[i]->first;
+        printf("Index: %3x | ", i);
+        for(j=0; j<numWaysL1; j++)
+        {
+            if(L1iNode->valid == 1)
+            {
+                printf("D: %x | ", L1iNode->dirty);
+                printf("Tag: %10llx\t", L1iNode->tag);
+            }
+            L1iNode = L1iNode->next;
+        }
+        printf("\n");
+    }
+
+    // print L1d cache values
+    printf("\nL1d\n");
+    for(int i=0; i<numLinesL1; i++)
+    {
+        L1dNode = cacheHier->L1d[i]->first;
+        printf("Index: %3x | ", i);
+        for(j=0; j<numWaysL1; j++)
+        {
+            if(L1dNode->valid == 1)
+            {
+                printf("D: %x | ", L1dNode->dirty);
+                printf("Tag: %10llx\t", L1dNode->tag);
+            }
+            L1dNode = L1dNode->next;
+        }
+        printf("\n");
+    }
+
+    // print L2 cache values
+    printf("\nL2\n");
+    for(int i=0; i<numLinesL2; i++)
+    {
+        L2Node = cacheHier->L2[i]->first;
+
+        printf("Index: %3x | ", i);
+        for(j=0; j<numWaysL2; j++)
+        {
+            if(L2Node->valid == 1)
+            {
+                printf("D: %x | ", L2Node->dirty);
+                printf("Tag: %10llx\t", L2Node->tag);
+            }
+            L2Node = L2Node->next;
+        }
+        printf("\n");
+    }
+
+    // print Victim cache values
+    printf("\nVCL1i\n");
+    VCL1iNode = cacheHier->VCL1i->first;
+    for(i=0; i<8; i++)
+    {
+        if(VCL1iNode->valid == 1)
+        {
+            printf("D: %x | ", VCL1iNode->dirty);
+            printf("Tag: %10llx\n", VCL1iNode->tag);
+        }
+        VCL1iNode = VCL1iNode->next;
+
+    }
+    printf("\nVCL1d\n");
+    VCL1dNode = cacheHier->VCL1d->first;
+    for(i=0; i<8; i++)
+    {
+        if(VCL1dNode->valid == 1)
+        {
+            printf("D: %x | ", VCL1dNode->dirty);
+            printf("Tag: %10llx\n", VCL1dNode->tag);
+        }
+        VCL1dNode = VCL1dNode->next;
+
+    }
+    printf("\nVCL2\n");
+    VCL2Node = cacheHier->VCL2->first;
+    for(i=0; i<8; i++)
+    {
+        if(VCL2Node->valid == 1)
+        {
+            printf("D: %x | ", VCL2Node->dirty);
+            printf("Tag: %10llx\n", VCL2Node->tag);
+        }
+        VCL2Node = VCL2Node->next;
+
+    }
+    printf("\n");
 
     return EXIT_SUCCESS;
 }

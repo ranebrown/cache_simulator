@@ -29,8 +29,9 @@
      * @param[in] currTagL2 the calculated tag value for L2 cache
      * @param[in] currIndxL2 the calculated index for the L2 cache
      * @param[in] cacheHier structure containing linked lists for each cache level in the hierarchy
+     * @param[in] addr the current full address, used when placing item in victim cache
      * @returns EXIT_SUCCESS or EXIT_FAILURE
      */
-    int L2miss(performance *stats, ulli currTagL2, ulli currIndxL2, allCache *cacheHier);
+    int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndxL2, allCache *cacheHier, ulli addr);
 
 #endif // L2_CACHE_H
