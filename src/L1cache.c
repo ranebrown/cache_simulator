@@ -244,6 +244,7 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
 
         return EXIT_SUCCESS;
     }
+    // TODO remove below code -> never have dirty kickouts from L1i
     else
     {
         stats->dirtyKickL1i++;
@@ -503,8 +504,8 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
     }
 
     // case 2: kickout from L1d causes a kickout from VCL1d -> move entry to L2 if dirty
-    VCL1dNode = cacheHier->VCL1d->last;         // item being kicked out from L1d
-    L1dNode = cacheHier->L1d[currIndxL1]->last; // item being kicked out from VCL1d
+    VCL1dNode = cacheHier->VCL1d->last;
+    L1dNode = cacheHier->L1d[currIndxL1]->last;
     node *kickVCL1d = VCL1dNode;                // temp node
     node *L2Node = cacheHier->L2[currIndxL2]->first;
 
@@ -534,6 +535,15 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
     else
     {
         stats->dirtyKickL1d++;
+        // transfer tag from L2 to L1d
+        L1dNode->tag = currTagL1;
+        L1dNode->valid = 1;
+        if(rw == READ)
+            L1dNode->dirty = CLEAN;
+        else
+            L1dNode->dirty = DIRTY;
+        if(bumpToFirst(cacheHier->L1d[currIndxL1], L1dNode->tag))
+            PERR("bumpToFirst failed");
 
         // kickout from VCL1d to L2
         // case 2a: there is a spot available in L2
@@ -548,18 +558,6 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
 
                 // LRU policy L2
                 if(bumpToFirst(cacheHier->L2[currIndxL2], L2Node->tag))
-                    PERR("bumpToFirst failed");
-
-                // transfer tag from L2 to L1d
-                L1dNode->tag = currTagL1;
-                L1dNode->valid = 1;
-                if(rw == READ)
-                    L1dNode->dirty = CLEAN;
-                else
-                    L1dNode->dirty = DIRTY;
-
-                // LRU policy L1d
-                if(bumpToFirst(cacheHier->L1d[currIndxL1], currTagL1))
                     PERR("bumpToFirst failed");
 
                 return EXIT_SUCCESS;
@@ -594,18 +592,6 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
                 if(bumpToFirst(cacheHier->L2[currIndxL2], L2Node->tag))
                     PERR("bumpToFirst failed");
 
-                // transfer tag from L2 to L1d
-                L1dNode->tag = currTagL1;
-                L1dNode->valid = 1;
-                if(rw == READ)
-                    L1dNode->dirty = CLEAN;
-                else
-                    L1dNode->dirty = DIRTY;
-
-                // LRU policy L1d
-                if(bumpToFirst(cacheHier->L1d[currIndxL1], currTagL1))
-                    PERR("bumpToFirst failed");
-
                 return EXIT_SUCCESS;
             }
 
@@ -633,18 +619,6 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
 
         // LRU policy L2
         if(bumpToFirst(cacheHier->L2[currIndxL2], L2Node->tag))
-            PERR("bumpToFirst failed");
-
-        // transfer tag from L2 to L1d
-        L1dNode->tag = currTagL1;
-        L1dNode->valid = 1;
-        if(rw == READ)
-            L1dNode->dirty = CLEAN;
-        else
-            L1dNode->dirty = DIRTY;
-
-        // LRU policy L1d
-        if(bumpToFirst(cacheHier->L1d[currIndxL1], currTagL1))
             PERR("bumpToFirst failed");
 
         // check if item evicted from VCL2 was dirty and needs written to main mem
