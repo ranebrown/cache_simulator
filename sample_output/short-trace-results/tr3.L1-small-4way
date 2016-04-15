@@ -1,0 +1,726 @@
+
+Config filename: configs/L1-small-4way-config
+Set parameter L1i_cache_size to 4096
+Set parameter L1d_cache_size to 4096
+Set parameter L1i_assoc to 4
+Set parameter L1d_assoc to 4
+Set 4 parameter(s) from config file.
+
+----------------------------------------------------------------
+Ref 0: Addr = 0x7f81ce2206b0, Type = I, BSize = 3
+Level L1i access addr = 0x7f81ce2206b0, reftype = Read
+    index = 0x15, tag = 0x1fe0738881  MISS
+Add L1i miss time (+ 1)
+Level L2 access addr = 0x7f81ce2206b0, reftype = Read
+    index = 0x1a, tag =   0xff039c44  MISS
+Add L2 miss time (+ 10)
+Bringing line into L2.
+Add memory to L2 transfer time (+ 180)
+Add L2 hit replay time (+ 8)
+Bringing line into L1i.
+Add L2 to L1 transfer time (+ 20)
+Add L1i hit replay time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 221
+----------------------------------------------------------------
+Ref 1: Addr = 0x7f81ce2206b3, Type = I, BSize = 5
+Level L1i access addr = 0x7f81ce2206b0, reftype = Read
+    index = 0x15, tag = 0x1fe0738881  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce2206b4, reftype = Read
+    index = 0x15, tag = 0x1fe0738881  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 224
+----------------------------------------------------------------
+Ref 2: Addr = 0x7fff5a8487d8, Type = W, BSize = 8
+Level L1d access addr = 0x7fff5a8487d8, reftype = Write
+    index = 0x1e, tag = 0x1fffd6a121  MISS
+Add L1d miss time (+ 1)
+Level L2 access addr = 0x7fff5a8487d8, reftype = Read
+    index = 0x1f, tag =   0xfffeb509  MISS
+Add L2 miss time (+ 10)
+Bringing line into L2.
+Add memory to L2 transfer time (+ 180)
+Add L2 hit replay time (+ 8)
+Bringing line into L1d.
+Add L2 to L1 transfer time (+ 20)
+Add L1d hit replay time (+ 1)
+Level L1d access addr = 0x7fff5a8487dc, reftype = Write
+    index = 0x1e, tag = 0x1fffd6a121  HIT
+Add L1d hit time (+ 1)
+Simulated time = 445
+----------------------------------------------------------------
+Ref 3: Addr = 0x7f81ce224010, Type = I, BSize = 1
+Level L1i access addr = 0x7f81ce224010, reftype = Read
+    index =   0, tag = 0x1fe0738890  MISS
+Add L1i miss time (+ 1)
+Level L2 access addr = 0x7f81ce224010, reftype = Read
+    index = 0x100, tag =   0xff039c44  MISS
+Add L2 miss time (+ 10)
+Bringing line into L2.
+Add memory to L2 transfer time (+ 180)
+Add L2 hit replay time (+ 8)
+Bringing line into L1i.
+Add L2 to L1 transfer time (+ 20)
+Add L1i hit replay time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 666
+----------------------------------------------------------------
+Ref 4: Addr = 0x7fff5a8487d0, Type = W, BSize = 8
+Level L1d access addr = 0x7fff5a8487d0, reftype = Write
+    index = 0x1e, tag = 0x1fffd6a121  HIT
+Add L1d hit time (+ 1)
+Level L1d access addr = 0x7fff5a8487d4, reftype = Write
+    index = 0x1e, tag = 0x1fffd6a121  HIT
+Add L1d hit time (+ 1)
+Simulated time = 668
+----------------------------------------------------------------
+Ref 5: Addr = 0x7f81ce224011, Type = I, BSize = 3
+Level L1i access addr = 0x7f81ce224010, reftype = Read
+    index =   0, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 670
+----------------------------------------------------------------
+Ref 6: Addr = 0x7f81ce224014, Type = I, BSize = 2
+Level L1i access addr = 0x7f81ce224014, reftype = Read
+    index =   0, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 672
+----------------------------------------------------------------
+Ref 7: Addr = 0x7fff5a8487c8, Type = W, BSize = 8
+Level L1d access addr = 0x7fff5a8487c8, reftype = Write
+    index = 0x1e, tag = 0x1fffd6a121  HIT
+Add L1d hit time (+ 1)
+Level L1d access addr = 0x7fff5a8487cc, reftype = Write
+    index = 0x1e, tag = 0x1fffd6a121  HIT
+Add L1d hit time (+ 1)
+Simulated time = 674
+----------------------------------------------------------------
+Ref 8: Addr = 0x7f81ce224016, Type = I, BSize = 2
+Level L1i access addr = 0x7f81ce224014, reftype = Read
+    index =   0, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 676
+----------------------------------------------------------------
+Ref 9: Addr = 0x7fff5a8487c0, Type = W, BSize = 8
+Level L1d access addr = 0x7fff5a8487c0, reftype = Write
+    index = 0x1e, tag = 0x1fffd6a121  HIT
+Add L1d hit time (+ 1)
+Level L1d access addr = 0x7fff5a8487c4, reftype = Write
+    index = 0x1e, tag = 0x1fffd6a121  HIT
+Add L1d hit time (+ 1)
+Simulated time = 678
+----------------------------------------------------------------
+Ref 10: Addr = 0x7f81ce224018, Type = I, BSize = 2
+Level L1i access addr = 0x7f81ce224018, reftype = Read
+    index =   0, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 680
+----------------------------------------------------------------
+Ref 11: Addr = 0x7fff5a8487b8, Type = W, BSize = 8
+Level L1d access addr = 0x7fff5a8487b8, reftype = Write
+    index = 0x1d, tag = 0x1fffd6a121  MISS
+Add L1d miss time (+ 1)
+Level L2 access addr = 0x7fff5a8487b8, reftype = Read
+    index = 0x1e, tag =   0xfffeb509  MISS
+Add L2 miss time (+ 10)
+Bringing line into L2.
+Add memory to L2 transfer time (+ 180)
+Add L2 hit replay time (+ 8)
+Bringing line into L1d.
+Add L2 to L1 transfer time (+ 20)
+Add L1d hit replay time (+ 1)
+Level L1d access addr = 0x7fff5a8487bc, reftype = Write
+    index = 0x1d, tag = 0x1fffd6a121  HIT
+Add L1d hit time (+ 1)
+Simulated time = 901
+----------------------------------------------------------------
+Ref 12: Addr = 0x7f81ce22401a, Type = I, BSize = 2
+Level L1i access addr = 0x7f81ce224018, reftype = Read
+    index =   0, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 903
+----------------------------------------------------------------
+Ref 13: Addr = 0x7fff5a8487b0, Type = W, BSize = 8
+Level L1d access addr = 0x7fff5a8487b0, reftype = Write
+    index = 0x1d, tag = 0x1fffd6a121  HIT
+Add L1d hit time (+ 1)
+Level L1d access addr = 0x7fff5a8487b4, reftype = Write
+    index = 0x1d, tag = 0x1fffd6a121  HIT
+Add L1d hit time (+ 1)
+Simulated time = 905
+----------------------------------------------------------------
+Ref 14: Addr = 0x7f81ce22401c, Type = I, BSize = 1
+Level L1i access addr = 0x7f81ce22401c, reftype = Read
+    index =   0, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 907
+----------------------------------------------------------------
+Ref 15: Addr = 0x7fff5a8487a8, Type = W, BSize = 8
+Level L1d access addr = 0x7fff5a8487a8, reftype = Write
+    index = 0x1d, tag = 0x1fffd6a121  HIT
+Add L1d hit time (+ 1)
+Level L1d access addr = 0x7fff5a8487ac, reftype = Write
+    index = 0x1d, tag = 0x1fffd6a121  HIT
+Add L1d hit time (+ 1)
+Simulated time = 909
+----------------------------------------------------------------
+Ref 16: Addr = 0x7f81ce22401d, Type = I, BSize = 3
+Level L1i access addr = 0x7f81ce22401c, reftype = Read
+    index =   0, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 911
+----------------------------------------------------------------
+Ref 17: Addr = 0x7f81ce224020, Type = I, BSize = 4
+Level L1i access addr = 0x7f81ce224020, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  MISS
+Add L1i miss time (+ 1)
+Level L2 access addr = 0x7f81ce224020, reftype = Read
+    index = 0x100, tag =   0xff039c44  HIT
+Add L2 hit time (+ 8)
+Bringing line into L1i.
+Add L2 to L1 transfer time (+ 20)
+Add L1i hit replay time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 942
+----------------------------------------------------------------
+Ref 18: Addr = 0x7f81ce224024, Type = I, BSize = 2
+Level L1i access addr = 0x7f81ce224024, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 944
+----------------------------------------------------------------
+Ref 19: Addr = 0x7f81ce224026, Type = I, BSize = 4
+Level L1i access addr = 0x7f81ce224024, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224028, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 947
+----------------------------------------------------------------
+Ref 20: Addr = 0x7f81ce22402a, Type = I, BSize = 2
+Level L1i access addr = 0x7f81ce224028, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 949
+----------------------------------------------------------------
+Ref 21: Addr = 0x7f81ce22402c, Type = I, BSize = 3
+Level L1i access addr = 0x7f81ce22402c, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 951
+----------------------------------------------------------------
+Ref 22: Addr = 0x7f81ce22402f, Type = I, BSize = 7
+Level L1i access addr = 0x7f81ce22402c, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224030, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224034, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 955
+----------------------------------------------------------------
+Ref 23: Addr = 0x7f81ce224036, Type = I, BSize = 7
+Level L1i access addr = 0x7f81ce224034, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224038, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce22403c, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 959
+----------------------------------------------------------------
+Ref 24: Addr = 0x7f81ce441b80, Type = R, BSize = 8
+Level L1d access addr = 0x7f81ce441b80, reftype = Read
+    index = 0x1c, tag = 0x1fe0739106  MISS
+Add L1d miss time (+ 1)
+Level L2 access addr = 0x7f81ce441b80, reftype = Read
+    index = 0x6e, tag =   0xff039c88  MISS
+Add L2 miss time (+ 10)
+Bringing line into L2.
+Add memory to L2 transfer time (+ 180)
+Add L2 hit replay time (+ 8)
+Bringing line into L1d.
+Add L2 to L1 transfer time (+ 20)
+Add L1d hit replay time (+ 1)
+Level L1d access addr = 0x7f81ce441b84, reftype = Read
+    index = 0x1c, tag = 0x1fe0739106  HIT
+Add L1d hit time (+ 1)
+Simulated time = 1180
+----------------------------------------------------------------
+Ref 25: Addr = 0x7f81ce22403d, Type = I, BSize = 7
+Level L1i access addr = 0x7f81ce22403c, reftype = Read
+    index = 0x1, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224040, reftype = Read
+    index = 0x2, tag = 0x1fe0738890  MISS
+Add L1i miss time (+ 1)
+Level L2 access addr = 0x7f81ce224040, reftype = Read
+    index = 0x101, tag =   0xff039c44  MISS
+Add L2 miss time (+ 10)
+Bringing line into L2.
+Add memory to L2 transfer time (+ 180)
+Add L2 hit replay time (+ 8)
+Bringing line into L1i.
+Add L2 to L1 transfer time (+ 20)
+Add L1i hit replay time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 1402
+----------------------------------------------------------------
+Ref 26: Addr = 0x7f81ce441cd8, Type = W, BSize = 8
+Level L1d access addr = 0x7f81ce441cd8, reftype = Write
+    index = 0x6, tag = 0x1fe0739107  MISS
+Add L1d miss time (+ 1)
+Level L2 access addr = 0x7f81ce441cd8, reftype = Read
+    index = 0x73, tag =   0xff039c88  MISS
+Add L2 miss time (+ 10)
+Bringing line into L2.
+Add memory to L2 transfer time (+ 180)
+Add L2 hit replay time (+ 8)
+Bringing line into L1d.
+Add L2 to L1 transfer time (+ 20)
+Add L1d hit replay time (+ 1)
+Level L1d access addr = 0x7f81ce441cdc, reftype = Write
+    index = 0x6, tag = 0x1fe0739107  HIT
+Add L1d hit time (+ 1)
+Simulated time = 1623
+----------------------------------------------------------------
+Ref 27: Addr = 0x7f81ce224044, Type = I, BSize = 3
+Level L1i access addr = 0x7f81ce224044, reftype = Read
+    index = 0x2, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 1625
+----------------------------------------------------------------
+Ref 28: Addr = 0x7f81ce224047, Type = I, BSize = 7
+Level L1i access addr = 0x7f81ce224044, reftype = Read
+    index = 0x2, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224048, reftype = Read
+    index = 0x2, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce22404c, reftype = Read
+    index = 0x2, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 1629
+----------------------------------------------------------------
+Ref 29: Addr = 0x7f81ce441fb8, Type = R, BSize = 8
+Level L1d access addr = 0x7f81ce441fb8, reftype = Read
+    index = 0x1d, tag = 0x1fe0739107  MISS
+Add L1d miss time (+ 1)
+Level L2 access addr = 0x7f81ce441fb8, reftype = Read
+    index = 0x7e, tag =   0xff039c88  MISS
+Add L2 miss time (+ 10)
+Bringing line into L2.
+Add memory to L2 transfer time (+ 180)
+Add L2 hit replay time (+ 8)
+Bringing line into L1d.
+Add L2 to L1 transfer time (+ 20)
+Add L1d hit replay time (+ 1)
+Level L1d access addr = 0x7f81ce441fbc, reftype = Read
+    index = 0x1d, tag = 0x1fe0739107  HIT
+Add L1d hit time (+ 1)
+Simulated time = 1850
+----------------------------------------------------------------
+Ref 30: Addr = 0x7f81ce22404e, Type = I, BSize = 7
+Level L1i access addr = 0x7f81ce22404c, reftype = Read
+    index = 0x2, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224050, reftype = Read
+    index = 0x2, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224054, reftype = Read
+    index = 0x2, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 1854
+----------------------------------------------------------------
+Ref 31: Addr = 0x7f81ce4429d8, Type = W, BSize = 8
+Level L1d access addr = 0x7f81ce4429d8, reftype = Write
+    index = 0xe, tag = 0x1fe073910a  MISS
+Add L1d miss time (+ 1)
+Level L2 access addr = 0x7f81ce4429d8, reftype = Read
+    index = 0xa7, tag =   0xff039c88  MISS
+Add L2 miss time (+ 10)
+Bringing line into L2.
+Add memory to L2 transfer time (+ 180)
+Add L2 hit replay time (+ 8)
+Bringing line into L1d.
+Add L2 to L1 transfer time (+ 20)
+Add L1d hit replay time (+ 1)
+Level L1d access addr = 0x7f81ce4429dc, reftype = Write
+    index = 0xe, tag = 0x1fe073910a  HIT
+Add L1d hit time (+ 1)
+Simulated time = 2075
+----------------------------------------------------------------
+Ref 32: Addr = 0x7f81ce224055, Type = I, BSize = 3
+Level L1i access addr = 0x7f81ce224054, reftype = Read
+    index = 0x2, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2077
+----------------------------------------------------------------
+Ref 33: Addr = 0x7f81ce441e28, Type = R, BSize = 8
+Level L1d access addr = 0x7f81ce441e28, reftype = Read
+    index = 0x11, tag = 0x1fe0739107  MISS
+Add L1d miss time (+ 1)
+Level L2 access addr = 0x7f81ce441e28, reftype = Read
+    index = 0x78, tag =   0xff039c88  MISS
+Add L2 miss time (+ 10)
+Bringing line into L2.
+Add memory to L2 transfer time (+ 180)
+Add L2 hit replay time (+ 8)
+Bringing line into L1d.
+Add L2 to L1 transfer time (+ 20)
+Add L1d hit replay time (+ 1)
+Level L1d access addr = 0x7f81ce441e2c, reftype = Read
+    index = 0x11, tag = 0x1fe0739107  HIT
+Add L1d hit time (+ 1)
+Simulated time = 2298
+----------------------------------------------------------------
+Ref 34: Addr = 0x7f81ce224058, Type = I, BSize = 7
+Level L1i access addr = 0x7f81ce224058, reftype = Read
+    index = 0x2, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce22405c, reftype = Read
+    index = 0x2, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2301
+----------------------------------------------------------------
+Ref 35: Addr = 0x7f81ce4429e8, Type = W, BSize = 8
+Level L1d access addr = 0x7f81ce4429e8, reftype = Write
+    index = 0xf, tag = 0x1fe073910a  MISS
+Add L1d miss time (+ 1)
+Level L2 access addr = 0x7f81ce4429e8, reftype = Read
+    index = 0xa7, tag =   0xff039c88  HIT
+Add L2 hit time (+ 8)
+Bringing line into L1d.
+Add L2 to L1 transfer time (+ 20)
+Add L1d hit replay time (+ 1)
+Level L1d access addr = 0x7f81ce4429ec, reftype = Write
+    index = 0xf, tag = 0x1fe073910a  HIT
+Add L1d hit time (+ 1)
+Simulated time = 2332
+----------------------------------------------------------------
+Ref 36: Addr = 0x7f81ce22405f, Type = I, BSize = 3
+Level L1i access addr = 0x7f81ce22405c, reftype = Read
+    index = 0x2, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224060, reftype = Read
+    index = 0x3, tag = 0x1fe0738890  MISS
+Add L1i miss time (+ 1)
+Level L2 access addr = 0x7f81ce224060, reftype = Read
+    index = 0x101, tag =   0xff039c44  HIT
+Add L2 hit time (+ 8)
+Bringing line into L1i.
+Add L2 to L1 transfer time (+ 20)
+Add L1i hit replay time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2364
+----------------------------------------------------------------
+Ref 37: Addr = 0x7f81ce224062, Type = I, BSize = 6
+Level L1i access addr = 0x7f81ce224060, reftype = Read
+    index = 0x3, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224064, reftype = Read
+    index = 0x3, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2367
+----------------------------------------------------------------
+Ref 38: Addr = 0x7f81ce224068, Type = I, BSize = 5
+Level L1i access addr = 0x7f81ce224068, reftype = Read
+    index = 0x3, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce22406c, reftype = Read
+    index = 0x3, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2370
+----------------------------------------------------------------
+Ref 39: Addr = 0x7f81ce22406d, Type = I, BSize = 6
+Level L1i access addr = 0x7f81ce22406c, reftype = Read
+    index = 0x3, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224070, reftype = Read
+    index = 0x3, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2373
+----------------------------------------------------------------
+Ref 40: Addr = 0x7f81ce224073, Type = I, BSize = 6
+Level L1i access addr = 0x7f81ce224070, reftype = Read
+    index = 0x3, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224074, reftype = Read
+    index = 0x3, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224078, reftype = Read
+    index = 0x3, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2377
+----------------------------------------------------------------
+Ref 41: Addr = 0x7f81ce224079, Type = I, BSize = 7
+Level L1i access addr = 0x7f81ce224078, reftype = Read
+    index = 0x3, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce22407c, reftype = Read
+    index = 0x3, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2380
+----------------------------------------------------------------
+Ref 42: Addr = 0x7f81ce224080, Type = I, BSize = 6
+Level L1i access addr = 0x7f81ce224080, reftype = Read
+    index = 0x4, tag = 0x1fe0738890  MISS
+Add L1i miss time (+ 1)
+Level L2 access addr = 0x7f81ce224080, reftype = Read
+    index = 0x102, tag =   0xff039c44  MISS
+Add L2 miss time (+ 10)
+Bringing line into L2.
+Add memory to L2 transfer time (+ 180)
+Add L2 hit replay time (+ 8)
+Bringing line into L1i.
+Add L2 to L1 transfer time (+ 20)
+Add L1i hit replay time (+ 1)
+Level L1i access addr = 0x7f81ce224084, reftype = Read
+    index = 0x4, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2602
+----------------------------------------------------------------
+Ref 43: Addr = 0x7f81ce224086, Type = I, BSize = 5
+Level L1i access addr = 0x7f81ce224084, reftype = Read
+    index = 0x4, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224088, reftype = Read
+    index = 0x4, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2605
+----------------------------------------------------------------
+Ref 44: Addr = 0x7f81ce22408b, Type = I, BSize = 2
+Level L1i access addr = 0x7f81ce224088, reftype = Read
+    index = 0x4, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce22408c, reftype = Read
+    index = 0x4, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2608
+----------------------------------------------------------------
+Ref 45: Addr = 0x7f81ce2240ad, Type = I, BSize = 4
+Level L1i access addr = 0x7f81ce2240ac, reftype = Read
+    index = 0x5, tag = 0x1fe0738890  MISS
+Add L1i miss time (+ 1)
+Level L2 access addr = 0x7f81ce2240ac, reftype = Read
+    index = 0x102, tag =   0xff039c44  HIT
+Add L2 hit time (+ 8)
+Bringing line into L1i.
+Add L2 to L1 transfer time (+ 20)
+Add L1i hit replay time (+ 1)
+Level L1i access addr = 0x7f81ce2240b0, reftype = Read
+    index = 0x5, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2640
+----------------------------------------------------------------
+Ref 46: Addr = 0x7f81ce2240b1, Type = I, BSize = 2
+Level L1i access addr = 0x7f81ce2240b0, reftype = Read
+    index = 0x5, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2642
+----------------------------------------------------------------
+Ref 47: Addr = 0x7f81ce224090, Type = I, BSize = 7
+Level L1i access addr = 0x7f81ce224090, reftype = Read
+    index = 0x4, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224094, reftype = Read
+    index = 0x4, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2645
+----------------------------------------------------------------
+Ref 48: Addr = 0x7f81ce224097, Type = I, BSize = 8
+Level L1i access addr = 0x7f81ce224094, reftype = Read
+    index = 0x4, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce224098, reftype = Read
+    index = 0x4, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Level L1i access addr = 0x7f81ce22409c, reftype = Read
+    index = 0x4, tag = 0x1fe0738890  HIT
+Add L1i hit time (+ 1)
+Add +1 for instruction execute time
+Simulated time = 2649
+----------------------------------------------------------------
+Ref 49: Addr = 0x7f81ce442a88, Type = W, BSize = 8
+Level L1d access addr = 0x7f81ce442a88, reftype = Write
+    index = 0x14, tag = 0x1fe073910a  MISS
+Add L1d miss time (+ 1)
+Level L2 access addr = 0x7f81ce442a88, reftype = Read
+    index = 0xaa, tag =   0xff039c88  MISS
+Add L2 miss time (+ 10)
+Bringing line into L2.
+Add memory to L2 transfer time (+ 180)
+Add L2 hit replay time (+ 8)
+Bringing line into L1d.
+Add L2 to L1 transfer time (+ 20)
+Add L1d hit replay time (+ 1)
+Level L1d access addr = 0x7f81ce442a8c, reftype = Write
+    index = 0x14, tag = 0x1fe073910a  HIT
+Add L1d hit time (+ 1)
+Simulated time = 2870
+
+L1i_block_shift = 5 L1d_block_shift = 5 L2_block_shift = 6
+L1i_sets_num = 32 L1d_sets_num = 32 L2_sets_num = 512
+L1i_sets_mask = 1f L1i_sets_shift = 5
+L1d_sets_mask = 1f L1d_sets_shift = 5
+L2_sets_mask = 1ff L2_sets_shift = 9
+L1i_tag_mask = 3fffffffffffff L1i_tag_shift = 10
+L1d_tag_mask = 3fffffffffffff L1d_tag_shift = 10
+L2_tag_mask = 1ffffffffffff L2_tag_shift = 15
+
+-------------------------------------------------------------------------
+      tr3.L1-small-4way   Simulation Results
+-------------------------------------------------------------------------
+
+  Memory system:
+    Dcache size = 4096 : ways = 4 : block size = 32 
+    Icache size = 4096 : ways = 4 : block size = 32 
+    L2-cache size = 32768 : ways = 1 : block size = 64 
+    Memory ready time = 50 : chunksize = 8 : chunktime = 15
+
+  Execute time =         2870;  Total refs = 50
+  Inst refs = 36;  Data refs = 14
+
+  Number of reference types:  [Percentage]
+    Reads  =           3    [ 6.0%]
+    Writes =          11    [22.0%]
+    Inst.  =          36    [72.0%]
+    Total  =          50
+
+  Total cycles for activities:  [Percentage]
+    Reads  =         663    [23.1%]
+    Writes =        1146    [39.9%]
+    Inst.  =        1061    [37.0%]
+    Total  =        2870
+
+  CPI = 79.7
+  Ideal: Exec. Time = 86; CPI =  2.4
+  Ideal mis-aligned: Exec. Time = 126; CPI =  3.5
+
+  Memory Level:  L1i
+    Hit Count = 55  Miss Count = 7
+    Total Requests = 62
+    Hit Rate = 88.7%   Miss Rate = 11.3%
+    Kickouts = 0; Dirty kickouts = 0; Transfers = 7
+    VC Hit count = 0
+
+  Memory Level:  L1d
+    Hit Count = 19  Miss Count = 9
+    Total Requests = 28
+    Hit Rate = 67.9%   Miss Rate = 32.1%
+    Kickouts = 0; Dirty kickouts = 0; Transfers = 9
+    VC Hit count = 0
+
+  Memory Level:  L2
+    Hit Count = 4  Miss Count = 12
+    Total Requests = 16
+    Hit Rate = 25.0%   Miss Rate = 75.0%
+    Kickouts = 0; Dirty kickouts = 0; Transfers = 12
+    VC Hit count = 0
+
+  L1 cache cost (Icache $300) + (Dcache $300) = $600
+  L2 cache cost = $100;  Memory cost = $75  Total cost = $775
+
+-------------------------------------------------------------------------
+
+Cache final contents - Index and Tag values are in HEX
+
+Memory Level:  L1i
+Index:    0 | V:1 D:0 Tag:   1fe0738890 | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:    1 | V:1 D:0 Tag:   1fe0738890 | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:    2 | V:1 D:0 Tag:   1fe0738890 | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:    3 | V:1 D:0 Tag:   1fe0738890 | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:    4 | V:1 D:0 Tag:   1fe0738890 | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:    5 | V:1 D:0 Tag:   1fe0738890 | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:   15 | V:1 D:0 Tag:   1fe0738881 | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Victim cache:
+            | V:0 D:0 Addr:            - | V:0 D:0 Addr:            - | 
+            | V:0 D:0 Addr:            - | V:0 D:0 Addr:            - | 
+            | V:0 D:0 Addr:            - | V:0 D:0 Addr:            - | 
+            | V:0 D:0 Addr:            - | V:0 D:0 Addr:            - | 
+
+Memory Level:  L1d
+Index:    6 | V:1 D:1 Tag:   1fe0739107 | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:    e | V:1 D:1 Tag:   1fe073910a | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:    f | V:1 D:1 Tag:   1fe073910a | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:   11 | V:1 D:0 Tag:   1fe0739107 | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:   14 | V:1 D:1 Tag:   1fe073910a | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:   1c | V:1 D:0 Tag:   1fe0739106 | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:   1d | V:1 D:0 Tag:   1fe0739107 | V:1 D:1 Tag:   1fffd6a121 | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Index:   1e | V:1 D:1 Tag:   1fffd6a121 | V:0 D:0 Tag:            - | 
+            | V:0 D:0 Tag:            - | V:0 D:0 Tag:            - | 
+Victim cache:
+            | V:0 D:0 Addr:            - | V:0 D:0 Addr:            - | 
+            | V:0 D:0 Addr:            - | V:0 D:0 Addr:            - | 
+            | V:0 D:0 Addr:            - | V:0 D:0 Addr:            - | 
+            | V:0 D:0 Addr:            - | V:0 D:0 Addr:            - | 
+
+Memory Level:  L2
+Index:   1a | V:1 D:0 Tag:     ff039c44 | 
+Index:   1e | V:1 D:0 Tag:     fffeb509 | 
+Index:   1f | V:1 D:0 Tag:     fffeb509 | 
+Index:   6e | V:1 D:0 Tag:     ff039c88 | 
+Index:   73 | V:1 D:0 Tag:     ff039c88 | 
+Index:   78 | V:1 D:0 Tag:     ff039c88 | 
+Index:   7e | V:1 D:0 Tag:     ff039c88 | 
+Index:   a7 | V:1 D:0 Tag:     ff039c88 | 
+Index:   aa | V:1 D:0 Tag:     ff039c88 | 
+Index:  100 | V:1 D:0 Tag:     ff039c44 | 
+Index:  101 | V:1 D:0 Tag:     ff039c44 | 
+Index:  102 | V:1 D:0 Tag:     ff039c44 | 
+Victim cache:
+            | V:0 D:0 Addr:            - | V:0 D:0 Addr:            - | 
+            | V:0 D:0 Addr:            - | V:0 D:0 Addr:            - | 
+            | V:0 D:0 Addr:            - | V:0 D:0 Addr:            - | 
+            | V:0 D:0 Addr:            - | V:0 D:0 Addr:            - | 
+
