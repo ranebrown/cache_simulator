@@ -106,6 +106,7 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
     node *L1iNode = cacheHier->L1i[currIndxL1]->first;
 
     // search victim cache for the tag (VC's use full address)
+    // TODO move to function check VC?
     while(VCL1iNode != NULL)
     {
         // the enty was found in the L1i victim cache
@@ -238,6 +239,8 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         L1iNode->tag = currTagL1;
         L1iNode->valid = 1;
         L1iNode->dirty = CLEAN;
+        if(bumpToFirst(cacheHier->L1i[currIndxL1], L1iNode->tag))
+            PERR("bumpToFirst failed");
 
         return EXIT_SUCCESS;
     }
@@ -523,6 +526,8 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             L1dNode->dirty = CLEAN;
         else
             L1dNode->dirty = DIRTY;
+        if(bumpToFirst(cacheHier->L1d[currIndxL1], L1dNode->tag))
+            PERR("bumpToFirst failed");
 
         return EXIT_SUCCESS;
     }
