@@ -240,10 +240,9 @@ int main(int argc, char *argv[])
     printf("L2 dirty kick: %llu\n", stats->dirtyKickL2);
     printf("VCL2 hit: %llu\n\n", stats->VChitL2);
 
-    /* free any allocated memory */
+	  /* free any allocated memory */
     free(cacheCnfg);
     free(stats);
-
     // free cache memory
     deleteCache(cacheCnfg, cacheHier);
 
