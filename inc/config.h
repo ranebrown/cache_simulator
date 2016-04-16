@@ -58,6 +58,11 @@
         int chunkS;          ///< main memory chunk size
         int memoryCost;      ///< main memory cost
 
+        int bitsIndexL1;     ///< number of bits for L1 index
+        int bitsTagL1;       ///< number of bits for L1 tag
+        int bitsIndexL2;     ///< number of bits for L2 index
+        int bitsTagL2;       ///< number of bits for L2 tag
+
         char cacheName[32];  ///< the config filename, helpful for printing
     } memInfo;
 
