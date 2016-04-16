@@ -224,7 +224,6 @@ int main(int argc, char *argv[])
     printf("hits L1i: %llu\n",stats->hitL1i);
     printf("miss L1i: %llu\n",stats->missL1i);
     printf("L1i kick: %llu\n", stats->kickoutL1i);
-    printf("L1i dirty kick: %llu\n", stats->dirtyKickL1i);
     printf("VCL1i hit: %llu\n\n", stats->VChitL1i);
 
     printf("hits L1d: %llu\n",stats->hitL1d);

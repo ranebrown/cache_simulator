@@ -94,16 +94,16 @@ int checkL1dW(ui currIndx, ulli currTag, allCache *cacheHier)
 
 int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier, ulli addr)
 {
-    /* check for bad input */
+    // check for bad input
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
         || cacheHier->VCL1i == NULL || cacheHier->VCL1d == NULL || cacheHier->VCL2 == NULL)
         PERR("cache not initialzed");
 
-    /* get the first entry in the L1 victim cache */
+    // get the first entry in the L1 victim cache
     node *VCL1iNode = cacheHier->VCL1i->first;
 
-    /* get the first node from the L1 cache */
-    node *L1iNode = cacheHier->L1i[currIndxL1]->first;
+    // get the first node from the L1 cache
+    node *L1iNode = cacheHier->L1i[currIndxL1]->last;
 
     // search victim cache for the tag (VC's use full address)
     // TODO move to function check VC?
@@ -125,7 +125,7 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             stats->transfersL1i++;
 
             // swap the values in the L1i cache and VCL1i
-            ulli swapTag = cacheHier->L1i[currIndxL1]->last->tag;
+            ulli swapTag = L1iNode->tag;
             if(bumpToFirst(cacheHier->L1i[currIndxL1], swapTag) != 0)
                 PERR("bumpToFirst failed");
 
@@ -229,7 +229,6 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
     if(bumpToFirst(cacheHier->VCL1i, VCL1iNode->tag))
         PERR("bumpToFirst failed");
 
-    // check dirty or clean kickout
     stats->kickoutL1i++;
     // transfer tag from L2 to L1i
     L1iNode->tag = currTagL1;
@@ -251,7 +250,7 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
     /* get the first entry in the L1 victim cache */
     node *VCL1dNode = cacheHier->VCL1d->first;
 
-    /* get the first node from the L1 cache */
+    /* get the first last from the L1 cache */
     node *L1dNode = cacheHier->L1d[currIndxL1]->first;
 
     // search victim cache for the tag (VC's use full address)
@@ -279,14 +278,17 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
 
             // swap VCL1d and L1d
             ulli tempTag = VCL1dNode->tag;
+            int tempDirty = VCL1dNode->dirty;
             // calculate VCL1d tag before swapping
             VCL1dNode->tag = (swapTag << cacheCnfg->bitsIndexL1) | currIndxL1;
+            VCL1dNode->dirty = L1dNode->valid;
+
             // calculate L1d tag before swapping
             cacheHier->L1d[currIndxL1]->first->tag = tempTag >> cacheCnfg->bitsIndexL1;
 
             // set dirty bit
             if(rw == READ)
-                cacheHier->L1d[currIndxL1]->first->dirty = CLEAN;
+                cacheHier->L1d[currIndxL1]->first->dirty = tempDirty;
             else
                 cacheHier->L1d[currIndxL1]->first->dirty = DIRTY;
 
@@ -410,6 +412,7 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
     }
     else
     {
+        stats->kickoutL1d++;
         stats->dirtyKickL1d++;
         // transfer tag from L2 to L1d
         L1dNode->tag = currTagL1;
