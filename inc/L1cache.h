@@ -14,8 +14,6 @@
     #include "cache.h"
     #include "common.h"
 
-    #define READ 0  ///< data read operation
-    #define WRITE 1 ///< data write operation
     /**
      * @brief check if instruction reference is a hit or a miss
      * @param[in] currIndx the index for block to check

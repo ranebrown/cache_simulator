@@ -20,6 +20,8 @@
     #define L2_OFFSET 6             ///< L2 is 64 bytes i.e. 2^6
     #define CLEAN 0                 ///< dirty bit status
     #define DIRTY 1                 ///< dirty bit status
+    #define READ 0  ///< data read operation
+    #define WRITE 1 ///< data write operation
 
     /*
      * Defines used for tracking simulation times

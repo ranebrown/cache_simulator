@@ -18,9 +18,10 @@
      * @param[in] currTag the calculated tag for the L2 cache
      * @param[in] currIndx the calculated index for the L2 cache
      * @param[in] cacheHier structure containing pointers to each cache level in the hierarchy
+     * @param[in] rw request is a read or write
      * @return 0 hit, 1 miss EXIT_FAILURE any other error
      */
-    int checkL2(ulli currTag, ulli currIndx, allCache *cacheHier);
+    int checkL2(ulli currTag, ulli currIndx, allCache *cacheHier, int rw);
 
     /**
      * @brief if a miss occurs in the L2 cache this function is called to check the victim cache.
@@ -30,8 +31,9 @@
      * @param[in] currIndxL2 the calculated index for the L2 cache
      * @param[in] cacheHier structure containing linked lists for each cache level in the hierarchy
      * @param[in] addr the current full address, used when placing item in victim cache
+     * @param[in] rw determines if request is a read or write
      * @returns EXIT_SUCCESS or EXIT_FAILURE
      */
-    int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndxL2, allCache *cacheHier, ulli addr);
+    int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndxL2, allCache *cacheHier, ulli addr, int rw);
 
 #endif // L2_CACHE_H
