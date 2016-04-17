@@ -157,7 +157,8 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         L2Node->tag = currTagL2;
         L2Node->valid = 1;
         L2Node->dirty = CLEAN;
-
+        printCurrCache(cacheCnfg, cacheHier);
+        
         return EXIT_SUCCESS;
     }
     else

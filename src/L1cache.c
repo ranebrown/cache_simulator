@@ -429,7 +429,7 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         if(bumpToFirst(cacheHier->L1d[currIndxL1], L1dNode->tag))
             PERR("bumpToFirst failed");
 
-/////////// TODO from here down should be handled as a write request to L2
+  /////////// TODO from here down should be handled as a write request to L2
         // kickout from VCL1d to L2
         // case 2a: there is a spot available in L2
         node *L2Node = cacheHier->L2[currIndxL2]->first;
