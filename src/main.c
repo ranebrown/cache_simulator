@@ -219,7 +219,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    printCurrCache(cacheCnfg, cacheHier);
+    /* printCurrCache(cacheCnfg, cacheHier); */
 
     printf("hits L1i: %llu\n",stats->hitL1i);
     printf("miss L1i: %llu\n",stats->missL1i);
