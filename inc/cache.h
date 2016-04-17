@@ -33,7 +33,7 @@
     #define L2_HIT_T 8              ///< number of cycles to return an L2 hit
     #define L2_MISS_T 10            ///< number of cycles to determine an L2 request is a miss and make request to main memory
     #define L2_TRANSFER_T 20        ///< time to transfer a value from L2 to L1 cache (based on 16 byte bus)
-    #define MAIN_MEM_TRANSFER_T     ///< time to transfer a value from main memory to L2 cache
+    #define MAIN_MEM_TRANSFER_T 180 ///< time to transfer a value from main memory to L2 cache
 
     typedef unsigned long long int ulli;    ///< shorten long type
     typedef unsigned int ui;                ///< maintain same format as ulli

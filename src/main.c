@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     /* structure containing statistics for simulation */
     performance *stats = malloc(sizeof(performance));
     if(stats == NULL)
-        PERR("malloc errro");
+        PERR("malloc error");
     performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     *stats = zero; // zero all elements in stats
 
@@ -100,7 +100,10 @@ int main(int argc, char *argv[])
     }
 
     /* calculate cost based on cache configuration */
+    getConfigName(cacheCnfg);
     calculateCost(cacheCnfg);
+
+    printf("CACHE NAME: %s\n",cacheCnfg->cacheName);
 
     /* calulate number of tag bits and index bits for the cache configuration */
     calcBits(cacheCnfg);
@@ -237,6 +240,15 @@ int main(int argc, char *argv[])
     printf("L2 kick: %llu\n", stats->kickoutL2);
     printf("L2 dirty kick: %llu\n", stats->dirtyKickL2);
     printf("VCL2 hit: %llu\n\n", stats->VChitL2);
+
+    //Some quick debugging
+    // ulli  totRefs = stats->instRefs + stats->dataReadRef + stats->dataWriteRef;
+    // ulli  totExecT = stats->cycleDRead + stats->cycleDWrite + stats->cycleInst +
+    //                  stats->totExecT;
+    // printf("total References: %llu\n",totRefs);
+    // printf("total exec time:  %llu\n",totExecT);
+
+    printResults("tr6",cacheCnfg,stats);
 
     /* free any allocated memory */
     free(cacheCnfg);

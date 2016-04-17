@@ -53,7 +53,7 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
     // search victim cache for the tag (VC's use full address)
     while(VCL2Node != NULL)
     {
-        // the enty was found in the L2 victim cache
+        // the entry was found in the L2 victim cache
         if(VCL2Node->valid && VCL2Node->tag == (addr >> L2_OFFSET))
         {
             // move found entry to front of list (LRU policy)
@@ -64,6 +64,7 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
             VCL2Node = cacheHier->VCL2->first;
 
             // increment statistics for simulation
+            stats->totExecT += L2_HIT_T;
             stats->VChitL2++;
             stats->transfersL2++;
 
@@ -115,6 +116,10 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
             // adhere to LRU policy
             if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2))
                 PERR("bumpToFirst failed");
+
+            //increment the statistics
+            stats->totExecT += MAIN_MEM_TRANSFER_T;
+
             return EXIT_SUCCESS;
         }
 
@@ -150,6 +155,9 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
             if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2))
                 PERR("bumpToFirst failed");
 
+            //increment the statistics
+            stats->totExecT += MAIN_MEM_TRANSFER_T;
+
             return EXIT_SUCCESS;
         }
 
@@ -171,7 +179,10 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
     // check dirty or clean kickout
     if(tempDirty == CLEAN)
     {
+        //increment the statistics
+        stats->totExecT += MAIN_MEM_TRANSFER_T;
         stats->kickoutL2++;
+
         // transfer tag from main mem to L2
         L2Node->tag = currTagL2;
         L2Node->valid = 1;
@@ -186,6 +197,8 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
     }
     else
     {
+        //increment the statistics
+        stats->totExecT += MAIN_MEM_TRANSFER_T;
         stats->kickoutL2++;
         stats->dirtyKickL2++;
 
@@ -200,7 +213,7 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
             PERR("bumpToFirst failed");
 
         // dirty write to main mem
-        // TODO increment stats for write to main mem
+        // TODO increment stats for write to main mem.......DONE
         return EXIT_SUCCESS;
     }
 }

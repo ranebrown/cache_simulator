@@ -21,12 +21,12 @@
     #define L2_ASSOC      50    ///< cost value
     #define DECMEMLAT     200   ///< to halve decrease memory latency
     #define BANDWIDTH     100   ///< to double the bandwidth
-    #define L1_HIT_TIME   1     ///<  L1 hit time
-    #define L1_MISS_TIME  1     ///<  L1 miss time
-    #define L2_HIT_TIME   8     ///<  L2 hit time
-    #define L2_MISS_TIME  10    ///<  L2 miss time
-    #define L2_TRANS_TIME 10    ///< transfer L1 to/from L2
-    #define L2_BUS_WIDTH  16    ///<  L1 to L2 bus width
+    // #define L1_HIT_TIME   1     ///<  L1 hit time
+    // #define L1_MISS_TIME  1     ///<  L1 miss time
+    // #define L2_HIT_TIME   8     ///<  L2 hit time
+    // #define L2_MISS_TIME  10    ///<  L2 miss time
+    // #define L2_TRANS_TIME 10    ///< transfer L1 to/from L2
+    // #define L2_BUS_WIDTH  16    ///<  L1 to L2 bus width
 
 
     /**
@@ -74,7 +74,7 @@
      * @param[out] cache pointer to fully populated memInfo struct
      * @return EXIT_SUCCESS or EXIT_FAILURE
      */
-    int setCacheValues(memInfo *cache);
+    int setCacheValues(memInfo *cacheCnfg);
 
     /**
      * @brief calculates cost of a cache
@@ -83,5 +83,11 @@
      */
     int calculateCost(memInfo *cache);
 
+    /**
+     * @brief pulls the configuration name out of the file path
+     *  This requires that the name is in the standard project file path.
+     * @param[out] name of the configuration, in the cacheName 
+     */
+    void getConfigName(memInfo *cache);
 
 #endif //CONFIG_H
