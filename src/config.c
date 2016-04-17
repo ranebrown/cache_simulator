@@ -64,8 +64,6 @@ int calculateCost(memInfo *cacheCnfg)
 
     /* Get the L2 cache cost */
     cacheCnfg->L2Cost    = (L2_16KB * cacheCnfg->L2Size/16384) + (L2_ASSOC * log2(cacheCnfg->L2Ways) * cacheCnfg->L2Size/16384);
-
-
     cacheCnfg->totalCost = cacheCnfg->L1TotCost + cacheCnfg->L2Cost + cacheCnfg->memoryCost;
 
     // TODO extra simulation cost using sjeng trace with different parameters.
@@ -81,11 +79,3 @@ int calculateCost(memInfo *cacheCnfg)
 
     return 0;
 }
-
-
-
-
-
-
-
-//placeholder

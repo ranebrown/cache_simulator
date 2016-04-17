@@ -10,6 +10,9 @@ int printResults(char *trace, memInfo *mem, performance *stats)
 {
     FILE *fp;               // file pointer
     char name[128];         // directory path to write to
+    int numWaysL1 = 0;      //
+    int numWaysL2 = 0;      //
+
 
     if(trace == NULL || mem == NULL)
         PERR("null input");
@@ -24,31 +27,37 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     if(fp == NULL)
         PERR("error opening file");
 
+
+    if(cacheCnfg->L1iWays == 0)
+        numWaysL1 = cacheCnfg->L1dSize / cacheCnfg->L1dBlock;
+    if(cacheCnfg->L2Ways == 0)
+        numWaysL2 = cacheCnfg->L1dSize / cacheCnfg->L1dBlock;
+
     /* calculate remaining values */
     /* ulli    totExecT       =   0;       // total execution time for the simulation */
-    /* ulli    totRefs        =   0;       // total number of references = data + instruction */
-    /* ulli    dataRefs       =   0;       // number of data references = read + writes */
-    /* float   percRefInst    =   0;       // percentage of references that are instructions */
-    /* float   percRefDRead   =   0;       // percentage of references that are data reads */
-    /* float   percRefDWrite  =   0;       // percentage of references that are data writes */
-    /* float   percCycleDR    =   0;       // percentage of cycles that are data reads */
-    /* float   percCycleDW    =   0;       // percentage of cycles that are data writes */
-    /* float   percCycleInst  =   0;       // percentage of cycles that are instructions */
-    /* ulli    idealExecT     =   0;       // ideal execution time */
-    /* ulli    idealMisExecT  =   0;       // ideal mis-aligned exectition time */
-    /* float   cpi            =   0;       // actual CPI */
-    /* float   idealCpi       =   0;       // ideal CPI */
-    /* float   idealMisCpi    =   0;       // ideal mis-aligned CPI */
-    /* ulli    totalReqL1i    =   0;       // total requests L1 instruction cache */
-    /* ulli    totalReqL1d    =   0;       // total requests L1 data cache */
-    /* ulli    totalReqL2     =   0;       // total requests L2 cache */
-    /* float   hitRateL1i     =   0;       // hit rate percentage L1 instruction cache */
-    /* float   hitRateL1d     =   0;       // hit rate percentage L1 data cache */
-    /* float   hitRateL2      =   0;       // hit rate percentage L2 cache */
-    /* float   missRateL1i    =   0;       // miss rate percentage L1 instruction cache */
-    /* float   missRateL1d    =   0;       // miss rate percentage L1 data cache */
-    /* float   missRateL2     =   0;       // miss rate percentage L2 cache */
-
+    ulli totRefs         = stats->instRefs + stats->dataReadRef + stats->dataWriteRef;       // total number of references = data + instruction
+    ulli dataRefs        = stats->dataReadRef + stats->dataWriteRef;       // number of data references = read + writes
+    float percRefInst    = stats->instRefs / totRefs;       // percentage of references that are instructions
+    float percRefDRead   = stats->dataReadRef / totRefs;       // percentage of references that are data reads
+    float percRefDWrite  = stats->dataWriteRef / totRefs;       // percentage of references that are data writes
+    /* float   percCycleDR    =   0;       // percentage of cycles that are data reads
+    /* float   percCycleDW    =   0;       // percentage of cycles that are data writes
+    /* float   percCycleInst  =   0;       // percentage of cycles that are instructions
+    /* ulli    idealExecT     =   0;       // ideal execution time
+    /* ulli    idealMisExecT  =   0;       // ideal mis-aligned exectition time
+    /* float   cpi            =   0;       // actual CPI
+    /* float   idealCpi       =   0;       // ideal CPI
+    /* float   idealMisCpi    =   0;       // ideal mis-aligned CPI
+    /* ulli    totalReqL1i    =   0;       // total requests L1 instruction cache
+    /* ulli    totalReqL1d    =   0;       // total requests L1 data cache
+    /* ulli    totalReqL2     =   0;       // total requests L2 cache
+    /* float   hitRateL1i     =   0;       // hit rate percentage L1 instruction cache
+    /* float   hitRateL1d     =   0;       // hit rate percentage L1 data cache
+    /* float   hitRateL2      =   0;       // hit rate percentage L2 cache
+    /* float   missRateL1i    =   0;       // miss rate percentage L1 instruction cache
+    /* float   missRateL1d    =   0;       // miss rate percentage L1 data cache
+    /* float   missRateL2     =   0;       // miss rate percentage L2 cache
+    */
     // print to file
     fprintf( fp, "-----------------------------------------------------------------------------------------------\n");
     fprintf( fp, "%20s %40s\n", trace, "Simulation Results");
