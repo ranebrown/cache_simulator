@@ -116,35 +116,39 @@ int main(int argc, char *argv[])
             printf("%c %llx %d\n" ,op ,addr ,numBytes);
 #endif
 
-        /* calculate the word (4 byte) aligned start address */
-        currAddr = addr & 0xFFFFFFFFFFFFFFFC;
+    /***** This is where the recursive cache function should be called *****/
 
-        /* calculate the end address (doesn't need to be word aligned since currAddr is incremented by 4) */
-        endAddr = addr + numBytes-1;
 
-        /* update the stats for the number of references */
-        switch(op)
-        {
-            case 'I':
-                stats->instRefs++;
-                break;
-            case 'R':
-                stats->dataReadRef++;
-                break;
-            case 'W':
-                stats->dataWriteRef++;
-                break;
-            default:
-                PERR("invalid trace operation");
-        }
+
+        // /* calculate the word (4 byte) aligned start address */
+        // currAddr = addr & 0xFFFFFFFFFFFFFFFC;
+        //
+        // /* calculate the end address (doesn't need to be word aligned since currAddr is incremented by 4) */
+        // endAddr = addr + numBytes-1;
+        //
+        // /* update the stats for the number of references */
+        // switch(op)
+        // {
+        //     case 'I':
+        //         stats->instRefs++;
+        //         break;
+        //     case 'R':
+        //         stats->dataReadRef++;
+        //         break;
+        //     case 'W':
+        //         stats->dataWriteRef++;
+        //         break;
+        //     default:
+        //         PERR("invalid trace operation");
+        // }
          /* loop for L1 access - 4 byte bus -> multiple accesses possible */
         while(currAddr <= endAddr)
         {
             /* index and tag for the address */
-            currIndxL1 = (currAddr << cacheCnfg->bitsTagL1) >> (cacheCnfg->bitsTagL1 + L1_OFFSET);
-            currIndxL2 = (currAddr << cacheCnfg->bitsTagL2) >> (cacheCnfg->bitsTagL2 + L2_OFFSET);
-            currTagL1 = currAddr >> (cacheCnfg->bitsIndexL1 + L1_OFFSET);
-            currTagL2 = currAddr >> (cacheCnfg->bitsIndexL2 + L2_OFFSET);
+            // currIndxL1 = (currAddr << cacheCnfg->bitsTagL1) >> (cacheCnfg->bitsTagL1 + L1_OFFSET);
+            // currIndxL2 = (currAddr << cacheCnfg->bitsTagL2) >> (cacheCnfg->bitsTagL2 + L2_OFFSET);
+            // currTagL1 = currAddr >> (cacheCnfg->bitsIndexL1 + L1_OFFSET);
+            // currTagL2 = currAddr >> (cacheCnfg->bitsIndexL2 + L2_OFFSET);
 
 #ifdef DEBUG_ADDR
             printf("current address: %llu\n",currAddr);
