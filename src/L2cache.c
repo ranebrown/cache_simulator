@@ -151,6 +151,7 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         // now get value from main memory for the original request
         // transfer tag from main mem to L2
         // TODO transfer stats main mem to L2
+        //stats->totExecT += MAIN_MEM_TRANSFER_T; /********** ADDED BY BRIAN **********/
         L2Node->tag = currTagL2;
         L2Node->valid = 1;
         if(rw == READ)
@@ -184,6 +185,8 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
                 // adhere to LRU policy
                 if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2))
                     PERR("bumpToFirst failed");
+
+                //stats->totExecT += MAIN_MEM_TRANSFER_T; /********** ADDED BY BRIAN **********/
                 return EXIT_SUCCESS;
             }
 
