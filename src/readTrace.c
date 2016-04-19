@@ -7,7 +7,7 @@
 
 #include "readTrace.h"
 
-int readTrace(char *op, unsigned long long int *addr, unsigned int *bs)
+int readTrace(char *op, unsigned long long int *addr, unsigned int *numBytes)
 {
     // result of scanf
     int res;
@@ -29,14 +29,11 @@ int readTrace(char *op, unsigned long long int *addr, unsigned int *bs)
     retval = select(1, &rfds, NULL, NULL, &tv);
 
     if (retval == -1)   // error with select function
-    {
-        perror("select()");
-        return EXIT_FAILURE;
-    }
+        PERR("using select function");
     else if (retval)    // data is ready to be read
     {
         // read a trace from stdin
-        res = scanf("%c %llx %d\n", op, addr, bs);
+        res = scanf("%c %llx %d\n", op, addr, numBytes);
         if(res == 3)
             return EXIT_SUCCESS;
         else

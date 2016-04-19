@@ -11,14 +11,15 @@
     #include <stdlib.h>
     #include <sys/select.h>
     #include <errno.h>
+    #include "common.h"
 
     /**
      * @brief reads a single trace line from stdin
      * @param[out] op type of operation - read or write or instruction
      * @param[out] addr memory address
-     * @param[out] bs byte size - the number of bytes referenced by the request
+     * @param[out] numBytes the number of bytes referenced by the request
      * @return EXIT_SUCCESS or EXIT_FAILURE
      */
-    int readTrace(char *op, unsigned long long int *addr, unsigned int *bs);
+    int readTrace(char *op, unsigned long long int *addr, unsigned int *numBytes);
 
 #endif // READ_TRACE_H

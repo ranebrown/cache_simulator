@@ -7,6 +7,7 @@
 #include <check.h>
 #include <stdlib.h>
 #include "printResults.h"
+#include "cache.h"
 
 /**
  * @brief unit test for printResults(char *filename)
@@ -29,15 +30,24 @@ START_TEST (test_printResults)
     mem->readyT         =       50;
     mem->chunkS         =       8;
     mem->chunkT         =       15;
+    strcpy(mem->cacheName,"test");
+    mem->totalCost      =       100;
+    mem->L1TotCost      =       200;
+    mem->L1dCost        =       300;
+    mem->L1iCost        =       400;
+    mem->L2Cost         =       500;
+    mem->addrsendT      =       10;
+    mem->memoryCost     =       120;
     int nullres         =       0;
     char *nullName      =       NULL;
     int nullres2        =       0;
     memInfo *nullS      =       NULL;
+    performance *stats  =   malloc(sizeof(performance));
 
     // function under test
-    res         =       printResults(filename, mem);
-    nullres     =       printResults(nullName, mem);
-    nullres2    =       printResults(filename, nullS);
+    res         =       printResults(filename, mem, stats);
+    nullres     =       printResults(nullName, mem, stats);
+    nullres2    =       printResults(filename, nullS, stats);
 
     // verify results are as expected
     ck_assert_int_eq(res, EXIT_SUCCESS);
@@ -46,6 +56,7 @@ START_TEST (test_printResults)
 
     // free allocated memory
     free(mem);
+    free(stats);
 
 }
 END_TEST

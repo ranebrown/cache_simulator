@@ -26,7 +26,7 @@ LIBS = -lm
 conf ?= ../config/default.txt
 
 # trace name
-trace ?= ../trace_short/tr1.gz
+trace ?= ../traces/traces_short/tr1.gz
 
 # All source files
 SRCS = $(wildcard $(SRCDIR)/*.c)
@@ -84,7 +84,7 @@ $(TEXCS): %.exe: %.o $(MAINOBJS)
 check: $(TEXCS)
 	@for test in $^;  do \
 		if [ $${test} = 'test_readTrace.exe' ]; then \
-			zcat < ../trace_short/tr1.gz | ./$${test}; \
+			zcat < ../traces/traces_short/tr1.gz | ./$${test}; \
 		else \
 			./$${test}; \
 		fi; \
@@ -100,7 +100,7 @@ run: $(MAIN)
 doc:
 	@echo "Generating documentation..."
 	@echo ""
-	@doxygen ../doc/config
+	@doxygen ../doc/doxygen.config
 	@echo ""
 
 # phony is used in case there is a file named clean
