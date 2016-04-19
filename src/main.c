@@ -4,16 +4,16 @@
  * @date        03-18-2016
  * @brief       Main file for cache simulator project.
  */
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
- #include "printResults.h"
- #include "readTrace.h"
- #include "config.h"
- #include "cache.h"
- #include "L1cache.h"
- #include "L2cache.h"
- #include "dlinkedList.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "printResults.h"
+#include "readTrace.h"
+#include "config.h"
+#include "cache.h"
+#include "L1cache.h"
+#include "L2cache.h"
+#include "dlinkedList.h"
 
 /* #define DEBUG_PRINT_TRACE ///< print traces for debugging */
 /* #define DEBUG_ADDR ///< print the tag and index info */
@@ -44,7 +44,6 @@ int main(int argc, char *argv[])
     performance *stats = malloc(sizeof(performance));
     if(stats == NULL)
         PERR("malloc errro");
-
     performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     *stats = zero; // zero all elements in stats
 
@@ -100,10 +99,7 @@ int main(int argc, char *argv[])
     }
 
     /* calculate cost based on cache configuration */
-    getConfigName(cacheCnfg);
     calculateCost(cacheCnfg);
-
-    printf("CACHE NAME: %s\n",cacheCnfg->cacheName);
 
     /* calulate number of tag bits and index bits for the cache configuration */
     calcBits(cacheCnfg);
@@ -117,7 +113,6 @@ int main(int argc, char *argv[])
 #ifdef DEBUG_PRINT_TRACE
             printf("%c %llx %d\n" ,op ,addr ,numBytes);
 #endif
-
 
         /* calculate the word (4 byte) aligned start address */
         currAddr = addr & 0xFFFFFFFFFFFFFFFC;
@@ -140,7 +135,6 @@ int main(int argc, char *argv[])
             default:
                 PERR("invalid trace operation");
         }
-
          /* loop for L1 access - 4 byte bus -> multiple accesses possible */
         while(currAddr <= endAddr)
         {
