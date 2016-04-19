@@ -13,7 +13,6 @@
 #include "cache.h"
 #include "L1cache.h"
 #include "L2cache.h"
-#include "VCache.h"
 #include "dlinkedList.h"
 
 /* #define DEBUG_PRINT_TRACE ///< print traces for debugging */
@@ -219,9 +218,9 @@ int main(int argc, char *argv[])
         }
     }
 
-    printCurrCache(cacheCnfg, cacheHier);
+    /* printCurrCache(cacheCnfg, cacheHier); */
 
-    printf("hits L1i: %llu\n",stats->hitL1i);
+    printf("\n\nhits L1i: %llu\n",stats->hitL1i);
     printf("miss L1i: %llu\n",stats->missL1i);
     printf("L1i kick: %llu\n", stats->kickoutL1i);
     printf("VCL1i hit: %llu\n\n", stats->VChitL1i);

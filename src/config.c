@@ -8,51 +8,33 @@
 
 /* #define PRINTVALUES         ///< print statements for debugging */
 
-int setCacheValues (memInfo *cache)
+int setCacheValues (memInfo *cacheCnfg)
 {
     /* Local variables */
     FILE *config;
-    int temp;
-    char inStr[10];
-
-    #ifdef PRINTVALUES
-        printf("About to open: %s\n",cache->cacheName);
-    #endif
+    int temp1=0, temp2=0, temp3=0;
 
     /* Open the file */
-    if( !(config = fopen(cache->cacheName,"r")) )
+    if( !(config = fopen(cacheCnfg->cacheName,"r")) )
         PERR("error opening file");
 
     /* Read the line from the file */
-    fscanf(config, "%s", inStr);
-
-    #ifdef PRINTVALUES
-        printf("Input string: ->%s<-\n",inStr);
-    #endif
+    //fscanf(config, "%s", inStr);
+    fscanf(config, "%d %d %d %d %d %d", &(cacheCnfg->L1dWays), &temp1, \
+                                        &(cacheCnfg->L1iWays), &temp2, \
+                                        &(cacheCnfg->L2Ways),  &temp3);
 
     /* Close the file */
     if( fclose(config) )
         PERR("error closing file");
 
-    /** Set the cache parameters from the file **/
-    /* L1 data */
-    cache->L1dWays   = inStr[0]-'0';
-    temp             = (inStr[1]-'0')*10 + (inStr[2]-'0');
-    cache->L1dSize   = pow(2,temp);
-
-    /* L1 instruction */
-    cache->L1iWays   = inStr[3]-'0';
-    temp             = (inStr[4]-'0')*10 + (inStr[5]-'0');
-    cache->L1iSize   = pow(2,temp);
-
-    /* L2 */
-    cache->L2Ways    = inStr[6]-'0';
-    temp             = (inStr[7]-'0')*10 + (inStr[8]-'0');
-    cache->L2Size    = pow(2,temp);
+    cacheCnfg->L1dSize = pow(2,temp1);
+    cacheCnfg->L1iSize = pow(2,temp2);
+    cacheCnfg->L2Size  = pow(2,temp3);
 
     #ifdef PRINTVALUES
         /* Check for fully associative */
-        if(cache->L1dWays == 0)
+        if(cacheCnfg->L1dWays == 0)
         {
             printf("Fully Associative.\n");
         }
@@ -63,50 +45,42 @@ int setCacheValues (memInfo *cache)
     return EXIT_SUCCESS;
 }
 
-int calculateCost(memInfo *cache)
+int calculateCost(memInfo *cacheCnfg)
 {
     //TODO Add functionality for fully associative cache
 
     #ifdef PRINTVALUES
-        printf("L1dWays: %d\nL1dSize: %d\n",cache->L1dWays,cache->L1dSize);
-        printf("L1iWays: %d\nL1iSize: %d\n",cache->L1iWays,cache->L1iSize);
-        printf("L2Ways:  %d\nL2Size:  %d\n",cache->L2Ways,cache->L2Size);
+        printf("L1dWays: %d\nL1dSize: %d\n",cacheCnfg->L1dWays,cacheCnfg->L1dSize);
+        printf("L1iWays: %d\nL1iSize: %d\n",cacheCnfg->L1iWays,cacheCnfg->L1iSize);
+        printf("L2Ways:  %d\nL2Size:  %d\n",cacheCnfg->L2Ways,cacheCnfg->L2Size);
     #endif
 
-    cache->memoryCost = 75;
+    cacheCnfg->memoryCost = 75;
 
     /* Get the cost of the L1i and L1d caches */
-    cache->L1dCost   = (L1_4KB * cache->L1dSize/4096) + (L1_ASSOC * log2(cache->L1dWays) * cache->L1dSize/4096);
-    cache->L1iCost   = (L1_4KB * cache->L1iSize/4096) + (L1_ASSOC * log2(cache->L1iWays) * cache->L1iSize/4096);
-    cache->L1TotCost = cache->L1dCost + cache->L1iCost;
+    cacheCnfg->L1dCost   = (L1_4KB * cacheCnfg->L1dSize/4096) + (L1_ASSOC * log2(cacheCnfg->L1dWays) * cacheCnfg->L1dSize/4096);
+    cacheCnfg->L1iCost   = (L1_4KB * cacheCnfg->L1iSize/4096) + (L1_ASSOC * log2(cacheCnfg->L1iWays) * cacheCnfg->L1iSize/4096);
+    cacheCnfg->L1TotCost = cacheCnfg->L1dCost + cacheCnfg->L1iCost;
 
     /* Get the L2 cache cost */
-    cache->L2Cost    = (L2_16KB * cache->L2Size/16384) + (L2_ASSOC * log2(cache->L2Ways) * cache->L2Size/16384);
+    cacheCnfg->L2Cost    = (L2_16KB * cacheCnfg->L2Size/16384) + (L2_ASSOC * log2(cacheCnfg->L2Ways) * cacheCnfg->L2Size/16384);
 
 
-    cache->totalCost = cache->L1TotCost + cache->L2Cost + cache->memoryCost;
+    cacheCnfg->totalCost = cacheCnfg->L1TotCost + cacheCnfg->L2Cost + cacheCnfg->memoryCost;
 
     // TODO extra simulation cost using sjeng trace with different parameters.
 
 
     #ifdef PRINTVALUES
     printf("L1 cache cost (Icache $%d) + (Dcache $%d) = $%d\n", \
-           cache->L1iCost, cache->L1dCost, cache->L1TotCost);
+           cacheCnfg->L1iCost, cacheCnfg->L1dCost, cacheCnfg->L1TotCost);
     printf("L2 cache cost = $%d;  Memory cost = %d  Total cost = $%d\n", \
-            cache->L2Cost, cache->memoryCost, cache->totalCost);
+            cacheCnfg->L2Cost, cacheCnfg->memoryCost, cacheCnfg->totalCost);
     #endif
 
 
     return 0;
 }
-
-int ilog2(int x)
-{
-    int y = 0;
-    while(x >>= 1) ++y;
-    return y;
-}
-
 
 
 

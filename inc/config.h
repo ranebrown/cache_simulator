@@ -8,18 +8,26 @@
  #ifndef CONFIG_H
     #define CONFIG_H
 
-    #define L1_4KB      100     ///< cost value
-    #define L1_ASSOC    100     ///< cost value
-    #define L2_16KB     50      ///< cost value
-    #define L2_ASSOC    50      ///< cost value
-    #define DECMEMLAT   200     ///< to halve decrease memory latency
-    #define BANDWIDTH   100     ///< to double the bandwidth
-
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
     #include <math.h>
     #include "common.h"
+
+    #define PRINTVALUES         ///< print statements for debugging
+    #define L1_4KB        100   ///< cost value
+    #define L1_ASSOC      100   ///< cost value
+    #define L2_16KB       50    ///< cost value
+    #define L2_ASSOC      50    ///< cost value
+    #define DECMEMLAT     200   ///< to halve decrease memory latency
+    #define BANDWIDTH     100   ///< to double the bandwidth
+    #define L1_HIT_TIME   1     ///<  L1 hit time
+    #define L1_MISS_TIME  1     ///<  L1 miss time
+    #define L2_HIT_TIME   8     ///<  L2 hit time
+    #define L2_MISS_TIME  10    ///<  L2 miss time
+    #define L2_TRANS_TIME 10    ///< transfer L1 to/from L2
+    #define L2_BUS_WIDTH  16    ///<  L1 to L2 bus width
+
 
     /**
      * @struct memInfo
@@ -27,7 +35,6 @@
      */
     typedef struct
     {
-        char cacheName[32];  ///< Holds the config filename, helpful for printing
         int totalCost;       ///< Total cost of the cache
         int L1TotCost;       ///< L1 cost of data + instruction
 
@@ -57,6 +64,7 @@
         int bitsIndexL2;     ///< number of bits for L2 index
         int bitsTagL2;       ///< number of bits for L2 tag
 
+        char cacheName[32];  ///< the config filename, helpful for printing
     } memInfo;
 
 
@@ -75,12 +83,5 @@
      */
     int calculateCost(memInfo *cache);
 
-     /**
-      * @brief calculates integer base 2 logarithm @f$ log_2/(x/)=y@f$
-      * doing this is faster and doesn't require the entire math.h library.
-      * param[in] x argument for the logarithm
-      * @return the solution of the base 2 logarithm
-      */
-    int ilog2(int x);
 
 #endif //CONFIG_H

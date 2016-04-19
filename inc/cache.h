@@ -20,6 +20,8 @@
     #define L2_OFFSET 6             ///< L2 is 64 bytes i.e. 2^6
     #define CLEAN 0                 ///< dirty bit status
     #define DIRTY 1                 ///< dirty bit status
+    #define READ 0  ///< data read operation
+    #define WRITE 1 ///< data write operation
 
     /*
      * Defines used for tracking simulation times
@@ -110,6 +112,12 @@
         float   missRateL2     ;       ///< miss rate percentage L2 cache
     } performance;
 
+    /**
+     * @brief prints the current cache contents for all cache levels
+     * @param[in] cacheCnfg the configuration setup for the current simulation
+     * @param[in] cacheHier structure that contains all cache levels
+     * @returns EXIT_SUCCESS or EXIT_FAILURE
+     */
     int printCurrCache(memInfo *cacheCnfg, allCache *cacheHier);
 
     /**
