@@ -13,5 +13,11 @@
     #define PERR(M, ...) do {fprintf(stderr, "ERROR: --- FILE:%s LINE:%d FUNCTION:%s --- " M "\n", \
             __FILE__, __LINE__, __func__,  ##__VA_ARGS__); return EXIT_FAILURE;} while(0)
 
+    typedef enum
+    {
+        false,
+        true
+    } bool; 
+
 #endif // COMMON_H
 

@@ -64,6 +64,7 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
             VCL2Node = cacheHier->VCL2->first;
 
             // increment statistics for simulation
+            stats->cycleInst += L2_HIT_T; // VC to L2 same time as an L2 hit
             stats->VChitL2++;
             stats->transfersL2++;
 
@@ -72,7 +73,6 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
             if(bumpToFirst(cacheHier->L2[currIndxL2], swapTag) != 0)
                 PERR("bumpToFirst failed");
 
-            // swap the values in the L2 cache and VCL2
             ulli tempTag = VCL2Node->tag;
             short tempDirty = VCL2Node->dirty;
 
@@ -97,82 +97,60 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         VCL2Node = VCL2Node->next;
     }
 
-    // hit or miss still need to transfer value from main mem to L2
-    // check if there is an empty spot (not valid) in L2
+    // entry was not in the L2 victim cache -> must first make write request to main mem if there is a dirty kickout
     L2Node = cacheHier->L2[currIndxL2]->first;
+    VCL2Node = cacheHier->VCL2->first;
+    bool L2Space = false;
+    bool VCL2Space = false;
     while(L2Node != NULL)
     {
         if(!L2Node->valid)
         {
-            // mark as valid and insert into L2
-            L2Node->valid = 1;
-            L2Node->tag = currTagL2;
-            if(rw == READ)
-                L2Node->dirty = CLEAN;
-            else
-                L2Node->dirty = DIRTY;
-
-            // adhere to LRU policy
-            if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2))
-                PERR("bumpToFirst failed");
-            return EXIT_SUCCESS;
+           L2Space = true;
+           break;
         }
-
         L2Node = L2Node->next;
     }
-
-    // otherwise a kickout occurs
-    VCL2Node = cacheHier->VCL2->first;
-    L2Node = cacheHier->L2[currIndxL2]->last;
     while(VCL2Node != NULL)
     {
-        // case 1: VCL2 has an available spot for the kickout from L2
         if(!VCL2Node->valid)
         {
-            // transfer tag from L2 to VCL2 (L2 kickout)
-            VCL2Node->tag = (L2Node->tag << cacheCnfg->bitsIndexL2) | currIndxL2;
-            VCL2Node->valid = 1;
-            VCL2Node->dirty = L2Node->dirty;
-
-            // LRU policy VCL2
-            if(bumpToFirst(cacheHier->VCL2, VCL2Node->tag))
-                PERR("bumpToFirst failed");
-
-            // transfer from main mem to L2
-            L2Node->valid = 1;
-            L2Node->tag = currTagL2;
-            if(rw == READ)
-                L2Node->dirty = CLEAN;
-            else
-                L2Node->dirty = DIRTY;
-
-            // LRU policy L2
-            if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2))
-                PERR("bumpToFirst failed");
-
-            return EXIT_SUCCESS;
+           VCL2Space = true;
+           break;
         }
-
         VCL2Node = VCL2Node->next;
     }
 
-    // case 2: kickout from L2 causes a kickout from VCL2 -> move entry to main mem if dirty
-    VCL2Node = cacheHier->VCL2->last;
-    L2Node = cacheHier->L2[currIndxL2]->last;
-    short tempDirty = VCL2Node->dirty;
-
-    // kickout from L2 to VCL2
-    VCL2Node->tag = (L2Node->tag << cacheCnfg->bitsIndexL2) | currIndxL2;
-    VCL2Node->valid = 1;
-    VCL2Node->dirty = L2Node->dirty;
-    if(bumpToFirst(cacheHier->VCL2, VCL2Node->tag))
-        PERR("bumpToFirst failed");
-
-    // check dirty or clean kickout
-    if(tempDirty == CLEAN)
+    // if no space in L2 and VCL2 then there is a kickout from L2 cache
+    // if the kickout is dirty the write request to main mem must occur first
+    if(L2Space == false && VCL2Space == false)
     {
-        stats->kickoutL2++;
+        VCL2Node = cacheHier->VCL2->last;
+        L2Node = cacheHier->L2[currIndxL2]->last;
+        short tempDirty = VCL2Node->dirty;
+
+        // just increment stats if kickout isn't dirty
+        if(tempDirty == CLEAN)
+            stats->kickoutL2++;
+
+        // otherwise handle dirty kickout
+        else if(tempDirty == DIRTY)
+        {
+            stats->kickoutL2++;
+            stats->dirtyKickL2++;
+            // TODO write to main memory time
+        }
+
+        // kickout from L2 to VCL2
+        VCL2Node->tag = (L2Node->tag << cacheCnfg->bitsIndexL2) | currIndxL2;
+        VCL2Node->valid = 1;
+        VCL2Node->dirty = L2Node->dirty;
+        if(bumpToFirst(cacheHier->VCL2, VCL2Node->tag))
+            PERR("bumpToFirst failed");
+
+        // now get value from main memory for the original request
         // transfer tag from main mem to L2
+        // TODO transfer stats main mem to L2
         L2Node->tag = currTagL2;
         L2Node->valid = 1;
         if(rw == READ)
@@ -184,23 +162,68 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
 
         return EXIT_SUCCESS;
     }
+
+    // item was not in VCL2 and there is not a kickout from L2
     else
     {
-        stats->kickoutL2++;
-        stats->dirtyKickL2++;
+        // TODO transfer stats main mem to L2
+        // check if there is an empty spot (not valid) in L2 for value from main memory
+        L2Node = cacheHier->L2[currIndxL2]->first;
+        while(L2Node != NULL)
+        {
+            if(!L2Node->valid)
+            {
+                // mark as valid and insert into L2
+                L2Node->valid = 1;
+                L2Node->tag = currTagL2;
+                if(rw == READ)
+                    L2Node->dirty = CLEAN;
+                else
+                    L2Node->dirty = DIRTY;
 
-        // transfer tag from main mem to L2
-        L2Node->tag = currTagL2;
-        L2Node->valid = 1;
-        if(rw == READ)
-            L2Node->dirty = CLEAN;
-        else
-            L2Node->dirty = DIRTY;
-        if(bumpToFirst(cacheHier->L2[currIndxL2], L2Node->tag))
-            PERR("bumpToFirst failed");
+                // adhere to LRU policy
+                if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2))
+                    PERR("bumpToFirst failed");
+                return EXIT_SUCCESS;
+            }
 
-        // dirty write to main mem
-        // TODO increment stats for write to main mem
-        return EXIT_SUCCESS;
+            L2Node = L2Node->next;
+        }
+
+        // otherwise a kickout occurs
+        VCL2Node = cacheHier->VCL2->first;
+        L2Node = cacheHier->L2[currIndxL2]->last;
+        while(VCL2Node != NULL)
+        {
+            // VCL2 has an available spot for the kickout from L2
+            if(!VCL2Node->valid)
+            {
+                // transfer tag from L2 to VCL2 (L2 kickout)
+                VCL2Node->tag = (L2Node->tag << cacheCnfg->bitsIndexL2) | currIndxL2;
+                VCL2Node->valid = 1;
+                VCL2Node->dirty = L2Node->dirty;
+
+                // LRU policy VCL2
+                if(bumpToFirst(cacheHier->VCL2, VCL2Node->tag))
+                    PERR("bumpToFirst failed");
+
+                // transfer from main mem to L2
+                L2Node->valid = 1;
+                L2Node->tag = currTagL2;
+                if(rw == READ)
+                    L2Node->dirty = CLEAN;
+                else
+                    L2Node->dirty = DIRTY;
+
+                // LRU policy L2
+                if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2))
+                    PERR("bumpToFirst failed");
+
+                return EXIT_SUCCESS;
+            }
+
+            VCL2Node = VCL2Node->next;
+        }
+        PERR("all cases should be covered before this point");
     }
 }
