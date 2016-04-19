@@ -218,7 +218,8 @@ int main(int argc, char *argv[])
         }
     }
 
-    /* printCurrCache(cacheCnfg, cacheHier); */
+    //printCurrCache(cacheCnfg, cacheHier);
+    printResults("All-4way",cacheCnfg,stats);
 
     printf("\n\nhits L1i: %llu\n",stats->hitL1i);
     printf("miss L1i: %llu\n",stats->missL1i);
