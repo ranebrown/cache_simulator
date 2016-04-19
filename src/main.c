@@ -13,7 +13,6 @@
 #include "cache.h"
 #include "L1cache.h"
 #include "L2cache.h"
-#include "VCache.h"
 #include "dlinkedList.h"
 
 /* #define DEBUG_PRINT_TRACE ///< print traces for debugging */

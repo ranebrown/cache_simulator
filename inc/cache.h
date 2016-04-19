@@ -112,6 +112,12 @@
         float   missRateL2     ;       ///< miss rate percentage L2 cache
     } performance;
 
+    /**
+     * @brief prints the current cache contents for all cache levels
+     * @param[in] cacheCnfg the configuration setup for the current simulation
+     * @param[in] cacheHier structure that contains all cache levels
+     * @returns EXIT_SUCCESS or EXIT_FAILURE
+     */
     int printCurrCache(memInfo *cacheCnfg, allCache *cacheHier);
 
     /**
