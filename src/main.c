@@ -163,12 +163,13 @@ int main(int argc, char *argv[])
                     {
                         /* increment statistics for simulation */
                         stats->hitL1i++;
-                        stats->cycleInst += L1_HIT_T;
+                        stats->cycleInst += L1_HIT_T + 1; // TODO +1 is time to execute inst. move to header?
                     }
                     else
                     {
                         /* increment miss count */
                         stats->missL1i++;
+                        stats->cycleInst += L1_MISS_T;
 
                         /* check up the memory hierarchy for the requested value */
                         if(L1iMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, currAddr) == EXIT_FAILURE)
@@ -186,6 +187,7 @@ int main(int argc, char *argv[])
                     {
                         /* increment miss count */
                         stats->missL1d++;
+                        stats->cycleDRead += L1_MISS_T;
 
                         /* check up the memory hierarchy for the requested value */
                         if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, READ) == EXIT_FAILURE)
@@ -203,6 +205,7 @@ int main(int argc, char *argv[])
                     {
                         /* increment miss count */
                         stats->missL1d++;
+                        stats->cycleDRead += L1_MISS_T;
 
                         /* check up the memory hierarchy for the requested value */
                         if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, WRITE) == EXIT_FAILURE)
@@ -220,22 +223,32 @@ int main(int argc, char *argv[])
 
     /* printCurrCache(cacheCnfg, cacheHier); */
 
-    printf("\n\nhits L1i: %llu\n",stats->hitL1i);
-    printf("miss L1i: %llu\n",stats->missL1i);
-    printf("L1i kick: %llu\n", stats->kickoutL1i);
-    printf("VCL1i hit: %llu\n\n", stats->VChitL1i);
+    /* printf("inst refs: %llu\n",stats->instRefs); */
+    /* printf("data R refs: %llu\n",stats->dataReadRef); */
+    /* printf("data W refs: %llu\n",stats->dataWriteRef); */
 
-    printf("hits L1d: %llu\n",stats->hitL1d);
-    printf("miss L1d: %llu\n",stats->missL1d);
-    printf("L1d kick: %llu\n", stats->kickoutL1d);
-    printf("L1d dirty kick: %llu\n", stats->dirtyKickL1d);
-    printf("VCL1d hit: %llu\n\n", stats->VChitL1d);
+    /* printf("\n\nhits L1i: %llu\n",stats->hitL1i); */
+    /* printf("miss L1i: %llu\n",stats->missL1i); */
+    /* printf("L1i kick: %llu\n", stats->kickoutL1i); */
+    /* printf("VCL1i hit: %llu\n\n", stats->VChitL1i); */
 
-    printf("hits L2: %llu\n",stats->hitL2);
-    printf("miss L2: %llu\n",stats->missL2);
-    printf("L2 kick: %llu\n", stats->kickoutL2);
-    printf("L2 dirty kick: %llu\n", stats->dirtyKickL2);
-    printf("VCL2 hit: %llu\n\n", stats->VChitL2);
+    /* printf("hits L1d: %llu\n",stats->hitL1d); */
+    /* printf("miss L1d: %llu\n",stats->missL1d); */
+    /* printf("L1d kick: %llu\n", stats->kickoutL1d); */
+    /* printf("L1d dirty kick: %llu\n", stats->dirtyKickL1d); */
+    /* printf("VCL1d hit: %llu\n\n", stats->VChitL1d); */
+
+    /* printf("hits L2: %llu\n",stats->hitL2); */
+    /* printf("miss L2: %llu\n",stats->missL2); */
+    /* printf("L2 kick: %llu\n", stats->kickoutL2); */
+    /* printf("L2 dirty kick: %llu\n", stats->dirtyKickL2); */
+    /* printf("VCL2 hit: %llu\n\n", stats->VChitL2); */
+
+    printf("\ncycles inst: %llu\n", stats->cycleInst);
+    printf("cycles data read: %llu\n", stats->cycleDRead);
+    printf("cycles data write: %llu\n", stats->cycleDWrite);
+    printf("total exec. time: %llu\n", stats->cycleInst+stats->cycleDRead+stats->cycleDWrite);
+
 
     /* free any allocated memory */
     free(cacheCnfg);

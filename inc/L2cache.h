@@ -33,8 +33,9 @@
      * @param[in] cacheHier structure containing linked lists for each cache level in the hierarchy
      * @param[in] addr the current full address, used when placing item in victim cache
      * @param[in] rw determines if request is a read or write
+     * @param[in] refType determines if request was instruction or data
      * @returns EXIT_SUCCESS or EXIT_FAILURE
      */
-    int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndxL2, allCache *cacheHier, ulli addr, int rw);
+    int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndxL2, allCache *cacheHier, ulli addr, int rw, refT refType);
 
 #endif // L2_CACHE_H
