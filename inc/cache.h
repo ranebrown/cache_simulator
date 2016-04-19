@@ -20,8 +20,11 @@
     #define L2_OFFSET 6             ///< L2 is 64 bytes i.e. 2^6
     #define CLEAN 0                 ///< dirty bit status
     #define DIRTY 1                 ///< dirty bit status
+<<<<<<< HEAD
     #define READ 0  ///< data read operation
     #define WRITE 1 ///< data write operation
+=======
+>>>>>>> b1431a5ce78a09bccdc5747b4a260f828553af77
 
     /*
      * Defines used for tracking simulation times
@@ -33,7 +36,11 @@
     #define L2_HIT_T 8              ///< number of cycles to return an L2 hit
     #define L2_MISS_T 10            ///< number of cycles to determine an L2 request is a miss and make request to main memory
     #define L2_TRANSFER_T 20        ///< time to transfer a value from L2 to L1 cache (based on 16 byte bus)
+<<<<<<< HEAD
     #define MAIN_MEM_TRANSFER_T 180 ///< time to transfer a value from main memory to L2 cache
+=======
+    #define MAIN_MEM_TRANSFER_T     ///< time to transfer a value from main memory to L2 cache
+>>>>>>> b1431a5ce78a09bccdc5747b4a260f828553af77
 
     typedef unsigned long long int ulli;    ///< shorten long type
     typedef unsigned int ui;                ///< maintain same format as ulli

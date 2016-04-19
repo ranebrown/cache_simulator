@@ -4,17 +4,16 @@
  * @date        03-18-2016
  * @brief       Main file for cache simulator project.
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "printResults.h"
-#include "readTrace.h"
-#include "config.h"
-#include "cache.h"
-#include "L1cache.h"
-#include "L2cache.h"
-#include "VCache.h"
-#include "dlinkedList.h"
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include "printResults.h"
+ #include "readTrace.h"
+ #include "config.h"
+ #include "cache.h"
+ #include "L1cache.h"
+ #include "L2cache.h"
+ #include "dlinkedList.h"
 
 /* #define DEBUG_PRINT_TRACE ///< print traces for debugging */
 /* #define DEBUG_ADDR ///< print the tag and index info */
@@ -44,7 +43,8 @@ int main(int argc, char *argv[])
     /* structure containing statistics for simulation */
     performance *stats = malloc(sizeof(performance));
     if(stats == NULL)
-        PERR("malloc error");
+        PERR("malloc errro");
+
     performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     *stats = zero; // zero all elements in stats
 
@@ -118,6 +118,7 @@ int main(int argc, char *argv[])
             printf("%c %llx %d\n" ,op ,addr ,numBytes);
 #endif
 
+
         /* calculate the word (4 byte) aligned start address */
         currAddr = addr & 0xFFFFFFFFFFFFFFFC;
 
@@ -139,6 +140,7 @@ int main(int argc, char *argv[])
             default:
                 PERR("invalid trace operation");
         }
+
          /* loop for L1 access - 4 byte bus -> multiple accesses possible */
         while(currAddr <= endAddr)
         {
@@ -224,7 +226,7 @@ int main(int argc, char *argv[])
 
     /* printCurrCache(cacheCnfg, cacheHier); */
 
-    printf("hits L1i: %llu\n",stats->hitL1i);
+    printf("\n\nhits L1i: %llu\n",stats->hitL1i);
     printf("miss L1i: %llu\n",stats->missL1i);
     printf("L1i kick: %llu\n", stats->kickoutL1i);
     printf("VCL1i hit: %llu\n\n", stats->VChitL1i);
@@ -240,15 +242,6 @@ int main(int argc, char *argv[])
     printf("L2 kick: %llu\n", stats->kickoutL2);
     printf("L2 dirty kick: %llu\n", stats->dirtyKickL2);
     printf("VCL2 hit: %llu\n\n", stats->VChitL2);
-
-    //Some quick debugging
-    // ulli  totRefs = stats->instRefs + stats->dataReadRef + stats->dataWriteRef;
-    // ulli  totExecT = stats->cycleDRead + stats->cycleDWrite + stats->cycleInst +
-    //                  stats->totExecT;
-    // printf("total References: %llu\n",totRefs);
-    // printf("total exec time:  %llu\n",totExecT);
-
-    printResults(cacheCnfg->cacheName,cacheCnfg,stats);
 
     /* free any allocated memory */
     free(cacheCnfg);

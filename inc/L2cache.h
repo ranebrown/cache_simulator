@@ -36,4 +36,5 @@
      */
     int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndxL2, allCache *cacheHier, ulli addr, int rw);
 
+
 #endif // L2_CACHE_H

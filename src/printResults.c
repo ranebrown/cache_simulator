@@ -27,7 +27,6 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     if(fp == NULL)
         PERR("error opening file");
 
-
     if(mem->L1iWays == 0)
         numWaysL1 = mem->L1dSize / mem->L1dBlock;
     if(mem->L2Ways == 0)
@@ -57,6 +56,7 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     // float   missRateL1i    =   0;       // miss rate percentage L1 instruction cache
     // float   missRateL1d    =   0;       // miss rate percentage L1 data cache
     // float   missRateL2     =   0;       // miss rate percentage L2 cache
+
 
     // print to file
     fprintf( fp, "-----------------------------------------------------------------------------------------------\n");
