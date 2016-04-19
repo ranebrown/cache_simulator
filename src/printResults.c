@@ -36,26 +36,26 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     stats->totExecT      = stats->totExecT + stats->cycleDRead + stats->cycleDWrite + stats->cycleInst;  // total execution time for the simulation */
     stats->totRefs       = stats->instRefs + stats->dataReadRef + stats->dataWriteRef; // total number of references = data + instruction
     stats->dataRefs      = stats->dataReadRef + stats->dataWriteRef;          // number of data references = read + writes
-    stats->percRefInst   = stats->instRefs / stats->totRefs;                  // percentage of references that are instructions
-    stats->percRefDRead  = stats->dataReadRef / stats->totRefs;               // percentage of references that are data reads
-    stats->percRefDWrite = stats->dataWriteRef / stats->totRefs;              // percentage of references that are data writes
-    stats->percCycleDR   = stats->cycleDRead / stats->totExecT;               // percentage of cycles that are data reads
-    stats->percCycleDW   = stats->cycleDWrite / stats->totExecT;              // percentage of cycles that are data writes
-    stats->percCycleInst = stats->cycleInst / stats->totExecT;                // percentage of cycles that are instructions
+    stats->percRefInst   = (float) stats->instRefs     / (float) stats->totRefs * 100;                  // percentage of references that are instructions
+    stats->percRefDRead  = (float) stats->dataReadRef  / (float) stats->totRefs * 100;               // percentage of references that are data reads
+    stats->percRefDWrite = (float) stats->dataWriteRef / (float) stats->totRefs * 100;              // percentage of references that are data writes
+    //stats->percCycleDR   = (float) stats->cycleDRead   / (float) stats->totExecT * 100;               // percentage of cycles that are data reads
+    //stats->percCycleDW   = (float) stats->cycleDWrite  / (float) stats->totExecT * 100;              // percentage of cycles that are data writes
+    //stats->percCycleInst = (float) stats->cycleInst    / (float) stats->totExecT * 100;                // percentage of cycles that are instructions
     // ulli    idealExecT     =   0;       // ideal execution time
     // ulli    idealMisExecT  =   0;       // ideal mis-aligned exectition time
-    // float   cpi = totExecT/(totRefs*_____);       // actual CPI
+    // float   cpi = (float) totExecT/((float) totRefs * (float) totRefs);       // actual CPI
     // float   idealCpi       =   0;       // ideal CPI
     // float   idealMisCpi    =   0;       // ideal mis-aligned CPI
-    // ulli    totalReqL1i    =   0;       // total requests L1 instruction cache
-    // ulli    totalReqL1d    =   0;       // total requests L1 data cache
-    // ulli    totalReqL2     =   0;       // total requests L2 cache
-    // float   hitRateL1i     =   0;       // hit rate percentage L1 instruction cache
-    // float   hitRateL1d     =   0;       // hit rate percentage L1 data cache
-    // float   hitRateL2      =   0;       // hit rate percentage L2 cache
-    // float   missRateL1i    =   0;       // miss rate percentage L1 instruction cache
-    // float   missRateL1d    =   0;       // miss rate percentage L1 data cache
-    // float   missRateL2     =   0;       // miss rate percentage L2 cache
+    stats->totalReqL1i = stats->hitL1i + stats->missL1i;       // total requests L1 instruction cache
+    stats->totalReqL1d = stats->hitL1d + stats->missL1d;       // total requests L1 data cache
+    stats->totalReqL2  = stats->hitL2 + stats->missL2;       // total requests L2 cache
+    stats->hitRateL1i     =   (float) stats->hitL1i / (float) stats->totalReqL1i * 100;       // hit rate percentage L1 instruction cache
+    stats->hitRateL1d     =   (float) stats->hitL1d / (float) stats->totalReqL1d * 100;       // hit rate percentage L1 data cache
+    stats->hitRateL2      =   (float) stats->hitL2 / (float) stats->totalReqL2 * 100;       // hit rate percentage L2 cache
+    stats->missRateL1i    =   100 - stats->hitRateL1i;       // miss rate percentage L1 instruction cache
+    stats->missRateL1d    =   100 - stats->hitRateL1d;       // miss rate percentage L1 data cache
+    stats->missRateL2     =   100 - stats->hitRateL2 ;       // miss rate percentage L2 cache
 
 
     // print to file

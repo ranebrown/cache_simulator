@@ -186,7 +186,6 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
                 if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2))
                     PERR("bumpToFirst failed");
 
-                //stats->totExecT += MAIN_MEM_TRANSFER_T; /********** ADDED BY BRIAN **********/
                 return EXIT_SUCCESS;
             }
 
