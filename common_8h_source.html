@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Cache Simulator: printResults.h File Reference</title>
+<title>Cache Simulator: common.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,77 +87,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">printResults.h File Reference</div>  </div>
+<div class="title">common.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Header file with function prototypes for printing the cache simulation results to a file.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;errno.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="config_8h_source.html">config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="cache_8h_source.html">cache.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="common_8h_source.html">common.h</a>&quot;</code><br />
-</div>
-<p><a href="print_results_8h_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a509cc22917e10890b307cb040ba83860"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="print_results_8h.html#a509cc22917e10890b307cb040ba83860">printResults</a> (char *trace, <a class="el" href="structmem_info.html">memInfo</a> *mem, <a class="el" href="structperformance.html">performance</a> *stats)</td></tr>
-<tr class="memdesc:a509cc22917e10890b307cb040ba83860"><td class="mdescLeft">&#160;</td><td class="mdescRight">prints the results of the simulation to a file  <a href="#a509cc22917e10890b307cb040ba83860">More...</a><br /></td></tr>
-<tr class="separator:a509cc22917e10890b307cb040ba83860"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section author"><dt>Authors</dt><dd>Rane Brown &amp; Brian Douglass </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>03-20-2016 </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a509cc22917e10890b307cb040ba83860"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int printResults </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>trace</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structmem_info.html">memInfo</a> *&#160;</td>
-          <td class="paramname"><em>mem</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structperformance.html">performance</a> *&#160;</td>
-          <td class="paramname"><em>stats</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">trace</td><td>string containing the name of the currently running trace </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">mem</td><td>struct containing memory configuration parameters </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">stats</td><td>struct containing statistics about the cache simulation </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS or EXIT_FAILURE </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+<a href="common_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef COMMON_H</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">    #define COMMON_H</span></div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="common_8h.html#a1250e0ed87b5baa5422f5b6feaaac030">   13</a></span>&#160;<span class="preprocessor">    #define PERR(M, ...) do {fprintf(stderr, &quot;ERROR: --- FILE:%s LINE:%d FUNCTION:%s --- &quot; M &quot;\n&quot;, \</span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">            __FILE__, __LINE__, __func__,  ##__VA_ARGS__); return EXIT_FAILURE;} while(0)</span></div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div><div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="common_8h.html#af6a258d8f3ee5206d682d799316314b1">   19</a></span>&#160;    <span class="keyword">typedef</span> <span class="keyword">enum</span></div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    {</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">false</span>,</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">true</span></div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    } <a class="code" href="common_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>;</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#endif // COMMON_H</span></div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div><div class="ttc" id="common_8h_html_af6a258d8f3ee5206d682d799316314b1"><div class="ttname"><a href="common_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a></div><div class="ttdeci">bool</div><div class="ttdoc">used to indicate a statment is true or false </div><div class="ttdef"><b>Definition:</b> common.h:19</div></div>
+</div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

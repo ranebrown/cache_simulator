@@ -1,10 +1,13 @@
 var searchData=
 [
-  ['valid',['valid',['../structnode.html#aa4fa3079ce1a14d45c3d3f519dc56098',1,'node']]],
-  ['vchitl1d',['VChitL1d',['../structperformance.html#a2a9ad4b394bd11653d8c04d07049bbd4',1,'performance']]],
-  ['vchitl1i',['VChitL1i',['../structperformance.html#a05cf3fa6c5f61c165ace79624a8fde3d',1,'performance']]],
-  ['vchitl2',['VChitL2',['../structperformance.html#af47f19b28af858a815ed8c77e8b52f48',1,'performance']]],
-  ['vcl1d',['VCL1d',['../structall_cache.html#a2b2d19dfc5a73918f39e4c73f1e6d302',1,'allCache']]],
-  ['vcl1i',['VCL1i',['../structall_cache.html#ad3450171e9b973943475e37f89de7d74',1,'allCache']]],
-  ['vcl2',['VCL2',['../structall_cache.html#a4bf36bcf71496282367818c38ea49a85',1,'allCache']]]
+  ['tag',['tag',['../structnode.html#a62913859238d218110e429653857d04f',1,'node']]],
+  ['totalcost',['totalCost',['../structmem_info.html#afcd9f210027db998685e5ce99be9db20',1,'memInfo']]],
+  ['totalreql1d',['totalReqL1d',['../structperformance.html#a855e7ab762a1980e0675237eebc77cd4',1,'performance']]],
+  ['totalreql1i',['totalReqL1i',['../structperformance.html#a3b947222387d84e91d269ab2ba82f243',1,'performance']]],
+  ['totalreql2',['totalReqL2',['../structperformance.html#a406e34cdc5305590d432c448ec52c828',1,'performance']]],
+  ['totexect',['totExecT',['../structperformance.html#a7eb0551bdfc7b393ecbe944b63235496',1,'performance']]],
+  ['totrefs',['totRefs',['../structperformance.html#a3c94e93dfa01de681e7238a1b1ffc5b8',1,'performance']]],
+  ['transfersl1d',['transfersL1d',['../structperformance.html#a63b0c50e30394c94b03d330af6333e50',1,'performance']]],
+  ['transfersl1i',['transfersL1i',['../structperformance.html#a6fbeade97c9a6a75fbd156d6372ae723',1,'performance']]],
+  ['transfersl2',['transfersL2',['../structperformance.html#a7ceb53b99ec40df5a39d27ec26b48be6',1,'performance']]]
 ];

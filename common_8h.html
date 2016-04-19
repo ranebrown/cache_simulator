@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Cache Simulator: printResults.h File Reference</title>
+<title>Cache Simulator: common.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -88,55 +88,51 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">printResults.h File Reference</div>  </div>
+<div class="title">common.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Header file with function prototypes for printing the cache simulation results to a file.  
+<p>Header file to contain items that are used by all files to avoid circular dependencies.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;errno.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="config_8h_source.html">config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="cache_8h_source.html">cache.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="common_8h_source.html">common.h</a>&quot;</code><br />
-</div>
-<p><a href="print_results_8h_source.html">Go to the source code of this file.</a></p>
+
+<p><a href="common_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a509cc22917e10890b307cb040ba83860"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="print_results_8h.html#a509cc22917e10890b307cb040ba83860">printResults</a> (char *trace, <a class="el" href="structmem_info.html">memInfo</a> *mem, <a class="el" href="structperformance.html">performance</a> *stats)</td></tr>
-<tr class="memdesc:a509cc22917e10890b307cb040ba83860"><td class="mdescLeft">&#160;</td><td class="mdescRight">prints the results of the simulation to a file  <a href="#a509cc22917e10890b307cb040ba83860">More...</a><br /></td></tr>
-<tr class="separator:a509cc22917e10890b307cb040ba83860"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a1250e0ed87b5baa5422f5b6feaaac030"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="common_8h.html#a1250e0ed87b5baa5422f5b6feaaac030">PERR</a>(M, ...)</td></tr>
+<tr class="memdesc:a1250e0ed87b5baa5422f5b6feaaac030"><td class="mdescLeft">&#160;</td><td class="mdescRight">macro to print an error message to stderr, uses var args to accept printf format input, returns EXIT_FAILURE  <a href="#a1250e0ed87b5baa5422f5b6feaaac030">More...</a><br /></td></tr>
+<tr class="separator:a1250e0ed87b5baa5422f5b6feaaac030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:af6a258d8f3ee5206d682d799316314b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6a258d8f3ee5206d682d799316314b1"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="common_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> { <b>false</b>, 
+<b>true</b>
+ }<tr class="memdesc:af6a258d8f3ee5206d682d799316314b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">used to indicate a statment is true or false <br /></td></tr>
+</td></tr>
+<tr class="separator:af6a258d8f3ee5206d682d799316314b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Authors</dt><dd>Rane Brown &amp; Brian Douglass </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>03-20-2016 </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a509cc22917e10890b307cb040ba83860"></a>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a1250e0ed87b5baa5422f5b6feaaac030"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int printResults </td>
+          <td class="memname">#define PERR</td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>trace</em>, </td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">M, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structmem_info.html">memInfo</a> *&#160;</td>
-          <td class="paramname"><em>mem</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structperformance.html">performance</a> *&#160;</td>
-          <td class="paramname"><em>stats</em>&#160;</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -145,16 +141,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">trace</td><td>string containing the name of the currently running trace </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">mem</td><td>struct containing memory configuration parameters </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">stats</td><td>struct containing statistics about the cache simulation </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS or EXIT_FAILURE </dd></dl>
-
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {fprintf(stderr, <span class="stringliteral">&quot;ERROR: --- FILE:%s LINE:%d FUNCTION:%s --- &quot;</span> M <span class="stringliteral">&quot;\n&quot;</span>, \</div><div class="line">            __FILE__, __LINE__, __func__,  ##__VA_ARGS__); <span class="keywordflow">return</span> EXIT_FAILURE;} <span class="keywordflow">while</span>(0)</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

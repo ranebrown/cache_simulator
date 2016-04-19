@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['read',['READ',['../cache_8h.html#ada74e7db007a68e763f20c17f2985356',1,'cache.h']]],
   ['readtrace',['readTrace',['../read_trace_8c.html#a5df74d7ff529dc84d701085d3ddd97ba',1,'readTrace(char *op, unsigned long long int *addr, unsigned int *numBytes):&#160;readTrace.c'],['../read_trace_8h.html#a5df74d7ff529dc84d701085d3ddd97ba',1,'readTrace(char *op, unsigned long long int *addr, unsigned int *numBytes):&#160;readTrace.c']]],
   ['readtrace_2ec',['readTrace.c',['../read_trace_8c.html',1,'']]],
   ['readtrace_2eh',['readTrace.h',['../read_trace_8h.html',1,'']]],

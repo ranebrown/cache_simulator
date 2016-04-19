@@ -1,11 +1,20 @@
 var searchData=
 [
-  ['maxsize',['maxSize',['../structlist.html#ad6dbdcd39ca79c02fa2169daf3680f97',1,'list']]],
-  ['memorycost',['memoryCost',['../structmem_info.html#a55e2e27a05b3d7b04f6e110a7fd0dbc9',1,'memInfo']]],
-  ['missl1d',['missL1d',['../structperformance.html#a26e134187c61debc3806b894c09d6e66',1,'performance']]],
-  ['missl1i',['missL1i',['../structperformance.html#a661722edb7039a2f19ac8fd3e10b2310',1,'performance']]],
-  ['missl2',['missL2',['../structperformance.html#af20f1f6af5037b229f060602bbfa8367',1,'performance']]],
-  ['missratel1d',['missRateL1d',['../structperformance.html#a07f81856741d485e8bd9bdfa3697a0ec',1,'performance']]],
-  ['missratel1i',['missRateL1i',['../structperformance.html#a938cccfbb291e98472cac3ad48039535',1,'performance']]],
-  ['missratel2',['missRateL2',['../structperformance.html#afe1e4cfd29d6c9f55fe17ab65eb37e73',1,'performance']]]
+  ['l1d',['L1d',['../structall_cache.html#a82eca3b26c8670d3d8d405e85c7b10e5',1,'allCache']]],
+  ['l1dblock',['L1dBlock',['../structmem_info.html#adbcb8d0f6cff9d14d7ec5f2af4b9051b',1,'memInfo']]],
+  ['l1dcost',['L1dCost',['../structmem_info.html#a44f38becd921a47d55bb7f3303731914',1,'memInfo']]],
+  ['l1dsize',['L1dSize',['../structmem_info.html#aaf6614b071e66cc3f8aa8afec24246bf',1,'memInfo']]],
+  ['l1dways',['L1dWays',['../structmem_info.html#a4defe4bd8c6798edcdf8ab5817992490',1,'memInfo']]],
+  ['l1i',['L1i',['../structall_cache.html#a07dcd4cc72e6c4596eea30f2aec617bd',1,'allCache']]],
+  ['l1iblock',['L1iBlock',['../structmem_info.html#a8b9171bd7116591a869a0f539c532030',1,'memInfo']]],
+  ['l1icost',['L1iCost',['../structmem_info.html#a229e850e9b47accb3f02ac7e126824a6',1,'memInfo']]],
+  ['l1isize',['L1iSize',['../structmem_info.html#a4d41d16be3b104307938f428d89daae5',1,'memInfo']]],
+  ['l1iways',['L1iWays',['../structmem_info.html#a7f8c4a1e48db2283e8da603abff6960a',1,'memInfo']]],
+  ['l1totcost',['L1TotCost',['../structmem_info.html#aaad81406ea88314743ee2dabb17b13f9',1,'memInfo']]],
+  ['l2',['L2',['../structall_cache.html#a726e78585b11fdfb18b7ae4c14b1120e',1,'allCache']]],
+  ['l2block',['L2Block',['../structmem_info.html#a10a45bacca03211ab1e4809cc1ec5b7d',1,'memInfo']]],
+  ['l2cost',['L2Cost',['../structmem_info.html#a246ba94356a6d06523b8824cf709ee6d',1,'memInfo']]],
+  ['l2size',['L2Size',['../structmem_info.html#a84c86681321e80f10029647af067884c',1,'memInfo']]],
+  ['l2ways',['L2Ways',['../structmem_info.html#acf9b2df9d926d22e8e48091ac47f5b3c',1,'memInfo']]],
+  ['last',['last',['../structlist.html#a19d6b0fffc8973f372b3effc9d3d9405',1,'list']]]
 ];
