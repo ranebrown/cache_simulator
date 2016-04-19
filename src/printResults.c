@@ -50,13 +50,15 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     stats->totalReqL1i = stats->hitL1i + stats->missL1i;       // total requests L1 instruction cache
     stats->totalReqL1d = stats->hitL1d + stats->missL1d;       // total requests L1 data cache
     stats->totalReqL2  = stats->hitL2 + stats->missL2;       // total requests L2 cache
-    stats->hitRateL1i     =   (float) stats->hitL1i / (float) stats->totalReqL1i * 100;       // hit rate percentage L1 instruction cache
-    stats->hitRateL1d     =   (float) stats->hitL1d / (float) stats->totalReqL1d * 100;       // hit rate percentage L1 data cache
-    stats->hitRateL2      =   (float) stats->hitL2 / (float) stats->totalReqL2 * 100;       // hit rate percentage L2 cache
-    stats->missRateL1i    =   100 - stats->hitRateL1i;       // miss rate percentage L1 instruction cache
-    stats->missRateL1d    =   100 - stats->hitRateL1d;       // miss rate percentage L1 data cache
-    stats->missRateL2     =   100 - stats->hitRateL2 ;       // miss rate percentage L2 cache
-
+    stats->hitRateL1i     = (float) stats->hitL1i / (float) stats->totalReqL1i * 100;       // hit rate percentage L1 instruction cache
+    stats->hitRateL1d     = (float) stats->hitL1d / (float) stats->totalReqL1d * 100;       // hit rate percentage L1 data cache
+    stats->hitRateL2      = (float) stats->hitL2 / (float) stats->totalReqL2 * 100;       // hit rate percentage L2 cache
+    stats->missRateL1i    = 100 - stats->hitRateL1i;       // miss rate percentage L1 instruction cache
+    stats->missRateL1d    = 100 - stats->hitRateL1d;       // miss rate percentage L1 data cache
+    stats->missRateL2     = 100 - stats->hitRateL2 ;       // miss rate percentage L2 cache
+    stats->transfersL1i   = stats->missL1i - stats->transfersL1i;
+    stats->transfersL1d   = stats->missL1d - stats->transfersL1d;
+    stats->transfersL2    = stats->missL2 - stats->transfersL2;
 
     // print to file
     fprintf( fp, "-----------------------------------------------------------------------------------------------\n");
