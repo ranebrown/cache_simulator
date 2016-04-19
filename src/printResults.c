@@ -34,18 +34,18 @@ int printResults(char *trace, memInfo *mem, performance *stats)
         numWaysL2 = mem->L1dSize / mem->L1dBlock;
 
     /* calculate remaining values */
-    stats->totExecT = stats->totExecT + stats->cycleDRead + stats->cycleDWrite + stats->cycleInst;  // total execution time for the simulation */
-    stats->totRefs  = stats->instRefs + stats->dataReadRef + stats->dataWriteRef; // total number of references = data + instruction
-    stats->dataRefs = stats->dataReadRef + stats->dataWriteRef;   // number of data references = read + writes
-    // float percRefInst     = stats->instRefs / totRefs;                  // percentage of references that are instructions
-    // float percRefDRead    = stats->dataReadRef / totRefs;               // percentage of references that are data reads
-    // float percRefDWrite   = stats->dataWriteRef / totRefs;              // percentage of references that are data writes
-    // float percCycleDR     = stats->cycleDRead / totExecT;               // percentage of cycles that are data reads
-    // float percCycleDW     = stats->cycleDWrite / totExecT;              // percentage of cycles that are data writes
-    // float percCycleInst   = stats->cycleInst / totExecT;                // percentage of cycles that are instructions
-    // // ulli    idealExecT     =   0;       // ideal execution time
-    // // ulli    idealMisExecT  =   0;       // ideal mis-aligned exectition time
-    // float   cpi = totExecT/(totRefs*);       // actual CPI
+    stats->totExecT      = stats->totExecT + stats->cycleDRead + stats->cycleDWrite + stats->cycleInst;  // total execution time for the simulation */
+    stats->totRefs       = stats->instRefs + stats->dataReadRef + stats->dataWriteRef; // total number of references = data + instruction
+    stats->dataRefs      = stats->dataReadRef + stats->dataWriteRef;          // number of data references = read + writes
+    stats->percRefInst   = stats->instRefs / stats->totRefs;                  // percentage of references that are instructions
+    stats->percRefDRead  = stats->dataReadRef / stats->totRefs;               // percentage of references that are data reads
+    stats->percRefDWrite = stats->dataWriteRef / stats->totRefs;              // percentage of references that are data writes
+    stats->percCycleDR   = stats->cycleDRead / stats->totExecT;               // percentage of cycles that are data reads
+    stats->percCycleDW   = stats->cycleDWrite / stats->totExecT;              // percentage of cycles that are data writes
+    stats->percCycleInst = stats->cycleInst / stats->totExecT;                // percentage of cycles that are instructions
+    // ulli    idealExecT     =   0;       // ideal execution time
+    // ulli    idealMisExecT  =   0;       // ideal mis-aligned exectition time
+    // float   cpi = totExecT/(totRefs*_____);       // actual CPI
     // float   idealCpi       =   0;       // ideal CPI
     // float   idealMisCpi    =   0;       // ideal mis-aligned CPI
     // ulli    totalReqL1i    =   0;       // total requests L1 instruction cache

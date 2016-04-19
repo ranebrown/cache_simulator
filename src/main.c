@@ -248,7 +248,7 @@ int main(int argc, char *argv[])
     // printf("total References: %llu\n",totRefs);
     // printf("total exec time:  %llu\n",totExecT);
 
-    printResults("tr6",cacheCnfg,stats);
+    printResults(cacheCnfg->cacheName,cacheCnfg,stats);
 
     /* free any allocated memory */
     free(cacheCnfg);
