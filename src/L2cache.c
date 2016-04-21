@@ -67,17 +67,23 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
             if(refType == instT)
             {
                 stats->cycleInst += L2_HIT_T; // VC to L2 same time as an L2 hit
-                printf("31:VC->L2 : time +8\n");
+#ifdef DEBUG_TIME
+                printf("31:VCL2->L2: time +8\n");
+#endif
             }
-            else if(refType == dataT && rw == READ)
+            else if(refType == dataTR)
             {
                 stats->cycleDRead += L2_HIT_T;
+#ifdef DEBUG_TIME
                 printf("32:VC->L2 : time +8\n");
+#endif
             }
             else
             {
                 stats->cycleDWrite += L2_HIT_T;
-                printf("33:VC->L2 : time +8\n");
+#ifdef DEBUG_TIME
+                printf("33:VC->L2: time +8\n");
+#endif
             }
 
             stats->VChitL2++;
@@ -142,17 +148,23 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         if(refType == instT)
         {
             stats->cycleInst += L2_HIT_T; // VC to L2 same time as an L2 hit
-            printf("34:L2->VC : time +8\n");
+#ifdef DEBUG_TIME
+            printf("34:L2->VC: time +8\n");
+#endif
         }
-        else if(refType == dataT && rw == READ)
+        else if(refType == dataTR)
         {
             stats->cycleDRead += L2_HIT_T;
-            printf("35:L2->VC : time +8\n");
+#ifdef DEBUG_TIME
+            printf("35:L2->VC: time +8\n");
+#endif
         }
         else
         {
             stats->cycleDWrite += L2_HIT_T;
-            printf("36:L2->VC : time +8\n");
+#ifdef DEBUG_TIME
+            printf("36:L2->VC: time +8\n");
+#endif
         }
 
         VCL2Node = cacheHier->VCL2->last;
@@ -166,20 +178,27 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         // otherwise handle dirty kickout
         else if(tempDirty == DIRTY)
         {
+            // TODO add replays ??
             if(refType == instT)
             {
                 stats->cycleInst += MAIN_MEM_TRANSFER_T;
-                printf("37:Main->L2 : time +180\n");
+#ifdef DEBUG_TIME
+                printf("37:Main->L2: time +180\n");
+#endif
             }
-            else if(refType == dataT && rw == READ)
+            else if(refType == dataTR)
             {
-                stats->cycleDRead += MAIN_MEM_TRANSFER_T;
+                stats->cycleDRead += L2_HIT_T;
+#ifdef DEBUG_TIME
                 printf("38:Main->L2 : time +180\n");
+#endif
             }
             else
             {
-                stats->cycleDWrite += MAIN_MEM_TRANSFER_T;
+                stats->cycleDWrite += L2_HIT_T;
+#ifdef DEBUG_TIME
                 printf("39:Main->L2: time +180\n");
+#endif
             }
 
             stats->kickoutL2++;
@@ -199,17 +218,29 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         if(refType == instT)
         {
             stats->cycleInst += MAIN_MEM_TRANSFER_T;
+            stats->cycleInst += L2_HIT_T;
+#ifdef DEBUG_TIME
             printf("40:Main->L2: time +180\n");
+            printf("40b:Main->L2 replay: time +8\n");
+#endif
         }
-        else if(refType == dataT && rw == READ)
+        else if(refType == dataTR)
         {
             stats->cycleDRead += MAIN_MEM_TRANSFER_T;
+            stats->cycleDRead += L2_HIT_T;
+#ifdef DEBUG_TIME
             printf("41:Main->L2: time +180\n");
+            printf("41b:Main->L2 replay: time +8\n");
+#endif
         }
         else
         {
             stats->cycleDWrite += MAIN_MEM_TRANSFER_T;
+            stats->cycleDWrite += L2_HIT_T;
+#ifdef DEBUG_TIME
             printf("42:Main->L2: time +180\n");
+            printf("42b:Main->L2 replay: time +8\n");
+#endif
         }
 
         L2Node->tag = currTagL2;
@@ -230,17 +261,29 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         if(refType == instT)
         {
             stats->cycleInst += MAIN_MEM_TRANSFER_T;
+            stats->cycleInst += L2_HIT_T;
+#ifdef DEBUG_TIME
             printf("43:Main->L2: time +180\n");
+            printf("43b:Main->L2 replay: time +8\n");
+#endif
         }
-        else if(refType == dataT && rw == READ)
+        else if(refType == dataTR)
         {
             stats->cycleDRead += MAIN_MEM_TRANSFER_T;
+            stats->cycleDRead += L2_HIT_T;
+#ifdef DEBUG_TIME
             printf("44:Main->L2: time +180\n");
+            printf("44b:Main->L2 replay: time +8\n");
+#endif
         }
         else
         {
             stats->cycleDWrite += MAIN_MEM_TRANSFER_T;
+            stats->cycleDWrite += L2_HIT_T;
+#ifdef DEBUG_TIME
             printf("45:Main->L2: time +180\n");
+            printf("45b:Main->L2 replay: time +8\n");
+#endif
         }
 
         // TODO transfer stats main mem to L2
@@ -268,21 +311,28 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         }
 
         // otherwise a kickout occurs
-        if(refType == instT)
-        {
-            stats->cycleInst += L2_HIT_T;
-            printf("46:L2->VC: time +8\n");
-        }
-        else if(refType == dataT && rw == READ)
-        {
-            stats->cycleDRead += L2_HIT_T;
-            printf("47:L2->VC: time +8\n");
-        }
-        else
-        {
-            stats->cycleDWrite += L2_HIT_T;
-            printf("48:L2->VC: time +8\n");
-        }
+        // TODO these stats are not incremented
+        /* if(refType == instT) */
+        /* { */
+        /*     stats->cycleInst += L2_HIT_T; */
+/* #ifdef DEBUG_TIME */
+        /*     printf("46:L2->VC: time +8\n"); */
+/* #endif */
+        /* } */
+        /* else if(refType == dataTR) */
+        /* { */
+        /*     stats->cycleDRead += L2_HIT_T; */
+/* #ifdef DEBUG_TIME */
+        /*     printf("47:L2->VC: time +8\n"); */
+/* #endif */
+        /* } */
+        /* else */
+        /* { */
+        /*     stats->cycleDWrite += L2_HIT_T; */
+/* #ifdef DEBUG_TIME */
+        /*     printf("48:L2->VC: time +8\n"); */
+/* #endif */
+        /* } */
         VCL2Node = cacheHier->VCL2->first;
         L2Node = cacheHier->L2[currIndxL2]->last;
         while(VCL2Node != NULL)

@@ -43,7 +43,8 @@
      */
     typedef enum
     {
-        dataT,
+        dataTR,
+        dataTW,
         instT
     } refT;
 

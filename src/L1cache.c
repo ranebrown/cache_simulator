@@ -114,7 +114,9 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         {
             // increment statistics for simulation
             stats->cycleInst += L1_HIT_T; // VC to L1 same time as an L1 hit
+#ifdef DEBUG_TIME
             printf("7:VCL1i hit: time +1\n");
+#endif
             stats->VChitL1i++;
 
             // move found entry to front of list (LRU policy)
@@ -150,7 +152,9 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
     {
         stats->missL2++;
         stats->cycleInst += L2_MISS_T;
+#ifdef DEBUG_TIME
         printf("8:L2 miss: time +10\n");
+#endif
 
         // L2 miss
         // check the up the memory hierarchy for the requested value
@@ -163,11 +167,19 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         // increment stats
         stats->hitL2++;
         stats->cycleInst += L2_HIT_T;
+#ifdef DEBUG_TIME
         printf("9:L2 hit: time +8\n");
+#endif
     }
 
     stats->cycleInst += L2_TRANSFER_T;
+#ifdef DEBUG_TIME
     printf("10:L2->L1 transfer: time +20\n");
+#endif
+    stats->cycleInst += L1_HIT_T; // replay time to put value in cache
+#ifdef DEBUG_TIME
+    printf("10b:L2->L1 replay: time +1\n");
+#endif
 
     // hit or miss still need to transfer value from L2 (once it is there) to L1i
     // check if there is an empty spot (not valid) in L1i
@@ -198,7 +210,9 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         if(!VCL1iNode->valid)
         {
             stats->cycleInst += L1_HIT_T;
-            printf("11:VCL1i : time +1\n");
+#ifdef DEBUG_TIME
+            printf("11:L1->VCL1i: time +1\n");
+#endif
 
             // transfer tag from L1i to VCL1i (L1i kickout)
             VCL1iNode->tag = (L1iNode->tag << cacheCnfg->bitsIndexL1) | currIndxL1;
@@ -236,8 +250,8 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         PERR("bumpToFirst failed");
 
     stats->kickoutL1i++;
-    stats->cycleInst += L1_HIT_T;
-    printf("12:VCL1i : time +1\n");
+    /* stats->cycleInst += L1_HIT_T; */
+    /* printf("12:VCL1i->L2: time +1\n"); */
 
     // transfer tag from L2 to L1i
     L1iNode->tag = currTagL1;
@@ -249,7 +263,7 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
     return EXIT_SUCCESS;
 }
 
-int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier, ulli addr, int rw)
+int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTagL2, int currIndxL1, int currIndxL2, allCache *cacheHier, ulli addr, int rw, refT refType)
 {
     // check for bad input
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
@@ -277,7 +291,9 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
 
             // increment statistics for simulation
             stats->cycleInst += L1_HIT_T; // VC to L1 same time as an L1 hit
-            printf("13:VCL1d : time +1\n");
+#ifdef DEBUG_TIME
+            printf("13:VCL1d hit: time +1\n");
+#endif
             stats->VChitL1d++;
 
             // swap the values in the L1d cache and VCL1d
@@ -342,12 +358,16 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         if(rw == READ)
         {
             stats->cycleDRead += L1_HIT_T;
-            printf("14:VCL1i : time +1\n");
+#ifdef DEBUG_TIME
+            printf("14:L1dR->VCL1dR : time +1\n");
+#endif
         }
         else
         {
             stats->cycleDWrite += L1_HIT_T;
-            printf("15:VCL1i : time +1\n");
+#ifdef DEBUG_TIME
+            printf("15:L1dW->VCL1d: time +1\n");
+#endif
         }
 
         VCL1dNode = cacheHier->VCL1d->last;
@@ -365,13 +385,18 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             if(rw == READ)
             {
                 stats->cycleDRead += L2_TRANSFER_T;
-                printf("16:L1->L2 kick : time +20\n");
+                // TODO replay??
+#ifdef DEBUG_TIME
+                printf("16:L1dR->L2 kickout: time +20\n");
+#endif
 
             }
             else
             {
                 stats->cycleDWrite += L2_TRANSFER_T;
-                printf("17:L1->L2 kick : time +20\n");
+#ifdef DEBUG_TIME
+                printf("17:L1dW->L2 kickout: time +20\n");
+#endif
             }
 
             stats->kickoutL1d++;
@@ -392,7 +417,7 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             {
                 stats->missL2++;
 
-                if(L2miss(stats, cacheCnfg,  tempTag, tempIndx, cacheHier, tempaddr, WRITE, dataT) == EXIT_FAILURE)
+                if(L2miss(stats, cacheCnfg,  tempTag, tempIndx, cacheHier, tempaddr, WRITE, refType) == EXIT_FAILURE)
                     PERR("problem L2 miss");
             }
         }
@@ -410,19 +435,23 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             if(rw == READ)
             {
                 stats->cycleDRead += L2_MISS_T;
-                printf("18:L2 miss : time +10\n");
+#ifdef DEBUG_TIME
+                printf("18:L2 miss: time +10\n");
+#endif
             }
             else
             {
                 stats->cycleDWrite += L2_MISS_T;
-                printf("19:L2 miss : time +10\n");
+#ifdef DEBUG_TIME
+                printf("19:L2 miss: time +10\n");
+#endif
             }
 
             stats->missL2++;
 
             // L2 miss
             // check the up the memory hierarchy for the requested value
-            if(L2miss(stats, cacheCnfg,  currTagL2, currIndxL2, cacheHier, addr, READ, dataT) == EXIT_FAILURE)
+            if(L2miss(stats, cacheCnfg,  currTagL2, currIndxL2, cacheHier, addr, READ, refType) == EXIT_FAILURE)
                 PERR("problem L2 miss");
         }
         // otherwise hit
@@ -433,12 +462,16 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             if(rw == READ)
             {
                 stats->cycleDRead += L2_HIT_T;
-                printf("20:L2 hit : time +8\n");
+#ifdef DEBUG_TIME
+                printf("20:L2 hit: time +8\n");
+#endif
             }
             else
             {
                 stats->cycleDWrite += L2_HIT_T;
-                printf("21:L2 hit : time +8\n");
+#ifdef DEBUG_TIME
+                printf("21:L2 hit: time +8\n");
+#endif
             }
         }
 
@@ -446,12 +479,20 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         if(rw == READ)
         {
             stats->cycleDRead += L2_TRANSFER_T;
-            printf("21:L2->L1 : time +20\n");
+            stats->cycleDRead += L1_HIT_T; // replay
+#ifdef DEBUG_TIME
+            printf("21:L2->L1dR: time +20\n");
+            printf("21b:L2->L1dR replay: time +1\n");
+#endif
         }
         else
         {
             stats->cycleDWrite += L2_TRANSFER_T;
-            printf("22:L2->L1 : time +20\n");
+            stats->cycleDWrite += L1_HIT_T;
+#ifdef DEBUG_TIME
+            printf("22:L2->L1dW: time +20\n");
+            printf("22b:L2->L1dW replay: time +1\n");
+#endif
         }
 
         L1dNode->tag = currTagL1;
@@ -475,18 +516,22 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             if(rw == READ)
             {
                 stats->cycleDRead += L2_MISS_T;
-                printf("23:L2 miss : time +10\n");
+#ifdef DEBUG_TIME
+                printf("23:L2 miss: time +10\n");
+#endif
             }
             else
             {
                 stats->cycleDWrite += L2_MISS_T;
-                printf("24:L2 miss : time +10\n");
+#ifdef DEBUG_TIME
+                printf("24:L2 miss: time +10\n");
+#endif
             }
             stats->missL2++;
 
             // L2 miss
             // check the up the memory hierarchy for the requested value
-            if(L2miss(stats, cacheCnfg,  currTagL2, currIndxL2, cacheHier, addr, READ, dataT) == EXIT_FAILURE)
+            if(L2miss(stats, cacheCnfg,  currTagL2, currIndxL2, cacheHier, addr, READ, refType) == EXIT_FAILURE)
                 PERR("problem L2 miss");
         }
         // otherwise hit
@@ -497,12 +542,16 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             if(rw == READ)
             {
                 stats->cycleDRead += L2_HIT_T;
-                printf("25:L2 hit : time +8\n");
+#ifdef DEBUG_TIME
+                printf("25:L2 hit: time +8\n");
+#endif
             }
             else
             {
                 stats->cycleDWrite += L2_HIT_T;
-                printf("26:L2 hit : time +8\n");
+#ifdef DEBUG_TIME
+                printf("26:L2 hit: time +8\n");
+#endif
             }
         }
 
@@ -510,12 +559,20 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         if(rw == READ)
         {
             stats->cycleDRead += L2_TRANSFER_T;
-            printf("27:L2->L1 : time +20\n");
+            stats->cycleDRead += L1_HIT_T;
+#ifdef DEBUG_TIME
+            printf("27:L2->L1dR: time +20\n");
+            printf("27b:L2->L1dR replay: time +1\n");
+#endif
         }
         else
         {
             stats->cycleDWrite += L2_TRANSFER_T;
-            printf("28:L2->L1 : time +20\n");
+            stats->cycleDWrite += L1_HIT_T;
+#ifdef DEBUG_TIME
+            printf("28:L2->L1dW: time +20\n");
+            printf("28b:L2->L1dW replay: time +1\n");
+#endif
         }
 
         // check if there is an empty spot (not valid) in L1d
@@ -544,16 +601,21 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         // otherwise a kickout occurs
         VCL1dNode = cacheHier->VCL1d->first;
         L1dNode = cacheHier->L1d[currIndxL1]->last;
-        if(rw == READ)
-        {
-            stats->cycleDRead += L1_HIT_T;
-            printf("29:L1->VC : time +1\n");
-        }
-        else
-        {
-            stats->cycleDWrite += L1_HIT_T;
-            printf("30:L1->VC : time +1\n");
-        }
+        // TODO these stats are not incremented
+        /* if(rw == READ) */
+        /* { */
+        /*     stats->cycleDRead += L1_HIT_T; */
+/* #ifdef DEBUG_TIME */
+        /*     printf("29:L1dR->VCL1d: time +1\n"); */
+/* #endif */
+        /* } */
+        /* else */
+        /* { */
+        /*     stats->cycleDWrite += L1_HIT_T; */
+/* #ifdef DEBUG_TIME */
+        /*     printf("30:L1dW->VCL1d: time +1\n"); */
+/* #endif */
+        /* } */
 
         while(VCL1dNode != NULL)
         {
