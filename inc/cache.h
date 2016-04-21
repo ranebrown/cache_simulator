@@ -14,6 +14,8 @@
     #include "dlinkedList.h"
     #include "common.h"
 
+    #define POINT_COUNT 
+
     #define HIT 0                   ///< used as a return value for a cache hit
     #define MISS 1                  ///< used as a return value for a cache miss
     #define L1_OFFSET 5             ///< L1 is 32 bytes i.e. 2^5

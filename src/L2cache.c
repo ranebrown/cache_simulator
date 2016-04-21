@@ -67,17 +67,23 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
             if(refType == instT)
             {
                 stats->cycleInst += L2_HIT_T; // VC to L2 same time as an L2 hit
-                printf("31:VC->L2 : time +8\n");
+            #ifdef POINT_COUNT
+                printf("36:VC->L2: \t\t\ttime +8\n");
+            #endif
             }
             else if(refType == dataT && rw == READ)
             {
                 stats->cycleDRead += L2_HIT_T;
-                printf("32:VC->L2 : time +8\n");
+            #ifdef POINT_COUNT
+                printf("37:VC->L2: \t\t\ttime +8\n");
+            #endif
             }
             else
             {
                 stats->cycleDWrite += L2_HIT_T;
-                printf("33:VC->L2 : time +8\n");
+            #ifdef POINT_COUNT
+                printf("38:VC->L2: \t\t\ttime +8\n");
+            #endif
             }
 
             stats->VChitL2++;
@@ -142,17 +148,23 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         if(refType == instT)
         {
             stats->cycleInst += L2_HIT_T; // VC to L2 same time as an L2 hit
-            printf("34:L2->VC : time +8\n");
+        #ifdef POINT_COUNT
+            printf("39:L2->VC: \t\t\ttime +8\n");
+        #endif
         }
         else if(refType == dataT && rw == READ)
         {
             stats->cycleDRead += L2_HIT_T;
-            printf("35:L2->VC : time +8\n");
+        #ifdef POINT_COUNT
+            printf("40:L2->VC: \t\t\ttime +8\n");
+        #endif
         }
         else
         {
             stats->cycleDWrite += L2_HIT_T;
-            printf("36:L2->VC : time +8\n");
+        #ifdef POINT_COUNT
+            printf("41:L2->VC: \t\t\ttime +8\n");
+        #endif
         }
 
         VCL2Node = cacheHier->VCL2->last;
@@ -169,17 +181,23 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
             if(refType == instT)
             {
                 stats->cycleInst += MAIN_MEM_TRANSFER_T;
-                printf("37:Main->L2 : time +180\n");
+            #ifdef POINT_COUNT
+                printf("42:Main->L2: \t\t\ttime +180\n");
+            #endif
             }
             else if(refType == dataT && rw == READ)
             {
                 stats->cycleDRead += MAIN_MEM_TRANSFER_T;
-                printf("38:Main->L2 : time +180\n");
+            #ifdef POINT_COUNT
+                printf("43:Main->L2: \t\t\ttime +180\n");
+            #endif
             }
             else
             {
                 stats->cycleDWrite += MAIN_MEM_TRANSFER_T;
-                printf("39:Main->L2: time +180\n");
+            #ifdef POINT_COUNT
+                printf("44:Main->L2: \t\t\ttime +180\n");
+            #endif
             }
 
             stats->kickoutL2++;
@@ -199,17 +217,23 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         if(refType == instT)
         {
             stats->cycleInst += MAIN_MEM_TRANSFER_T;
-            printf("40:Main->L2: time +180\n");
+        #ifdef POINT_COUNT
+            printf("45:Main->L2: \t\t\ttime +180\n");
+        #endif
         }
         else if(refType == dataT && rw == READ)
         {
             stats->cycleDRead += MAIN_MEM_TRANSFER_T;
-            printf("41:Main->L2: time +180\n");
+        #ifdef POINT_COUNT
+            printf("46:Main->L2: \t\t\ttime +180\n");
+        #endif
         }
         else
         {
             stats->cycleDWrite += MAIN_MEM_TRANSFER_T;
-            printf("42:Main->L2: time +180\n");
+        #ifdef POINT_COUNT
+            printf("47:Main->L2: \t\t\ttime +180\n");
+        #endif
         }
 
         L2Node->tag = currTagL2;
@@ -230,17 +254,23 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         if(refType == instT)
         {
             stats->cycleInst += MAIN_MEM_TRANSFER_T;
-            printf("43:Main->L2: time +180\n");
+        #ifdef POINT_COUNT
+            printf("48:Main->L2: \t\t\ttime +180\n");
+        #endif
         }
         else if(refType == dataT && rw == READ)
         {
             stats->cycleDRead += MAIN_MEM_TRANSFER_T;
-            printf("44:Main->L2: time +180\n");
+        #ifdef POINT_COUNT
+            printf("49:Main->L2: \t\t\ttime +180\n");
+        #endif
         }
         else
         {
             stats->cycleDWrite += MAIN_MEM_TRANSFER_T;
-            printf("45:Main->L2: time +180\n");
+        #ifdef POINT_COUNT
+            printf("50:Main->L2: \t\t\ttime +180\n");
+        #endif
         }
 
         // TODO transfer stats main mem to L2
@@ -271,17 +301,23 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         if(refType == instT)
         {
             stats->cycleInst += L2_HIT_T;
-            printf("46:L2->VC: time +8\n");
+        #ifdef POINT_COUNT
+            printf("51:L2->VC: \t\t\ttime +8\n");
+        #endif
         }
         else if(refType == dataT && rw == READ)
         {
             stats->cycleDRead += L2_HIT_T;
-            printf("47:L2->VC: time +8\n");
+        #ifdef POINT_COUNT
+            printf("52:L2->VC: \t\t\ttime +8\n");
+        #endif
         }
         else
         {
             stats->cycleDWrite += L2_HIT_T;
-            printf("48:L2->VC: time +8\n");
+        #ifdef POINT_COUNT
+            printf("35:L2->VC: \t\t\ttime +8\n");
+        #endif
         }
         VCL2Node = cacheHier->VCL2->first;
         L2Node = cacheHier->L2[currIndxL2]->last;

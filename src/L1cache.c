@@ -114,7 +114,9 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         {
             // increment statistics for simulation
             stats->cycleInst += L1_HIT_T; // VC to L1 same time as an L1 hit
-            printf("7:VCL1i hit: time +1\n");
+        #ifdef POINT_COUNT
+            printf("10:VCL1i hit: \t\t\ttime +1\n");
+        #endif
             stats->VChitL1i++;
 
             // move found entry to front of list (LRU policy)
@@ -150,12 +152,20 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
     {
         stats->missL2++;
         stats->cycleInst += L2_MISS_T;
-        printf("8:L2 miss: time +10\n");
+        #ifdef POINT_COUNT
+            printf("11:L2 miss: \t\t\ttime +10\n");
+        #endif
 
         // L2 miss
         // check the up the memory hierarchy for the requested value
         if(L2miss(stats, cacheCnfg,  currTagL2, currIndxL2, cacheHier, addr, READ, instT) == EXIT_FAILURE)
             PERR("problem L2 miss");
+
+        /* Account for the 'replay' time */
+        stats->cycleInst += L2_HIT_T;
+        #ifdef POINT_COUNT
+            printf("12:L2 hit replay: \t\ttime +8\n");
+        #endif
     }
     // otherwise hit
     else
@@ -163,12 +173,15 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         // increment stats
         stats->hitL2++;
         stats->cycleInst += L2_HIT_T;
-        printf("9:L2 hit: time +8\n");
+    #ifdef POINT_COUNT
+        printf("13:L2 hit: \t\t\ttime +8\n");
+    #endif
     }
 
     stats->cycleInst += L2_TRANSFER_T;
-    printf("10:L2->L1 transfer: time +20\n");
-
+    #ifdef POINT_COUNT
+        printf("14:L2->L1 transfer: \t\ttime +20\n");
+    #endif
     // hit or miss still need to transfer value from L2 (once it is there) to L1i
     // check if there is an empty spot (not valid) in L1i
     L1iNode = cacheHier->L1i[currIndxL1]->first;
@@ -198,7 +211,9 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         if(!VCL1iNode->valid)
         {
             stats->cycleInst += L1_HIT_T;
-            printf("11:VCL1i : time +1\n");
+        #ifdef POINT_COUNT
+            printf("15:VCL1i : \t\t\ttime +1\n");
+        #endif
 
             // transfer tag from L1i to VCL1i (L1i kickout)
             VCL1iNode->tag = (L1iNode->tag << cacheCnfg->bitsIndexL1) | currIndxL1;
@@ -237,7 +252,9 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
 
     stats->kickoutL1i++;
     stats->cycleInst += L1_HIT_T;
-    printf("12:VCL1i : time +1\n");
+    #ifdef POINT_COUNT
+        printf("16:VCL1i: \t\t\ttime +1\n");
+    #endif
 
     // transfer tag from L2 to L1i
     L1iNode->tag = currTagL1;
@@ -277,7 +294,9 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
 
             // increment statistics for simulation
             stats->cycleInst += L1_HIT_T; // VC to L1 same time as an L1 hit
-            printf("13:VCL1d : time +1\n");
+        #ifdef POINT_COUNT
+            printf("17:VCL1d: \t\t\ttime +1\n");
+        #endif
             stats->VChitL1d++;
 
             // swap the values in the L1d cache and VCL1d
@@ -342,12 +361,16 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         if(rw == READ)
         {
             stats->cycleDRead += L1_HIT_T;
-            printf("14:VCL1i : time +1\n");
+            #ifdef POINT_COUNT
+                printf("18:VCL1i: \t\t\ttime +1\n");
+            #endif
         }
         else
         {
             stats->cycleDWrite += L1_HIT_T;
-            printf("15:VCL1i : time +1\n");
+            #ifdef POINT_COUNT
+                printf("19:VCL1i: \t\t\ttime +1\n");
+            #endif
         }
 
         VCL1dNode = cacheHier->VCL1d->last;
@@ -365,13 +388,17 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             if(rw == READ)
             {
                 stats->cycleDRead += L2_TRANSFER_T;
-                printf("16:L1->L2 kick : time +20\n");
+                #ifdef POINT_COUNT
+                    printf("20:L1->L2 kick: \t\t\ttime +20\n");
+                #endif
 
             }
             else
             {
                 stats->cycleDWrite += L2_TRANSFER_T;
-                printf("17:L1->L2 kick : time +20\n");
+                #ifdef POINT_COUNT
+                    printf("21:L1->L2 kick: \t\t\ttime +20\n");
+                #endif
             }
 
             stats->kickoutL1d++;
@@ -394,6 +421,8 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
 
                 if(L2miss(stats, cacheCnfg,  tempTag, tempIndx, cacheHier, tempaddr, WRITE, dataT) == EXIT_FAILURE)
                     PERR("problem L2 miss");
+                /* Account for the 'replay' time */
+                stats->hitL2++;
             }
         }
 
@@ -410,12 +439,16 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             if(rw == READ)
             {
                 stats->cycleDRead += L2_MISS_T;
-                printf("18:L2 miss : time +10\n");
+                #ifdef POINT_COUNT
+                    printf("22:L2 miss: \t\t\ttime +10\n");
+                #endif
             }
             else
             {
                 stats->cycleDWrite += L2_MISS_T;
-                printf("19:L2 miss : time +10\n");
+                #ifdef POINT_COUNT
+                    printf("23:L2 miss: \t\t\ttime +10\n");
+                #endif
             }
 
             stats->missL2++;
@@ -424,6 +457,9 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             // check the up the memory hierarchy for the requested value
             if(L2miss(stats, cacheCnfg,  currTagL2, currIndxL2, cacheHier, addr, READ, dataT) == EXIT_FAILURE)
                 PERR("problem L2 miss");
+
+            /* Account for the 'replay' time */
+            stats->hitL2++;
         }
         // otherwise hit
         else
@@ -433,12 +469,16 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             if(rw == READ)
             {
                 stats->cycleDRead += L2_HIT_T;
-                printf("20:L2 hit : time +8\n");
+                #ifdef POINT_COUNT
+                    printf("24:L2 hit: \t\t\ttime +8\n");
+                #endif
             }
             else
             {
                 stats->cycleDWrite += L2_HIT_T;
-                printf("21:L2 hit : time +8\n");
+                #ifdef POINT_COUNT
+                    printf("25:L2 hit: \t\t\ttime +8\n");
+                #endif
             }
         }
 
@@ -446,12 +486,16 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         if(rw == READ)
         {
             stats->cycleDRead += L2_TRANSFER_T;
-            printf("21:L2->L1 : time +20\n");
+            #ifdef POINT_COUNT
+                printf("26:L2->L1: \t\t\ttime +20\n");
+            #endif
         }
         else
         {
             stats->cycleDWrite += L2_TRANSFER_T;
-            printf("22:L2->L1 : time +20\n");
+            #ifdef POINT_COUNT
+                printf("27:L2->L1: \t\t\ttime +20\n");
+            #endif
         }
 
         L1dNode->tag = currTagL1;
@@ -475,12 +519,16 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             if(rw == READ)
             {
                 stats->cycleDRead += L2_MISS_T;
-                printf("23:L2 miss : time +10\n");
+                #ifdef POINT_COUNT
+                    printf("28:L2 miss: \t\t\ttime +10\n");
+                #endif
             }
             else
             {
                 stats->cycleDWrite += L2_MISS_T;
-                printf("24:L2 miss : time +10\n");
+                #ifdef POINT_COUNT
+                    printf("29:L2 miss: \t\t\ttime +10\n");
+                #endif
             }
             stats->missL2++;
 
@@ -488,6 +536,9 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             // check the up the memory hierarchy for the requested value
             if(L2miss(stats, cacheCnfg,  currTagL2, currIndxL2, cacheHier, addr, READ, dataT) == EXIT_FAILURE)
                 PERR("problem L2 miss");
+
+            /* Account for the 'replay' time */
+            stats->hitL2++;
         }
         // otherwise hit
         else
@@ -497,12 +548,16 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             if(rw == READ)
             {
                 stats->cycleDRead += L2_HIT_T;
-                printf("25:L2 hit : time +8\n");
+                #ifdef POINT_COUNT
+                    printf("30:L2 hit: \t\t\ttime +8\n");
+                #endif
             }
             else
             {
                 stats->cycleDWrite += L2_HIT_T;
-                printf("26:L2 hit : time +8\n");
+                #ifdef POINT_COUNT
+                    printf("31:L2 hit: \t\t\ttime +8\n");
+                #endif
             }
         }
 
@@ -510,12 +565,16 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         if(rw == READ)
         {
             stats->cycleDRead += L2_TRANSFER_T;
-            printf("27:L2->L1 : time +20\n");
+            #ifdef POINT_COUNT
+                printf("32:L2->L1: \t\t\ttime +20\n");
+            #endif
         }
         else
         {
             stats->cycleDWrite += L2_TRANSFER_T;
-            printf("28:L2->L1 : time +20\n");
+        #ifdef POINT_COUNT
+            printf("33:L2->L1: \t\t\ttime +20\n");
+        #endif
         }
 
         // check if there is an empty spot (not valid) in L1d
@@ -547,12 +606,16 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         if(rw == READ)
         {
             stats->cycleDRead += L1_HIT_T;
-            printf("29:L1->VC : time +1\n");
+            #ifdef POINT_COUNT
+                printf("34:L1->VC: \t\t\ttime +1\n");
+            #endif
         }
         else
         {
             stats->cycleDWrite += L1_HIT_T;
-            printf("30:L1->VC : time +1\n");
+            #ifdef POINT_COUNT
+                printf("35:L1->VC: \t\t\ttime +1\n");
+            #endif
         }
 
         while(VCL1dNode != NULL)
