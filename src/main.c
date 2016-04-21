@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
     ulli currTagL2  =   0;      // cache tag for an address
     ulli currAddr   =   0;      // address from trace
     ulli endAddr    =   0;      // end address from trace (depends on number of bytes)
+    char traceName[32];         // the name of the trace
 
     /* structure containing cache settings */
     memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));
@@ -64,17 +65,12 @@ int main(int argc, char *argv[])
     cacheCnfg->chunkS    = 8;
 
     /* If there is a file included, it is the config needed */
-    if(argc > 1)
+    if(argc >= 2)
     {
         strcpy(cacheCnfg->cacheName,argv[1]);
         /* Set the values from the file */
         if( setCacheValues(cacheCnfg) )
             PERR("config issue: error setting values");
-        else
-        {
-            printf("\nCache name: %s\n",cacheCnfg->cacheName);
-            printf("Done setting values.\n");
-        }
     }
     else
     {
@@ -107,7 +103,15 @@ int main(int argc, char *argv[])
     // initialize and allocate memory for all cache levels
     initCache(cacheCnfg, cacheHier);
 
+    /* get the config name from the config file passed in */
+    getName(cacheCnfg->cacheName);
+    //printf("Config: %s\n",cacheCnfg->cacheName);
 
+    /* get the trace name from the second argv */
+    for(unsigned long x=0; x<strlen(argv[2]); x++)
+        traceName[x] = argv[2][x];
+    getName(traceName);
+    printf("%s\n", traceName);
 
 #ifdef DEBUG_TIME
 
@@ -279,6 +283,8 @@ int main(int argc, char *argv[])
 #ifdef DEBUG_TIME
     printf("end-----------------------------------\n");
 #endif
+
+    printResults(traceName, cacheCnfg, stats);
 
     /* printCurrCache(cacheCnfg, cacheHier); */
 

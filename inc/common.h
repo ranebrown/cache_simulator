@@ -7,7 +7,7 @@
 #ifndef COMMON_H
     #define COMMON_H
 
-    #define DEBUG_TIME ///< if enabled prints statements used to debug execution time
+    //#define DEBUG_TIME ///< if enabled prints statements used to debug execution time
 
     /**
      * @brief macro to print an error message to stderr, uses var args to accept printf format input, returns EXIT_FAILURE
@@ -25,4 +25,3 @@
     } bool;
 
 #endif // COMMON_H
-

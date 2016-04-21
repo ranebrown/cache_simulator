@@ -83,5 +83,10 @@
      */
     int calculateCost(memInfo *cache);
 
-
+    /**
+     * @brief pulls a name out of a file path
+     *  This requires that the name is in the standard project file path.
+     * @param[out] name of the file passed in
+     */
+    char *getName(char *str);
 #endif //CONFIG_H
