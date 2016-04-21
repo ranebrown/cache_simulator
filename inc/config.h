@@ -84,10 +84,10 @@
     int calculateCost(memInfo *cache);
 
     /**
-     * @brief pulls the configuration name out of the file path
+     * @brief pulls a name out of a file path
      *  This requires that the name is in the standard project file path.
-     * @param[out] name of the configuration, in the cacheName 
+     * @param[out] name of the file passed in
      */
-    void getConfigName(memInfo *cache);
+    char *getName(char *str);
 
 #endif //CONFIG_H

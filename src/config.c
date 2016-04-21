@@ -99,19 +99,29 @@ int calculateCost(memInfo *cacheCnfg)
 }
 
 
-void getConfigName(memInfo *cache)
+char *getName(char *str)
 {
     int i=0,j=0,k=0,l=0;
+    int flag = 0; // 0=cacheName, 1=argv
     char temp[32];
 
-    //Find the '.' in the '.txt'
-    for(i=0;i<32;i++)
-        if(cache->cacheName[i] == '.' && cache->cacheName[i+1] == 't')
-            break;
 
-    //Find the '/' prior to the config name
+    //Find the '.' in the '.txt' or '.gz'
+    for(i=0;i<32;i++)
+        if(str[i] == '.' && str[i+1] == 't')
+        {
+            flag = 0;
+            break;
+        }
+        else if(str[i] == '.' && str[i+1] == 'g')
+        {
+            flag = 1;
+            break;
+        }
+
+    //Find the '/' prior to the  name
     for(j=i;j>0;j--)
-        if(cache->cacheName[j] == '/')
+        if(str[j] == '/')
         {
             j++;
             break;
@@ -119,14 +129,15 @@ void getConfigName(memInfo *cache)
 
     //Copy the string into the temp string
     for(k=j;k<i;k++)
-        temp[l++] = cache->cacheName[k];
+        temp[l++] = str[k];
 
-    //Copy temp the beginning of the cacheName
+    //Copy temp the beginning of the name
     for(k=0;k<(i-j);k++)
-        cache->cacheName[k] = temp[k];
+        str[k] = temp[k];
 
     //Fill the unused part of the cacheName with '\0'
     for(i=k;k<32;k++)
-        cache->cacheName[k] = '\0';
+        str[k] = '\0';
 
+    return str;
 }

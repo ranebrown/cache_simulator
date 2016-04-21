@@ -62,7 +62,7 @@ int printResults(char *trace, memInfo *mem, performance *stats)
 
     // print to file
     fprintf( fp, "-----------------------------------------------------------------------------------------------\n");
-    fprintf( fp, "%20s %40s\n", trace, "Simulation Results");
+    fprintf( fp, "%20s.%s %30s\n", trace,mem->cacheName, "Simulation Results");
     fprintf( fp, "-----------------------------------------------------------------------------------------------\n");
     fprintf( fp, "\n");
     fprintf( fp, "\n");

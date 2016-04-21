@@ -14,6 +14,7 @@
     #include "dlinkedList.h"
     #include "common.h"
 
+
     #define HIT 0                   ///< used as a return value for a cache hit
     #define MISS 1                  ///< used as a return value for a cache miss
     #define L1_OFFSET 5             ///< L1 is 32 bytes i.e. 2^5
@@ -37,6 +38,16 @@
 
     typedef unsigned long long int ulli;    ///< shorten long type
     typedef unsigned int ui;                ///< maintain same format as ulli
+
+    /**
+     * @brief determines if request is data or instruction - value is passed to L2 to determine cycles
+     */
+    typedef enum
+    {
+        dataTR,
+        dataTW,
+        instT
+    } refT;
 
     /**
      * @brief structure to hold pointers to all cache levels
