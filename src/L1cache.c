@@ -114,6 +114,7 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         {
             // increment statistics for simulation
             stats->cycleInst += L1_HIT_T; // VC to L1 same time as an L1 hit
+
 #ifdef DEBUG_TIME
             printf("7:VCL1i hit: time +1\n");
 #endif
@@ -152,6 +153,7 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
     {
         stats->missL2++;
         stats->cycleInst += L2_MISS_T;
+
 #ifdef DEBUG_TIME
         printf("8:L2 miss: time +10\n");
 #endif
@@ -160,6 +162,12 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         // check the up the memory hierarchy for the requested value
         if(L2miss(stats, cacheCnfg,  currTagL2, currIndxL2, cacheHier, addr, READ, instT) == EXIT_FAILURE)
             PERR("problem L2 miss");
+
+        /* Account for the 'replay' time */
+        stats->cycleInst += L2_HIT_T;
+        #ifdef POINT_COUNT
+            printf("12:L2 hit replay: \t\ttime +8\n");
+        #endif
     }
     // otherwise hit
     else
@@ -167,6 +175,7 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         // increment stats
         stats->hitL2++;
         stats->cycleInst += L2_HIT_T;
+
 #ifdef DEBUG_TIME
         printf("9:L2 hit: time +8\n");
 #endif
@@ -210,6 +219,7 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         if(!VCL1iNode->valid)
         {
             stats->cycleInst += L1_HIT_T;
+
 #ifdef DEBUG_TIME
             printf("11:L1->VCL1i: time +1\n");
 #endif
@@ -250,6 +260,7 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         PERR("bumpToFirst failed");
 
     stats->kickoutL1i++;
+
     /* stats->cycleInst += L1_HIT_T; */
     /* printf("12:VCL1i->L2: time +1\n"); */
 
@@ -422,6 +433,8 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
 
                 if(L2miss(stats, cacheCnfg,  tempTag, tempIndx, cacheHier, tempaddr, WRITE, refType) == EXIT_FAILURE)
                     PERR("problem L2 miss");
+                /* Account for the 'replay' time */
+                stats->hitL2++;
             }
         }
 
@@ -456,6 +469,9 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             // check the up the memory hierarchy for the requested value
             if(L2miss(stats, cacheCnfg,  currTagL2, currIndxL2, cacheHier, addr, READ, refType) == EXIT_FAILURE)
                 PERR("problem L2 miss");
+
+            /* Account for the 'replay' time */
+            stats->hitL2++;
         }
         // otherwise hit
         else
@@ -536,6 +552,9 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             // check the up the memory hierarchy for the requested value
             if(L2miss(stats, cacheCnfg,  currTagL2, currIndxL2, cacheHier, addr, READ, refType) == EXIT_FAILURE)
                 PERR("problem L2 miss");
+
+            /* Account for the 'replay' time */
+            stats->hitL2++;
         }
         // otherwise hit
         else
