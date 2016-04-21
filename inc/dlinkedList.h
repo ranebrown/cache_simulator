@@ -14,8 +14,6 @@
 
     /* #define DEBUG 1 */
 
-    typedef unsigned long long int ulli;    ///< shorten long type
-
     /**
      * @brief contains variables necessary for each node
      */

@@ -35,9 +35,6 @@
     #define L2_TRANSFER_T 20        ///< time to transfer a value from L2 to L1 cache (based on 16 byte bus)
     #define MAIN_MEM_TRANSFER_T 180 ///< time to transfer a value from main memory to L2 cache
 
-    typedef unsigned long long int ulli;    ///< shorten long type
-    typedef unsigned int ui;                ///< maintain same format as ulli
-
     /**
      * @brief determines if request is data or instruction - value is passed to L2 to determine cycles
      */

@@ -385,17 +385,20 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             if(rw == READ)
             {
                 stats->cycleDRead += L2_TRANSFER_T;
-                // TODO replay??
+                stats->cycleDRead += L2_HIT_T;
 #ifdef DEBUG_TIME
                 printf("16:L1dR->L2 kickout: time +20\n");
+                printf("16b:L1dR->L2 replay: time +8\n");
 #endif
 
             }
             else
             {
                 stats->cycleDWrite += L2_TRANSFER_T;
+                stats->cycleDWrite += L2_HIT_T;
 #ifdef DEBUG_TIME
                 printf("17:L1dW->L2 kickout: time +20\n");
+                printf("17b:L1dW->L2 replay: time +8\n");
 #endif
             }
 
