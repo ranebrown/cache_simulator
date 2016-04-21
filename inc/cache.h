@@ -14,7 +14,6 @@
     #include "dlinkedList.h"
     #include "common.h"
 
-    #define POINT_COUNT 
 
     #define HIT 0                   ///< used as a return value for a cache hit
     #define MISS 1                  ///< used as a return value for a cache miss
@@ -45,7 +44,8 @@
      */
     typedef enum
     {
-        dataT,
+        dataTR,
+        dataTW,
         instT
     } refT;
 

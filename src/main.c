@@ -107,7 +107,12 @@ int main(int argc, char *argv[])
     // initialize and allocate memory for all cache levels
     initCache(cacheCnfg, cacheHier);
 
+
+
+#ifdef DEBUG_TIME
+
     int i = 0;
+#endif
     /* read a trace from stdin and print it */
     while(readTrace(&op, &addr, &numBytes) == EXIT_SUCCESS)
     {
@@ -136,10 +141,11 @@ int main(int argc, char *argv[])
             default:
                 PERR("invalid trace operation");
         }
-         /* loop for L1 access - 4 byte bus -> multiple accesses possible */
-
+#ifdef DEBUG_TIME
             printf("ref:%d-------------------------------------------\n",i);
             i++;
+#endif
+         /* loop for L1 access - 4 byte bus -> multiple accesses possible */
         while(currAddr <= endAddr)
         {
             /* index and tag for the address */
@@ -167,20 +173,18 @@ int main(int argc, char *argv[])
                     {
                         /* increment statistics for simulation */
                         stats->hitL1i++;
-                        stats->cycleInst += L1_HIT_T + 1; // TODO +1 is time to execute inst. move to header?
-                        #ifdef POINT_COUNT
-                            printf(" 0:L1i hit: \t\t\ttime +1\n");
-                        #endif
+#ifdef DEBUG_TIME
+                        printf("1:L1i hit: time +1\n");
+#endif
                     }
                     else
                     {
                         /* increment miss count */
                         stats->missL1i++;
                         stats->cycleInst += L1_MISS_T;
-                        #ifdef POINT_COUNT
-                            printf(" 1:L1i miss: \t\t\ttime +1\n");
-                        #endif
-
+#ifdef DEBUG_TIME
+                        printf("2:L1i miss: time +1\n");
+#endif
 
                         /* check up the memory hierarchy for the requested value */
                         if(L1iMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, currAddr) == EXIT_FAILURE)
@@ -200,29 +204,26 @@ int main(int argc, char *argv[])
                         /* increment statistics for simulation */
                         stats->hitL1d++;
                         stats->cycleDRead += L1_HIT_T;
-                        #ifdef POINT_COUNT
-                            printf(" 3:L1d read  hit: \t\t\ttime +1\n");
-                        #endif
+
+#ifdef DEBUG_TIME
+                        printf("3:L1dR  hit: time +1\n");
+#endif
                     }
                     else
                     {
                         /* increment miss count */
                         stats->missL1d++;
                         stats->cycleDRead += L1_MISS_T;
-                        #ifdef POINT_COUNT
-                            printf(" 4:L1d read miss: \t\t\ttime +1\n");
-                        #endif
+
+#ifdef DEBUG_TIME
+                        printf("4:L1dR miss: time +1\n");
+#endif
 
                         /* check up the memory hierarchy for the requested value */
-                        if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, READ) == EXIT_FAILURE)
-                            PERR("L1d miss issue");
+                        if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, READ, dataTR) == EXIT_FAILURE)
+                            PERR("L1d write miss issue");
+                    }
 
-                        /* Account for the 'replay' time */
-                        stats->cycleDRead += L1_HIT_T;
-                        #ifdef POINT_COUNT
-                            printf(" 5:L1d read replay: \t\t\ttime +1\n");
-                        #endif
-                        }
                     break;
                 case 'W':
                     if(checkL1dW(currIndxL1, currTagL1, cacheHier) == HIT)
@@ -230,21 +231,23 @@ int main(int argc, char *argv[])
                         /* increment statistics for simulation */
                         stats->hitL1d++;
                         stats->cycleDWrite += L1_HIT_T;
-                        #ifdef POINT_COUNT
-                            printf(" 6:L1d write: \t\t\ttime +1\n");
-                        #endif
+
+#ifdef DEBUG_TIME
+                        printf("5:L1dW hit: time +1\n");
+#endif
                     }
                     else
                     {
                         /* increment miss count */
                         stats->missL1d++;
-                        stats->cycleDRead += L1_MISS_T;
-                        #ifdef POINT_COUNT
-                            printf(" 7:L1d write miss: \t\ttime +1\n");
-                        #endif
+
+                        stats->cycleDWrite += L1_MISS_T;
+#ifdef DEBUG_TIME
+                        printf("6:L1dW miss: time +1\n");
+#endif
 
                         /* check up the memory hierarchy for the requested value */
-                        if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, WRITE) == EXIT_FAILURE)
+                        if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, WRITE, dataTW) == EXIT_FAILURE)
                             PERR("L1d miss issue");
                         /* Account for the 'replay' time */
                         #ifdef POINT_COUNT
@@ -263,14 +266,19 @@ int main(int argc, char *argv[])
             if(op == 'I')
             {
                 stats->cycleInst += L1_HIT_T; // to execute inst.
-                #ifdef POINT_COUNT
-                    printf(" 9:execute inst: \t\ttime +1\n");
-                #endif
+
+#ifdef DEBUG_TIME
+                printf("0: execute inst: time +1\n");
+#endif
             }
+#ifdef DEBUG_TIME
             printf("total exec. time: %llu\n", stats->cycleInst+stats->cycleDRead+stats->cycleDWrite);
+#endif
     }
 
+#ifdef DEBUG_TIME
     printf("end-----------------------------------\n");
+#endif
 
     /* printCurrCache(cacheCnfg, cacheHier); */
 
@@ -295,9 +303,9 @@ int main(int argc, char *argv[])
     /* printf("L2 dirty kick: %llu\n", stats->dirtyKickL2); */
     /* printf("VCL2 hit: %llu\n\n", stats->VChitL2); */
 
-    printf("\ncycles inst: %llu\n", stats->cycleInst);
-    printf("cycles data read: %llu\n", stats->cycleDRead);
+    printf("\ncycles data read: %llu\n", stats->cycleDRead);
     printf("cycles data write: %llu\n", stats->cycleDWrite);
+    printf("cycles inst: %llu\n", stats->cycleInst);
     printf("total exec. time: %llu\n", stats->cycleInst+stats->cycleDRead+stats->cycleDWrite);
 
 
