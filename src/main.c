@@ -194,11 +194,11 @@ int main(int argc, char *argv[])
                         if(L1iMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, currAddr) == EXIT_FAILURE)
                             PERR("L1i miss issue");
 
-                        /* Account for the 'replay' time */
-                        stats->cycleInst += L1_HIT_T;
-                        #ifdef POINT_COUNT
-                            printf(" 2:L1i replay: \t\t\ttime +1\n");
-                        #endif
+                        // /* Account for the 'replay' time */
+                        // stats->cycleInst += L1_HIT_T;
+                        // #ifdef POINT_COUNT
+                        //     printf(" 2:L1i replay: \t\t\ttime +1\n");
+                        // #endif
 
                     }
                     break;
@@ -253,11 +253,11 @@ int main(int argc, char *argv[])
                         /* check up the memory hierarchy for the requested value */
                         if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, WRITE, dataTW) == EXIT_FAILURE)
                             PERR("L1d miss issue");
-                        /* Account for the 'replay' time */
-                        #ifdef POINT_COUNT
-                            printf(" 8:L1d write replay: \t\ttime +1\n");
-                        #endif
-                        stats->cycleDWrite += L1_HIT_T;
+                        // /* Account for the 'replay' time */
+                        // #ifdef POINT_COUNT
+                        //     printf(" 8:L1d write replay: \t\ttime +1\n");
+                        // #endif
+                        // stats->cycleDWrite += L1_HIT_T;
                     }
                     break;
                 default:

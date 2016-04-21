@@ -163,11 +163,11 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         if(L2miss(stats, cacheCnfg,  currTagL2, currIndxL2, cacheHier, addr, READ, instT) == EXIT_FAILURE)
             PERR("problem L2 miss");
 
-        /* Account for the 'replay' time */
-        stats->cycleInst += L2_HIT_T;
-        #ifdef POINT_COUNT
-            printf("12:L2 hit replay: \t\ttime +8\n");
-        #endif
+        // /* Account for the 'replay' time */
+        // stats->cycleInst += L2_HIT_T;
+        // #ifdef POINT_COUNT
+        //     printf("12:L2 hit replay: \t\ttime +8\n");
+        // #endif
     }
     // otherwise hit
     else
