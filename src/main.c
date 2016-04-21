@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     cacheCnfg->chunkS    = 8;
 
     /* If there is a file included, it is the config needed */
-    if(argc == 2)
+    if(argc > 1)
     {
         strcpy(cacheCnfg->cacheName,argv[1]);
         /* Set the values from the file */
