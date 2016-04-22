@@ -168,6 +168,9 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         // #ifdef POINT_COUNT
         //     printf("12:L2 hit replay: \t\ttime +8\n");
         // #endif
+
+        /* Account for the 'replay' time */
+        stats->cycleInst += L2_HIT_T;
     }
     // otherwise hit
     else
@@ -301,7 +304,10 @@ int L1dMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
             VCL1dNode = cacheHier->VCL1d->first;
 
             // increment statistics for simulation
-            stats->cycleInst += L1_HIT_T; // VC to L1 same time as an L1 hit
+            if(refType == dataTR)
+                stats->cycleDRead += L1_HIT_T; // VC to L1 same time as an L1 hit
+            else
+                stats->cycleDWrite += L1_HIT_T;
 #ifdef DEBUG_TIME
             printf("13:VCL1d hit: time +1\n");
 #endif
