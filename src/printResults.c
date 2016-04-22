@@ -20,6 +20,7 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     // concatenate trace to file path
     strcpy(name,"../sim_results/");
     strcat(name, trace);
+    strcat(name,mem->cacheName);
     strcat(name, ".txt");
 
     // open file for writing

@@ -1,4 +1,4 @@
-2/**
+/**
  * @file        config.c
  * @authors     Rane Brown & Brian Douglass
  * @date        03-20-2016

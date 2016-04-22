@@ -254,16 +254,9 @@ int main(int argc, char *argv[])
                         /* check up the memory hierarchy for the requested value */
                         if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, WRITE, dataTW) == EXIT_FAILURE)
                             PERR("L1d miss issue");
-<<<<<<< HEAD
-                        // /* Account for the 'replay' time */
-                        // #ifdef POINT_COUNT
-                        //     printf(" 8:L1d write replay: \t\ttime +1\n");
-                        // #endif
-                        // stats->cycleDWrite += L1_HIT_T;
-=======
+
                         /* Account for the 'replay' time */
                         stats->cycleDWrite += L1_HIT_T;
->>>>>>> statsWorkBrian
                     }
                     break;
                 default:
