@@ -177,6 +177,7 @@ int main(int argc, char *argv[])
                     {
                         /* increment statistics for simulation */
                         stats->hitL1i++;
+                        stats->cycleInst += L1_HIT_T;
 #ifdef DEBUG_TIME
                         printf("1:L1i hit: time +1\n");
 #endif
@@ -254,9 +255,6 @@ int main(int argc, char *argv[])
                         if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, WRITE, dataTW) == EXIT_FAILURE)
                             PERR("L1d miss issue");
                         /* Account for the 'replay' time */
-                        #ifdef POINT_COUNT
-                            printf(" 8:L1d write replay: \t\ttime +1\n");
-                        #endif
                         stats->cycleDWrite += L1_HIT_T;
                     }
                     break;
