@@ -2,7 +2,7 @@
 
 make clean
 
-tpath="../traces/traces_short/"
+tpath="../traces/traces_5M/"
 cpath="../config/"
 
 for trace in astar bzip2 gobmk libquantum omnetpp sjeng
