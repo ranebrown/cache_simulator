@@ -34,7 +34,7 @@ int printResults(char *trace, memInfo *mem, performance *stats)
         numWaysL2 = mem->L1dSize / mem->L1dBlock;
 
     /* calculate remaining values */
-    stats->totExecT      = stats->totExecT + stats->cycleDRead + stats->cycleDWrite + stats->cycleInst;  // total execution time for the simulation */
+    stats->totExecT      = /*stats->totExecT +*/ stats->cycleDRead + stats->cycleDWrite + stats->cycleInst;  // total execution time for the simulation */
     stats->totRefs       = stats->instRefs + stats->dataReadRef + stats->dataWriteRef;      // total number of references = data + instruction
     stats->dataRefs      = stats->dataReadRef + stats->dataWriteRef;                        // number of data references = read + writes
 
@@ -46,23 +46,24 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     stats->percCycleDW   = (float) stats->cycleDWrite  / (float) stats->totExecT * 100;     // percentage of cycles that are data writes
     stats->percCycleInst = (float) stats->cycleInst    / (float) stats->totExecT * 100;     // percentage of cycles that are instructions
 
-    stats->idealExecT    =   stats->dataReadRef + stats->dataWriteRef + 2*stats->instRefs;  // ideal execution time
-    // stats->idealMisExecT = 0;       // ideal mis-aligned exectition time
-    stats->cpi           = (float) (stats->totExecT)      / (float) stats->instRefs;            // actual CPI
-    stats->idealCpi      = (float) (stats->idealExecT)    / (float) stats->instRefs;            // ideal CPI
-    //stats->idealMisCpi   = (float) (stats->idealMisExecT) / (float) stats->totRefs;;       // ideal mis-aligned CPI
+    stats->idealExecT    = stats->dataReadRef + stats->dataWriteRef + 2*stats->instRefs;  // ideal execution time
+    stats->idealMisExecT = stats->instRefs + stats->dataReadRef + stats->dataWriteRef;    // ideal mis-aligned exectition time
+
+    stats->cpi           = (float) (stats->totExecT)      / (float) stats->instRefs;      // actual CPI
+    stats->idealCpi      = (float) (stats->idealExecT)    / (float) stats->instRefs;      // ideal CPI
+    stats->idealMisCpi   = (float) (stats->idealMisExecT) / (float) stats->instRefs;      // ideal mis-aligned CPI
 
     stats->totalReqL1i = stats->hitL1i + stats->missL1i;  // total requests L1 instruction cache
     stats->totalReqL1d = stats->hitL1d + stats->missL1d;  // total requests L1 data cache
     stats->totalReqL2  = stats->hitL2 + stats->missL2;    // total requests L2 cache
 
-    stats->hitRateL1i     = (float) stats->hitL1i / (float) stats->totalReqL1i * 100;       // hit rate percentage L1 instruction cache
-    stats->hitRateL1d     = (float) stats->hitL1d / (float) stats->totalReqL1d * 100;       // hit rate percentage L1 data cache
-    stats->hitRateL2      = (float) stats->hitL2 / (float) stats->totalReqL2 * 100;       // hit rate percentage L2 cache
+    stats->hitRateL1i     = (float) stats->hitL1i / (float) stats->totalReqL1i * 100;     // hit rate percentage L1 instruction cache
+    stats->hitRateL1d     = (float) stats->hitL1d / (float) stats->totalReqL1d * 100;     // hit rate percentage L1 data cache
+    stats->hitRateL2      = (float) stats->hitL2  / (float) stats->totalReqL2 * 100;       // hit rate percentage L2 cache
 
     stats->missRateL1i    = 100 - stats->hitRateL1i;       // miss rate percentage L1 instruction cache
     stats->missRateL1d    = 100 - stats->hitRateL1d;       // miss rate percentage L1 data cache
-    stats->missRateL2     = 100 - stats->hitRateL2 ;       // miss rate percentage L2 cache
+    stats->missRateL2     = 100 - stats->hitRateL2;       // miss rate percentage L2 cache
 
     stats->transfersL1i   = stats->missL1i - stats->VChitL1i;
     stats->transfersL1d   = stats->missL1d - stats->VChitL1d;
