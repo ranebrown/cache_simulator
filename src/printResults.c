@@ -30,8 +30,12 @@ int printResults(char *trace, memInfo *mem, performance *stats)
 
     if(mem->L1iWays == 0)
         numWaysL1 = mem->L1dSize / mem->L1dBlock;
+    else
+        numWaysL1 = mem->L1iWays;
     if(mem->L2Ways == 0)
         numWaysL2 = mem->L1dSize / mem->L1dBlock;
+    else
+        numWaysL2 = mem->L2Ways;
 
     /* calculate remaining values */
     stats->totExecT      = /*stats->totExecT +*/ stats->cycleDRead + stats->cycleDWrite + stats->cycleInst;  // total execution time for the simulation */
@@ -80,9 +84,9 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     fprintf( fp, "%90s\n", "-------------------------------------------------------------------------------------");
     fprintf( fp, "%20s %20s %20s %20s\n", "hierarchy", "size", "ways", "block size");
     fprintf( fp, "%20s %20s %20s %20s\n", "---------", "----", "----", "----------");
-    fprintf( fp, "%20s %20d %20d %20d\n", "L1 data",        mem->L1dSize, mem->L1dWays, mem->L1dBlock);
-    fprintf( fp, "%20s %20d %20d %20d\n", "L1 instruction", mem->L1iSize, mem->L1iWays, mem->L1iBlock);
-    fprintf( fp, "%20s %20d %20d %20d\n", "L2 cache",       mem->L2Size, mem->L2Ways, mem->L2Block);
+    fprintf( fp, "%20s %20d %20d %20d\n", "L1 data",        mem->L1dSize, numWaysL1, mem->L1dBlock);
+    fprintf( fp, "%20s %20d %20d %20d\n", "L1 instruction", mem->L1iSize, numWaysL1, mem->L1iBlock);
+    fprintf( fp, "%20s %20d %20d %20d\n", "L2 cache",       mem->L2Size, numWaysL2, mem->L2Block);
     fprintf( fp, "\n");
     fprintf( fp, "%20s %20s %20s %20s\n", "hierarchy", "ready time", "chunk size", "chunk time");
     fprintf( fp, "%20s %20s %20s %20s\n", "---------", "----------", "----------", "----------");
