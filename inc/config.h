@@ -62,7 +62,7 @@
 
     /**
      * @brief reads from config file, and set the values of the cache
-     * @param[out] cache pointer to fully populated memInfo struct
+     * @param[out] cacheCnfg pointer to fully populated memInfo struct
      * @return EXIT_SUCCESS or EXIT_FAILURE
      */
     int setCacheValues(memInfo *cacheCnfg);
