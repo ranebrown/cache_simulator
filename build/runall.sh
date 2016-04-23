@@ -1,13 +1,16 @@
 #! /bin/bash
 
 make clean
-make
-zcat < ../trace_short/tr1.gz | ./sim.exe
-zcat < ../trace_short/tr1.gz | ./sim.exe ../config/L1-2way.txt
-zcat < ../trace_short/tr1.gz | ./sim.exe ../config/All-2way.txt
-zcat < ../trace_short/tr1.gz | ./sim.exe ../config/All-4way.txt
-zcat < ../trace_short/tr1.gz | ./sim.exe ../config/L1-8way.txt
-zcat < ../trace_short/tr1.gz | ./sim.exe ../config/L1-small.txt
-zcat < ../trace_short/tr1.gz | ./sim.exe ../config/L1-small-4way.txt
-zcat < ../trace_short/tr1.gz | ./sim.exe ../config/All-small.txt
-#./sim.exe All-FA.txt
+
+tpath="../traces/traces_short/"
+cpath="../config/"
+
+for trace in tr1 tr2 tr3 tr4 tr5 tr6
+do
+    for config in default L1-2Way All-2way All-4way L1-8way L1-small L1-small-4way All-small All-FA
+    do
+        make run trace=$tpath$trace conf=$cpath$config.txt
+    done
+done
+
+echo complete
