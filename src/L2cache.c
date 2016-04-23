@@ -37,7 +37,7 @@ int checkL2(ulli currTag, ulli currIndx, allCache *cacheHier, int rw)
     return MISS;
 }
 
-int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndxL2, allCache *cacheHier, ulli addr, int rw)
+int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndxL2, allCache *cacheHier, ulli addr, int rw, refT refType)
 {
     // check for bad input
     if(cacheHier == NULL || cacheHier->L1i == NULL || cacheHier->L1d == NULL || cacheHier->L2 == NULL
@@ -63,10 +63,13 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
             // reset VCL2Node to its new location
             VCL2Node = cacheHier->VCL2->first;
 
-            // increment statistics for simulation
-            stats->cycleInst += L2_HIT_T; // VC to L2 same time as an L2 hit
             stats->VChitL2++;
-            stats->transfersL2++;
+            if(refType == instT)
+                stats->cycleInst += L2_HIT_T;
+            else if(refType == dataTR)
+                stats->cycleDRead += L2_HIT_T;
+            else
+                stats->cycleDWrite += L2_HIT_T;
 
             // swap the values in the L2 cache and VCL2
             ulli swapTag = cacheHier->L2[currIndxL2]->last->tag;
@@ -96,6 +99,12 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         // move to next node in the VCL2
         VCL2Node = VCL2Node->next;
     }
+    if(refType == instT)
+        stats->cycleInst += MAIN_MEM_TRANSFER_T + L2_HIT_T;
+    else if(refType == dataTR)
+        stats->cycleDRead += MAIN_MEM_TRANSFER_T + L2_HIT_T;
+    else
+        stats->cycleDWrite += MAIN_MEM_TRANSFER_T + L2_HIT_T;
 
     // entry was not in the L2 victim cache -> must first make write request to main mem if there is a dirty kickout
     L2Node = cacheHier->L2[currIndxL2]->first;
@@ -125,6 +134,7 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
     // if the kickout is dirty the write request to main mem must occur first
     if(L2Space == false && VCL2Space == false)
     {
+
         VCL2Node = cacheHier->VCL2->last;
         L2Node = cacheHier->L2[currIndxL2]->last;
         short tempDirty = VCL2Node->dirty;
@@ -138,7 +148,12 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
         {
             stats->kickoutL2++;
             stats->dirtyKickL2++;
-            // TODO write to main memory time
+            if(refType == instT)
+                stats->cycleInst += MAIN_MEM_TRANSFER_T;
+            else if(refType == dataTR)
+                stats->cycleDRead += MAIN_MEM_TRANSFER_T;
+            else
+                stats->cycleDWrite += MAIN_MEM_TRANSFER_T;
         }
 
         // kickout from L2 to VCL2
@@ -150,7 +165,6 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
 
         // now get value from main memory for the original request
         // transfer tag from main mem to L2
-        // TODO transfer stats main mem to L2
         L2Node->tag = currTagL2;
         L2Node->valid = 1;
         if(rw == READ)
@@ -166,7 +180,6 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
     // item was not in VCL2 and there is not a kickout from L2
     else
     {
-        // TODO transfer stats main mem to L2
         // check if there is an empty spot (not valid) in L2 for value from main memory
         L2Node = cacheHier->L2[currIndxL2]->first;
         while(L2Node != NULL)

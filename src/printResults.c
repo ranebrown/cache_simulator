@@ -10,8 +10,8 @@ int printResults(char *trace, memInfo *mem, performance *stats)
 {
     FILE *fp;               // file pointer
     char name[128];         // directory path to write to
-    int numWaysL1 = 0;      //
-    int numWaysL2 = 0;      //
+    int numWaysL1 = 0;
+    int numWaysL2 = 0;
 
 
     if(trace == NULL || mem == NULL)
@@ -20,6 +20,7 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     // concatenate trace to file path
     strcpy(name,"../sim_results/");
     strcat(name, trace);
+    strcat(name,mem->cacheName);
     strcat(name, ".txt");
 
     // open file for writing
@@ -29,40 +30,52 @@ int printResults(char *trace, memInfo *mem, performance *stats)
 
     if(mem->L1iWays == 0)
         numWaysL1 = mem->L1dSize / mem->L1dBlock;
+    else
+        numWaysL1 = mem->L1iWays;
     if(mem->L2Ways == 0)
         numWaysL2 = mem->L1dSize / mem->L1dBlock;
+    else
+        numWaysL2 = mem->L2Ways;
 
     /* calculate remaining values */
-    stats->totExecT      = stats->totExecT + stats->cycleDRead + stats->cycleDWrite + stats->cycleInst;  // total execution time for the simulation */
-    stats->totRefs       = stats->instRefs + stats->dataReadRef + stats->dataWriteRef; // total number of references = data + instruction
-    stats->dataRefs      = stats->dataReadRef + stats->dataWriteRef;          // number of data references = read + writes
-    stats->percRefInst   = (float) stats->instRefs     / (float) stats->totRefs * 100;                  // percentage of references that are instructions
-    stats->percRefDRead  = (float) stats->dataReadRef  / (float) stats->totRefs * 100;               // percentage of references that are data reads
-    stats->percRefDWrite = (float) stats->dataWriteRef / (float) stats->totRefs * 100;              // percentage of references that are data writes
-    //stats->percCycleDR   = (float) stats->cycleDRead   / (float) stats->totExecT * 100;               // percentage of cycles that are data reads
-    //stats->percCycleDW   = (float) stats->cycleDWrite  / (float) stats->totExecT * 100;              // percentage of cycles that are data writes
-    //stats->percCycleInst = (float) stats->cycleInst    / (float) stats->totExecT * 100;                // percentage of cycles that are instructions
-    // ulli    idealExecT     =   0;       // ideal execution time
-    // ulli    idealMisExecT  =   0;       // ideal mis-aligned exectition time
-    // float   cpi = (float) totExecT/((float) totRefs * (float) totRefs);       // actual CPI
-    // float   idealCpi       =   0;       // ideal CPI
-    // float   idealMisCpi    =   0;       // ideal mis-aligned CPI
-    stats->totalReqL1i = stats->hitL1i + stats->missL1i;       // total requests L1 instruction cache
-    stats->totalReqL1d = stats->hitL1d + stats->missL1d;       // total requests L1 data cache
-    stats->totalReqL2  = stats->hitL2 + stats->missL2;       // total requests L2 cache
-    stats->hitRateL1i     = (float) stats->hitL1i / (float) stats->totalReqL1i * 100;       // hit rate percentage L1 instruction cache
-    stats->hitRateL1d     = (float) stats->hitL1d / (float) stats->totalReqL1d * 100;       // hit rate percentage L1 data cache
-    stats->hitRateL2      = (float) stats->hitL2 / (float) stats->totalReqL2 * 100;       // hit rate percentage L2 cache
+    stats->totExecT      = /*stats->totExecT +*/ stats->cycleDRead + stats->cycleDWrite + stats->cycleInst;  // total execution time for the simulation */
+    stats->totRefs       = stats->instRefs + stats->dataReadRef + stats->dataWriteRef;      // total number of references = data + instruction
+    stats->dataRefs      = stats->dataReadRef + stats->dataWriteRef;                        // number of data references = read + writes
+
+    stats->percRefInst   = (float) stats->instRefs     / (float) stats->totRefs * 100;      // percentage of references that are instructions
+    stats->percRefDRead  = (float) stats->dataReadRef  / (float) stats->totRefs * 100;      // percentage of references that are data reads
+    stats->percRefDWrite = (float) stats->dataWriteRef / (float) stats->totRefs * 100;      // percentage of references that are data writes
+
+    stats->percCycleDR   = (float) stats->cycleDRead   / (float) stats->totExecT * 100;     // percentage of cycles that are data reads
+    stats->percCycleDW   = (float) stats->cycleDWrite  / (float) stats->totExecT * 100;     // percentage of cycles that are data writes
+    stats->percCycleInst = (float) stats->cycleInst    / (float) stats->totExecT * 100;     // percentage of cycles that are instructions
+
+    stats->idealExecT    = stats->dataReadRef + stats->dataWriteRef + 2*stats->instRefs;  // ideal execution time
+    stats->idealMisExecT = stats->instRefs + stats->misAlInstRef + stats->misAlDReadRef + stats->misAlDWriteRef;    // ideal mis-aligned execution time
+
+    stats->cpi           = (float) (stats->totExecT)      / (float) stats->instRefs;      // actual CPI
+    stats->idealCpi      = (float) (stats->idealExecT)    / (float) stats->instRefs;      // ideal CPI
+    stats->idealMisCpi   = (float) (stats->idealMisExecT) / (float) stats->instRefs;      // ideal mis-aligned CPI
+
+    stats->totalReqL1i = stats->hitL1i + stats->missL1i;  // total requests L1 instruction cache
+    stats->totalReqL1d = stats->hitL1d + stats->missL1d;  // total requests L1 data cache
+    stats->totalReqL2  = stats->hitL2 + stats->missL2;    // total requests L2 cache
+
+    stats->hitRateL1i     = (float) stats->hitL1i / (float) stats->totalReqL1i * 100;     // hit rate percentage L1 instruction cache
+    stats->hitRateL1d     = (float) stats->hitL1d / (float) stats->totalReqL1d * 100;     // hit rate percentage L1 data cache
+    stats->hitRateL2      = (float) stats->hitL2  / (float) stats->totalReqL2 * 100;       // hit rate percentage L2 cache
+
     stats->missRateL1i    = 100 - stats->hitRateL1i;       // miss rate percentage L1 instruction cache
     stats->missRateL1d    = 100 - stats->hitRateL1d;       // miss rate percentage L1 data cache
-    stats->missRateL2     = 100 - stats->hitRateL2 ;       // miss rate percentage L2 cache
-    stats->transfersL1i   = stats->missL1i - stats->transfersL1i;
-    stats->transfersL1d   = stats->missL1d - stats->transfersL1d;
-    stats->transfersL2    = stats->missL2 - stats->transfersL2;
+    stats->missRateL2     = 100 - stats->hitRateL2;       // miss rate percentage L2 cache
+
+    stats->transfersL1i   = stats->missL1i - stats->VChitL1i;
+    stats->transfersL1d   = stats->missL1d - stats->VChitL1d;
+    stats->transfersL2    = stats->missL2 - stats->VChitL2;
 
     // print to file
     fprintf( fp, "-----------------------------------------------------------------------------------------------\n");
-    fprintf( fp, "%20s %40s\n", trace, "Simulation Results");
+    fprintf( fp, "%20s.%s %30s\n", trace,mem->cacheName, "Simulation Results");
     fprintf( fp, "-----------------------------------------------------------------------------------------------\n");
     fprintf( fp, "\n");
     fprintf( fp, "\n");
@@ -71,9 +84,9 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     fprintf( fp, "%90s\n", "-------------------------------------------------------------------------------------");
     fprintf( fp, "%20s %20s %20s %20s\n", "hierarchy", "size", "ways", "block size");
     fprintf( fp, "%20s %20s %20s %20s\n", "---------", "----", "----", "----------");
-    fprintf( fp, "%20s %20d %20d %20d\n", "L1 data",        mem->L1dSize, mem->L1dWays, mem->L1dBlock);
-    fprintf( fp, "%20s %20d %20d %20d\n", "L1 instruction", mem->L1iSize, mem->L1iWays, mem->L1iBlock);
-    fprintf( fp, "%20s %20d %20d %20d\n", "L2 cache",       mem->L2Size, mem->L2Ways, mem->L2Block);
+    fprintf( fp, "%20s %20d %20d %20d\n", "L1 data",        mem->L1dSize, numWaysL1, mem->L1dBlock);
+    fprintf( fp, "%20s %20d %20d %20d\n", "L1 instruction", mem->L1iSize, numWaysL1, mem->L1iBlock);
+    fprintf( fp, "%20s %20d %20d %20d\n", "L2 cache",       mem->L2Size, numWaysL2, mem->L2Block);
     fprintf( fp, "\n");
     fprintf( fp, "%20s %20s %20s %20s\n", "hierarchy", "ready time", "chunk size", "chunk time");
     fprintf( fp, "%20s %20s %20s %20s\n", "---------", "----------", "----------", "----------");

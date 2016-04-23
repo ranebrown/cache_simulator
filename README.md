@@ -32,6 +32,7 @@
     * `report/` latex report
     * `report/images` images used in latex report (and any other images e.g. for wiki)
     * `sample_output` correct output files for debugging
+    * `sample_output/short_trace_results` step by step output for short traces
     * `sim_results/` all txt files of simulation results - folder is ignored for now
     * `src/` source files
     * `test/` unit test files - uses check framework

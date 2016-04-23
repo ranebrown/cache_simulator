@@ -15,9 +15,9 @@
 #include "L2cache.h"
 #include "dlinkedList.h"
 
-/* #define DEBUG_PRINT_TRACE ///< print traces for debugging */
-/* #define DEBUG_ADDR ///< print the tag and index info */
-/* #define DEBUG_MAIN */
+/* #define DEBUG_PRINT_TRACE    ///< print traces for debugging */
+/* #define READ_FILE            ///< read trace from a file rather than use zcat */
+/* #define PRINT_STATS          ///< print statistics to stdout */
 
 /**
  * @brief main function for cache simulator
@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
     ulli currTagL2  =   0;      // cache tag for an address
     ulli currAddr   =   0;      // address from trace
     ulli endAddr    =   0;      // end address from trace (depends on number of bytes)
+    char traceName[128];         // temp buffer to hold the trace name
 
     /* structure containing cache settings */
     memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));
@@ -44,7 +45,7 @@ int main(int argc, char *argv[])
     performance *stats = malloc(sizeof(performance));
     if(stats == NULL)
         PERR("malloc errro");
-    performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     *stats = zero; // zero all elements in stats
 
     /* structure used to represent each cache level (doubly linked list) */
@@ -64,23 +65,17 @@ int main(int argc, char *argv[])
     cacheCnfg->chunkS    = 8;
 
     /* If there is a file included, it is the config needed */
-    if(argc == 2)
+    if(argc >= 2)
     {
         strcpy(cacheCnfg->cacheName,argv[1]);
         /* Set the values from the file */
         if( setCacheValues(cacheCnfg) )
             PERR("config issue: error setting values");
-        else
-        {
-            printf("\nCache name: %s\n",cacheCnfg->cacheName);
-            printf("Done setting values.\n");
-        }
     }
     else
     {
         /***** Default cache values *****/
         strcpy(cacheCnfg->cacheName,"../config/default.txt");
-        printf("\nCache name: %s\n",cacheCnfg->cacheName);
 
         /* L1 data */
         cacheCnfg->L1dWays   = 1;
@@ -107,11 +102,33 @@ int main(int argc, char *argv[])
     // initialize and allocate memory for all cache levels
     initCache(cacheCnfg, cacheHier);
 
+    /* get the config name from the config file passed in */
+    getName(cacheCnfg->cacheName);
+    printf("config: %s\n",cacheCnfg->cacheName);
+
+    /* get the trace name from the second argv */
+    for(unsigned long x=0; x<strlen(argv[2]); x++)
+        traceName[x] = argv[2][x];
+    getName(traceName);
+    printf("trace: %s\n\n", traceName);
+
+#ifdef DEBUG_PRINT_TRACE
+    ulli j = 0;
+#endif
+
+#ifdef READ_FILE
+    FILE *fp;
+    fp = fopen("../traces/traces_5M/sjeng.txt", "r");
     /* read a trace from stdin and print it */
+    while(fscanf(fp, "%c %llx %d\n", &op, &addr, &numBytes) == 3)
+#else
     while(readTrace(&op, &addr, &numBytes) == EXIT_SUCCESS)
+#endif
     {
 #ifdef DEBUG_PRINT_TRACE
-            printf("%c %llx %d\n" ,op ,addr ,numBytes);
+        if(j%1000000 == 0)
+            printf("ref:%llu %llu %c\n",j,addr, op);
+        j++;
 #endif
 
         /* calculate the word (4 byte) aligned start address */
@@ -135,7 +152,8 @@ int main(int argc, char *argv[])
             default:
                 PERR("invalid trace operation");
         }
-         /* loop for L1 access - 4 byte bus -> multiple accesses possible */
+
+        /* loop for L1 access - 4 byte bus -> multiple accesses possible */
         while(currAddr <= endAddr)
         {
             /* index and tag for the address */
@@ -143,12 +161,6 @@ int main(int argc, char *argv[])
             currIndxL2 = (currAddr << cacheCnfg->bitsTagL2) >> (cacheCnfg->bitsTagL2 + L2_OFFSET);
             currTagL1 = currAddr >> (cacheCnfg->bitsIndexL1 + L1_OFFSET);
             currTagL2 = currAddr >> (cacheCnfg->bitsIndexL2 + L2_OFFSET);
-
-#ifdef DEBUG_ADDR
-            printf("current address: %llu\n",currAddr);
-            printf("current index: %d\n",currIndxL1);
-            printf("current tag: %llu\n",currTagL1);
-#endif
 
             /* alternative methods (untested) */
             /* currIndxL1 = (currAddr >> L1_OFFSET) | (2^(bitsIndexL1+1) - 1); */
@@ -159,6 +171,7 @@ int main(int argc, char *argv[])
             switch(op)
             {
                 case 'I':
+                    stats->misAlInstRef++;
                     if(checkL1i(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
@@ -169,6 +182,7 @@ int main(int argc, char *argv[])
                     {
                         /* increment miss count */
                         stats->missL1i++;
+                        stats->cycleInst += L1_MISS_T;
 
                         /* check up the memory hierarchy for the requested value */
                         if(L1iMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, currAddr) == EXIT_FAILURE)
@@ -176,6 +190,7 @@ int main(int argc, char *argv[])
                     }
                     break;
                 case 'R':
+                    stats->misAlDReadRef++;
                     if(checkL1dR(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
@@ -186,13 +201,15 @@ int main(int argc, char *argv[])
                     {
                         /* increment miss count */
                         stats->missL1d++;
+                        stats->cycleDRead += L1_MISS_T;
 
                         /* check up the memory hierarchy for the requested value */
-                        if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, READ) == EXIT_FAILURE)
-                            PERR("L1d miss issue");
+                        if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, READ, dataTR) == EXIT_FAILURE)
+                            PERR("L1d write miss issue");
                     }
                     break;
                 case 'W':
+                    stats->misAlDWriteRef++;
                     if(checkL1dW(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
@@ -203,9 +220,10 @@ int main(int argc, char *argv[])
                     {
                         /* increment miss count */
                         stats->missL1d++;
+                        stats->cycleDWrite += L1_MISS_T;
 
                         /* check up the memory hierarchy for the requested value */
-                        if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, WRITE) == EXIT_FAILURE)
+                        if(L1dMiss(stats, cacheCnfg,  currTagL1, currTagL2, currIndxL1, currIndxL2, cacheHier, addr, WRITE, dataTW) == EXIT_FAILURE)
                             PERR("L1d miss issue");
                     }
                     break;
@@ -216,10 +234,22 @@ int main(int argc, char *argv[])
             /* increment to next address */
             currAddr += 4;
         }
+            if(op == 'I')
+            {
+                stats->cycleInst += L1_HIT_T; // to execute inst.
+            }
     }
 
-    //printCurrCache(cacheCnfg, cacheHier);
-    printResults("All-4way",cacheCnfg,stats);
+    // print the simulation results to a file in sim_results/
+    printResults(traceName,cacheCnfg,stats);
+
+#ifdef PRINT_STATS
+    // print the cache contents
+    printCurrCache(cacheCnfg, cacheHier);
+
+    printf("inst refs: %llu\n",stats->instRefs);
+    printf("data R refs: %llu\n",stats->dataReadRef);
+    printf("data W refs: %llu\n",stats->dataWriteRef);
 
     printf("\n\nhits L1i: %llu\n",stats->hitL1i);
     printf("miss L1i: %llu\n",stats->missL1i);
@@ -238,14 +268,23 @@ int main(int argc, char *argv[])
     printf("L2 dirty kick: %llu\n", stats->dirtyKickL2);
     printf("VCL2 hit: %llu\n\n", stats->VChitL2);
 
+    printf("\ncycles data read: %llu\n", stats->cycleDRead);
+    printf("cycles data write: %llu\n", stats->cycleDWrite);
+    printf("cycles inst: %llu\n", stats->cycleInst);
+    printf("total exec. time: %llu\n", stats->cycleInst+stats->cycleDRead+stats->cycleDWrite);
+#endif
+
+    // free cache memory
+    deleteCache(cacheCnfg, cacheHier);
+    free(cacheHier);
+
     /* free any allocated memory */
     free(cacheCnfg);
     free(stats);
 
-    // free cache memory
-    deleteCache(cacheCnfg, cacheHier);
-
-    free(cacheHier);
+#ifdef READ_FILE
+    fclose(fp);
+#endif
 
     return EXIT_SUCCESS;
 }

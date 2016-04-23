@@ -1,0 +1,83 @@
+-----------------------------------------------------------------------------------------------
+                 tr3.All-4way             Simulation Results
+-----------------------------------------------------------------------------------------------
+
+
+                                   Memory System Information
+     -------------------------------------------------------------------------------------
+           hierarchy                 size                 ways           block size
+           ---------                 ----                 ----           ----------
+             L1 data                 8192                    4                   32
+      L1 instruction                 8192                    4                   32
+            L2 cache                32768                    4                   64
+
+           hierarchy           ready time           chunk size           chunk time
+           ---------           ----------           ----------           ----------
+         Main memory                   50                    8                   15
+
+
+                                         Overall Performance
+     -------------------------------------------------------------------------------------
+                          Execution time                           2870
+                        Total references                             50
+                  Instruction references                             36
+                         Data references                             14
+
+
+                                Number of references by type
+     -------------------------------------------------------------------------------------
+                     type                     count                percentage
+                     ----                     -----                ----------
+                    reads                         3                      6.00
+                   writes                        11                     22.00
+              instruction                        36                     72.00
+                                     --------------           ---------------
+                    total                        50                    100.00
+
+
+                                 Total cycles for activities
+     -------------------------------------------------------------------------------------
+                     type                     count                percentage
+                     ----                     -----                ----------
+                    reads                       663                     23.10
+                   writes                      1146                     39.93
+              instruction                      1061                     36.97
+                                    ---------------           ---------------
+                    total                      2870                    100.00
+
+
+                                        CPI and ideal values
+     -------------------------------------------------------------------------------------
+                     type            execution time                       CPI
+                     ----            --------------                       ---
+                   actual                      2870                      79.7
+                    ideal                        86                       2.4
+        ideal mis-aligned                       126                       3.5
+
+
+                                    Performance by hierarchy
+     -------------------------------------------------------------------------------------
+               value                  L1i                  L1d                   L2
+               -----                 ----                 ----                 ----
+           hit count                   55                   19                    4
+          miss count                    7                    9                   12
+      total requests                   62                   28                   16
+            hit rate                88.71                67.86                25.00
+           miss rate                11.29                32.14                75.00
+            kickouts                    0                    0                    0
+      dirty kickouts                    0                    0                    0
+           transfers                    7                    9                   12
+        VC hit count                    0                    0                    0
+
+
+                                                 Memory Cost
+     -------------------------------------------------------------------------------------
+                               hierarchy                           cost
+                               ---------                           ----
+                                      L1                           1200
+                                      L2                            300
+                             Main memory                             75
+                                                        ---------------
+                                   Total                           1575
+
+

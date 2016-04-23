@@ -7,6 +7,9 @@
 #ifndef COMMON_H
     #define COMMON_H
 
+    typedef unsigned long long int ulli;    ///< shorten long type
+    typedef unsigned int ui;                ///< maintain same format as ulli
+
     /**
      * @brief macro to print an error message to stderr, uses var args to accept printf format input, returns EXIT_FAILURE
      */
