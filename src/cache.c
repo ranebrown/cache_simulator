@@ -246,12 +246,6 @@ int initCache(memInfo *cacheCnfg, allCache *cacheHier)
         PERR("malloc failed");
     if((cacheHier->L2 = malloc(numLinesL2 * sizeof(list*))) == NULL)
         PERR("malloc failed");
-    if((cacheHier->VCL1i = malloc(sizeof(list*))) == NULL)
-        PERR("malloc failed");
-    if((cacheHier->VCL1d = malloc(sizeof(list*))) == NULL)
-        PERR("malloc failed");
-    if((cacheHier->VCL2 = malloc(sizeof(list*))) == NULL)
-        PERR("malloc failed");
 
     // initialize L1 caches
     for(i=0; i< numLinesL1; i++)
@@ -344,6 +338,10 @@ int deleteCache(memInfo *cacheCnfg, allCache *cacheHier)
         PERR("delete list failed");
     if(deleteList(cacheHier->VCL2) == EXIT_FAILURE)
         PERR("delete list failed");
+
+    free(cacheHier->L1i);
+    free(cacheHier->L1d);
+    free(cacheHier->L2);
 
     return EXIT_SUCCESS;
 }

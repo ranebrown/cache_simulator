@@ -1,3 +1,6 @@
+# uncomressed trace
+traces/traces_5M/sjeng.txt
+
 # ignore doxygen generated files
 doc/html/
 
