@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     ulli currTagL2  =   0;      // cache tag for an address
     ulli currAddr   =   0;      // address from trace
     ulli endAddr    =   0;      // end address from trace (depends on number of bytes)
-    char traceName[32];         // temp buffer to hold the trace name
+    char traceName[128];         // temp buffer to hold the trace name
 
     /* structure containing cache settings */
     memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));

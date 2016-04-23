@@ -107,7 +107,7 @@ char *getName(char *str)
 
 
     //Find the '.' in the '.txt' or '.gz'
-    for(i=0;i<32;i++)
+    for(i=0;i<128;i++)
         if(str[i] == '.' && str[i+1] == 't')
         {
             flag = 0;
@@ -136,7 +136,7 @@ char *getName(char *str)
         str[k] = temp[k];
 
     //Fill the unused part of the cacheName with '\0'
-    for(i=k;k<32;k++)
+    for(i=k;k<128;k++)
         str[k] = '\0';
 
     return str;
