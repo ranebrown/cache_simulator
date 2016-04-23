@@ -106,7 +106,6 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
     node *L1iNode = cacheHier->L1i[currIndxL1]->last;
 
     // search victim cache for the tag (VC's use full address)
-    // TODO move to function check VC?
     while(VCL1iNode != NULL)
     {
         // the enty was found in the L1i victim cache
@@ -250,8 +249,11 @@ int L1iMiss(performance *stats, memInfo* cacheCnfg,  ulli currTagL1, ulli currTa
         PERR("bumpToFirst failed");
 
     stats->kickoutL1i++;
+    // TODO delete ??
     /* stats->cycleInst += L1_HIT_T; */
+/* #ifdef DEBUG_TIME */
     /* printf("12:VCL1i->L2: time +1\n"); */
+/* #endif */
 
     // transfer tag from L2 to L1i
     L1iNode->tag = currTagL1;

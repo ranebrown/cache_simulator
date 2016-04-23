@@ -15,10 +15,9 @@
 #include "L2cache.h"
 #include "dlinkedList.h"
 
-/* #define DEBUG_PRINT_TRACE ///< print traces for debugging */
-/* #define DEBUG_ADDR ///< print the tag and index info */
-/* #define DEBUG_MAIN */
-/* #define READ_FILE */
+/* #define DEBUG_PRINT_TRACE    ///< print traces for debugging */
+/* #define DEBUG_ADDR           ///< print the tag and index info */
+/* #define READ_FILE            ///< read trace from a file rather than use zcat */
 
 /**
  * @brief main function for cache simulator
@@ -112,7 +111,9 @@ int main(int argc, char *argv[])
     int i = 0;
 #endif
 
+#ifdef DEBUG_PRINT_TRACE
     ulli j = 0;
+#endif
 
 #ifdef READ_FILE
     FILE *fp;
@@ -123,12 +124,10 @@ int main(int argc, char *argv[])
     while(readTrace(&op, &addr, &numBytes) == EXIT_SUCCESS)
 #endif
     {
-        /* printf("%c %llx %d\n",op, addr, numBytes); */
+#ifdef DEBUG_PRINT_TRACE
         if(j%1000000 == 0)
             printf("ref:%llu %llu %c\n",j,addr, op);
         j++;
-#ifdef DEBUG_PRINT_TRACE
-            printf("%c %llx %d\n" ,op ,addr ,numBytes);
 #endif
 
         /* calculate the word (4 byte) aligned start address */
