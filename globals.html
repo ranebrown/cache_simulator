@@ -81,6 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_b"><span>b</span></a></li>
       <li><a href="#index_c"><span>c</span></a></li>
       <li><a href="#index_d"><span>d</span></a></li>
+      <li><a href="#index_g"><span>g</span></a></li>
       <li><a href="#index_h"><span>h</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
       <li><a href="#index_l"><span>l</span></a></li>
@@ -89,6 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_p"><span>p</span></a></li>
       <li><a href="#index_r"><span>r</span></a></li>
       <li><a href="#index_s"><span>s</span></a></li>
+      <li><a href="#index_t"><span>t</span></a></li>
       <li><a href="#index_u"><span>u</span></a></li>
       <li class="current"><a href="#index_w"><span>w</span></a></li>
     </ul>
@@ -112,15 +114,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock">Here is a list of all documented functions, variables, defines, enums, and typedefs with links to the documentation:</div>
 
 <h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
-<li>BANDWIDTH
-: <a class="el" href="config_8h.html#ab62aed7f2123c9c915242a259da9f4a8">config.h</a>
-</li>
 <li>bool
 : <a class="el" href="common_8h.html#af6a258d8f3ee5206d682d799316314b1">common.h</a>
 </li>
 <li>bumpToFirst()
 : <a class="el" href="dlinked_list_8c.html#a88ca64b9ab55a6f69d93621f15c05b65">dlinkedList.c</a>
 , <a class="el" href="dlinked_list_8h.html#a88ca64b9ab55a6f69d93621f15c05b65">dlinkedList.h</a>
+</li>
+<li>BW_COST
+: <a class="el" href="config_8h.html#a75d70a93e76e3d1a6d81874ccb1151cf">config.h</a>
 </li>
 </ul>
 
@@ -157,19 +159,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
-<li>DECMEMLAT
-: <a class="el" href="config_8h.html#a248de5d1eca094767b305b01d26189d1">config.h</a>
-</li>
 <li>deleteCache()
 : <a class="el" href="cache_8c.html#ae9743f5f20f51caf20c393cfb24d47af">cache.c</a>
 , <a class="el" href="cache_8h.html#ae9743f5f20f51caf20c393cfb24d47af">cache.h</a>
 </li>
 <li>deleteList()
-: <a class="el" href="dlinked_list_8c.html#a2d5293abc831054667d303dbe321c227">dlinkedList.c</a>
-, <a class="el" href="dlinked_list_8h.html#a2d5293abc831054667d303dbe321c227">dlinkedList.h</a>
+: <a class="el" href="dlinked_list_8h.html#a2d5293abc831054667d303dbe321c227">dlinkedList.h</a>
+, <a class="el" href="dlinked_list_8c.html#a2d5293abc831054667d303dbe321c227">dlinkedList.c</a>
 </li>
 <li>DIRTY
 : <a class="el" href="cache_8h.html#ab78f34451c5c2be60321d0fa2fc0daac">cache.h</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
+<li>getName()
+: <a class="el" href="config_8c.html#a0ad360da4bacf6d4b3cb630fd83a8bf4">config.c</a>
+, <a class="el" href="config_8h.html#a0ad360da4bacf6d4b3cb630fd83a8bf4">config.h</a>
 </li>
 </ul>
 
@@ -211,21 +218,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>L1_HIT_T
 : <a class="el" href="cache_8h.html#a44506c85d3e6d1b0e94804565ce9300b">cache.h</a>
 </li>
-<li>L1_HIT_TIME
-: <a class="el" href="config_8h.html#a8426e21aec8f4fb16441b6167b0b0aaf">config.h</a>
-</li>
 <li>L1_MISS_T
 : <a class="el" href="cache_8h.html#ae12b274d71ba6d6655996c7dc180a014">cache.h</a>
-</li>
-<li>L1_MISS_TIME
-: <a class="el" href="config_8h.html#a405fa3610095aabb74027046255e2679">config.h</a>
 </li>
 <li>L1_OFFSET
 : <a class="el" href="cache_8h.html#a7e0044af98788804b7e01283a931753a">cache.h</a>
 </li>
 <li>L1dMiss()
-: <a class="el" href="_l1cache_8c.html#a2547c46879c0eee1a82913dee5fa37f5">L1cache.c</a>
-, <a class="el" href="_l1cache_8h.html#a2547c46879c0eee1a82913dee5fa37f5">L1cache.h</a>
+: <a class="el" href="_l1cache_8c.html#a2476112488029502efb94fdc1d218b65">L1cache.c</a>
+, <a class="el" href="_l1cache_8h.html#a2476112488029502efb94fdc1d218b65">L1cache.h</a>
 </li>
 <li>L1iMiss()
 : <a class="el" href="_l1cache_8c.html#a8bc51a177590750cf4d10d0ee9fcfc50">L1cache.c</a>
@@ -237,33 +238,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>L2_ASSOC
 : <a class="el" href="config_8h.html#a501bb4a979ca679ff4afdec5069c4476">config.h</a>
 </li>
-<li>L2_BUS_WIDTH
-: <a class="el" href="config_8h.html#a7c46cd74f051ed4af9675bf5af99bd04">config.h</a>
-</li>
 <li>L2_HIT_T
 : <a class="el" href="cache_8h.html#a0fd3f1b64981a1a9937bf15ed0ff4fa7">cache.h</a>
-</li>
-<li>L2_HIT_TIME
-: <a class="el" href="config_8h.html#a38b90f366f619d6fd67b406413793f06">config.h</a>
 </li>
 <li>L2_MISS_T
 : <a class="el" href="cache_8h.html#a1aa2f536390669bc40983fb02ddb2c2d">cache.h</a>
 </li>
-<li>L2_MISS_TIME
-: <a class="el" href="config_8h.html#a966d630961293b4c84b65c882c965502">config.h</a>
-</li>
 <li>L2_OFFSET
 : <a class="el" href="cache_8h.html#a7fdcfc866446c76c90a964133b733c65">cache.h</a>
-</li>
-<li>L2_TRANS_TIME
-: <a class="el" href="config_8h.html#a872e22f540101c2c7da7a74feba1c720">config.h</a>
 </li>
 <li>L2_TRANSFER_T
 : <a class="el" href="cache_8h.html#aa493f2bb6c3ca1d3f0e4321978922e5d">cache.h</a>
 </li>
 <li>L2miss()
-: <a class="el" href="_l2cache_8h.html#ae75f054b78dcba71124c2b565c3a20c4">L2cache.h</a>
-, <a class="el" href="_l2cache_8c.html#ae75f054b78dcba71124c2b565c3a20c4">L2cache.c</a>
+: <a class="el" href="_l2cache_8c.html#aacaf5d97d0b8a378571774dea49decf5">L2cache.c</a>
+, <a class="el" href="_l2cache_8h.html#aacaf5d97d0b8a378571774dea49decf5">L2cache.h</a>
 </li>
 </ul>
 
@@ -309,9 +298,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>printResults_suite()
 : <a class="el" href="test__print_results_8c.html#ab113ed9923be724af2e7f32d3bac3ace">test_printResults.c</a>
 </li>
-<li>PRINTVALUES
-: <a class="el" href="config_8h.html#a43200dc681c1bb3d8df82e1857afb9e0">config.h</a>
-</li>
 <li>putFirst()
 : <a class="el" href="dlinked_list_8h.html#a06708cd66bd41aed003c997ade0a73c1">dlinkedList.h</a>
 , <a class="el" href="dlinked_list_8c.html#a06708cd66bd41aed003c997ade0a73c1">dlinkedList.c</a>
@@ -334,9 +320,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>readTrace_suite()
 : <a class="el" href="test__read_trace_8c.html#af72b1b0d89e85bcfcac4a825158f4a4b">test_readTrace.c</a>
 </li>
+<li>refT
+: <a class="el" href="cache_8h.html#a57fb2129439cd478413299e55119399d">cache.h</a>
+</li>
 <li>removeFirst()
-: <a class="el" href="dlinked_list_8c.html#ae40c5e44bf513750f831043b9a72e73c">dlinkedList.c</a>
-, <a class="el" href="dlinked_list_8h.html#ae40c5e44bf513750f831043b9a72e73c">dlinkedList.h</a>
+: <a class="el" href="dlinked_list_8h.html#ae40c5e44bf513750f831043b9a72e73c">dlinkedList.h</a>
+, <a class="el" href="dlinked_list_8c.html#ae40c5e44bf513750f831043b9a72e73c">dlinkedList.c</a>
 </li>
 <li>removeLast()
 : <a class="el" href="dlinked_list_8h.html#ae9ee5aff8af452a09df2a55f7b928322">dlinkedList.h</a>
@@ -348,7 +337,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
 <li>setCacheValues()
 : <a class="el" href="config_8c.html#a23d258ac2a8f1a057cefd5985805f879">config.c</a>
-, <a class="el" href="config_8h.html#af58fe7d72116235a78669038ea9fe670">config.h</a>
+, <a class="el" href="config_8h.html#a23d258ac2a8f1a057cefd5985805f879">config.h</a>
 </li>
 <li>START_TEST()
 : <a class="el" href="test__print_results_8c.html#a6238891223946673bb72c7711f1c7fa0">test_printResults.c</a>
@@ -357,13 +346,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </ul>
 
 
+<h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
+<li>TIMES_BW_DBL
+: <a class="el" href="config_8h.html#a985fada7d73e9c21640c77aadb47746c">config.h</a>
+</li>
+</ul>
+
+
 <h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
 <li>ui
-: <a class="el" href="cache_8h.html#aa0f39ee33b87675e11229913d432ffe7">cache.h</a>
+: <a class="el" href="common_8h.html#aa0f39ee33b87675e11229913d432ffe7">common.h</a>
 </li>
 <li>ulli
-: <a class="el" href="dlinked_list_8h.html#afebafa022413aaef27ce1b01cbfa9791">dlinkedList.h</a>
-, <a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">cache.h</a>
+: <a class="el" href="common_8h.html#afebafa022413aaef27ce1b01cbfa9791">common.h</a>
 </li>
 </ul>
 

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bandwidth',['BANDWIDTH',['../config_8h.html#ab62aed7f2123c9c915242a259da9f4a8',1,'config.h']]]
+  ['bw_5fcost',['BW_COST',['../config_8h.html#a75d70a93e76e3d1a6d81874ccb1151cf',1,'config.h']]]
 ];

@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">cache.h File Reference</div>  </div>
@@ -172,20 +172,18 @@ Macros</h2></td></tr>
 <tr class="memdesc:aa493f2bb6c3ca1d3f0e4321978922e5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">time to transfer a value from L2 to L1 cache (based on 16 byte bus) <br /></td></tr>
 <tr class="separator:aa493f2bb6c3ca1d3f0e4321978922e5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ead52922295e2f96e792a4a76237a6c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ead52922295e2f96e792a4a76237a6c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8h.html#a3ead52922295e2f96e792a4a76237a6c">MAIN_MEM_TRANSFER_T</a></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8h.html#a3ead52922295e2f96e792a4a76237a6c">MAIN_MEM_TRANSFER_T</a>&#160;&#160;&#160;180</td></tr>
 <tr class="memdesc:a3ead52922295e2f96e792a4a76237a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">time to transfer a value from main memory to L2 cache <br /></td></tr>
 <tr class="separator:a3ead52922295e2f96e792a4a76237a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:afebafa022413aaef27ce1b01cbfa9791"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afebafa022413aaef27ce1b01cbfa9791"></a>
-typedef unsigned long long int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8h.html#afebafa022413aaef27ce1b01cbfa9791">ulli</a></td></tr>
-<tr class="memdesc:afebafa022413aaef27ce1b01cbfa9791"><td class="mdescLeft">&#160;</td><td class="mdescRight">shorten long type <br /></td></tr>
-<tr class="separator:afebafa022413aaef27ce1b01cbfa9791"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0f39ee33b87675e11229913d432ffe7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0f39ee33b87675e11229913d432ffe7"></a>
-typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8h.html#aa0f39ee33b87675e11229913d432ffe7">ui</a></td></tr>
-<tr class="memdesc:aa0f39ee33b87675e11229913d432ffe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">maintain same format as ulli <br /></td></tr>
-<tr class="separator:aa0f39ee33b87675e11229913d432ffe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a57fb2129439cd478413299e55119399d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a57fb2129439cd478413299e55119399d"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cache_8h.html#a57fb2129439cd478413299e55119399d">refT</a> { <b>dataTR</b>, 
+<b>dataTW</b>, 
+<b>instT</b>
+ }<tr class="memdesc:a57fb2129439cd478413299e55119399d"><td class="mdescLeft">&#160;</td><td class="mdescRight">determines if request is data or instruction - value is passed to L2 to determine cycles <br /></td></tr>
+</td></tr>
+<tr class="separator:a57fb2129439cd478413299e55119399d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -258,7 +256,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
+<p>NOTE: function assumes L1i and L1d are same size, same # blocks, same # ways </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">cacheCnfg</td><td>structure that contains the configuration settings for each cache level </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">cacheHier</td><td>strucutre that contains pointers to the linked lists for each cache level </td></tr>
@@ -292,7 +290,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
+<p>NOTE: function assumes L1i and L1d are same size, same # blocks, same # ways </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">cacheCnfg</td><td>structure containing cache configuration options </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">cacheHier</td><td>pointer to a struct containing doubly linked lists for each memory hierarchy </td></tr>

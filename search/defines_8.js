@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['write',['WRITE',['../cache_8h.html#aa10f470e996d0f51210d24f442d25e1e',1,'cache.h']]]
+  ['times_5fbw_5fdbl',['TIMES_BW_DBL',['../config_8h.html#a985fada7d73e9c21640c77aadb47746c',1,'config.h']]]
 ];

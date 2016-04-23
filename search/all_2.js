@@ -2,7 +2,7 @@ var searchData=
 [
   ['cache_2ec',['cache.c',['../cache_8c.html',1,'']]],
   ['cache_2eh',['cache.h',['../cache_8h.html',1,'']]],
-  ['cachename',['cacheName',['../structmem_info.html#a0d74bed84925d1921c77a91a6adcb342',1,'memInfo']]],
+  ['cachename',['cacheName',['../structmem_info.html#a3dff07eb6f51f8cef1ea6362afc9bba4',1,'memInfo']]],
   ['calcbits',['calcBits',['../cache_8c.html#adaf891c90f724333c76aabe5300c69d2',1,'calcBits(memInfo *mem):&#160;cache.c'],['../cache_8h.html#adaf891c90f724333c76aabe5300c69d2',1,'calcBits(memInfo *mem):&#160;cache.c']]],
   ['calculatecost',['calculateCost',['../config_8c.html#a34423d7558e095d74e3d288a243b15a1',1,'calculateCost(memInfo *cacheCnfg):&#160;config.c'],['../config_8h.html#a731e8e0a2681e8913bd2f5db587c4f8f',1,'calculateCost(memInfo *cache):&#160;config.c']]],
   ['checkl1dr',['checkL1dR',['../_l1cache_8c.html#ab20d28ba68db5178fb0aa64e018bfe5f',1,'checkL1dR(ui currIndx, ulli currTag, allCache *cacheHier):&#160;L1cache.c'],['../_l1cache_8h.html#ab20d28ba68db5178fb0aa64e018bfe5f',1,'checkL1dR(ui currIndx, ulli currTag, allCache *cacheHier):&#160;L1cache.c']]],

@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['readtrace',['readTrace',['../read_trace_8c.html#a5df74d7ff529dc84d701085d3ddd97ba',1,'readTrace(char *op, unsigned long long int *addr, unsigned int *numBytes):&#160;readTrace.c'],['../read_trace_8h.html#a5df74d7ff529dc84d701085d3ddd97ba',1,'readTrace(char *op, unsigned long long int *addr, unsigned int *numBytes):&#160;readTrace.c']]],
-  ['readtrace_5fsuite',['readTrace_suite',['../test__read_trace_8c.html#af72b1b0d89e85bcfcac4a825158f4a4b',1,'test_readTrace.c']]],
-  ['removefirst',['removeFirst',['../dlinked_list_8c.html#ae40c5e44bf513750f831043b9a72e73c',1,'removeFirst(list *q):&#160;dlinkedList.c'],['../dlinked_list_8h.html#ae40c5e44bf513750f831043b9a72e73c',1,'removeFirst(list *q):&#160;dlinkedList.c']]],
-  ['removelast',['removeLast',['../dlinked_list_8c.html#ae9ee5aff8af452a09df2a55f7b928322',1,'removeLast(list *q):&#160;dlinkedList.c'],['../dlinked_list_8h.html#ae9ee5aff8af452a09df2a55f7b928322',1,'removeLast(list *q):&#160;dlinkedList.c']]]
+  ['printcurrcache',['printCurrCache',['../cache_8c.html#a275a41eb01129720354adf2aee01e309',1,'printCurrCache(memInfo *cacheCnfg, allCache *cacheHier):&#160;cache.c'],['../cache_8h.html#a275a41eb01129720354adf2aee01e309',1,'printCurrCache(memInfo *cacheCnfg, allCache *cacheHier):&#160;cache.c']]],
+  ['printlist',['printList',['../dlinked_list_8c.html#a39d9d8e626cd95ae554d37c0c47574c7',1,'printList(list *q):&#160;dlinkedList.c'],['../dlinked_list_8h.html#a39d9d8e626cd95ae554d37c0c47574c7',1,'printList(list *q):&#160;dlinkedList.c']]],
+  ['printresults',['printResults',['../print_results_8c.html#a509cc22917e10890b307cb040ba83860',1,'printResults(char *trace, memInfo *mem, performance *stats):&#160;printResults.c'],['../print_results_8h.html#a509cc22917e10890b307cb040ba83860',1,'printResults(char *trace, memInfo *mem, performance *stats):&#160;printResults.c']]],
+  ['printresults_5fsuite',['printResults_suite',['../test__print_results_8c.html#ab113ed9923be724af2e7f32d3bac3ace',1,'test_printResults.c']]],
+  ['putfirst',['putFirst',['../dlinked_list_8c.html#a06708cd66bd41aed003c997ade0a73c1',1,'putFirst(list *q):&#160;dlinkedList.c'],['../dlinked_list_8h.html#a06708cd66bd41aed003c997ade0a73c1',1,'putFirst(list *q):&#160;dlinkedList.c']]],
+  ['putlast',['putLast',['../dlinked_list_8c.html#a861658b36bd566b4568dec229f4b9074',1,'putLast(list *q, ulli tag):&#160;dlinkedList.c'],['../dlinked_list_8h.html#a861658b36bd566b4568dec229f4b9074',1,'putLast(list *q, ulli tag):&#160;dlinkedList.c']]]
 ];
