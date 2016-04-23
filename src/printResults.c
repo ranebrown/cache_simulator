@@ -10,8 +10,8 @@ int printResults(char *trace, memInfo *mem, performance *stats)
 {
     FILE *fp;               // file pointer
     char name[128];         // directory path to write to
-    int numWaysL1 = 0;      //
-    int numWaysL2 = 0;      //
+    int numWaysL1 = 0;
+    int numWaysL2 = 0;
 
 
     if(trace == NULL || mem == NULL)

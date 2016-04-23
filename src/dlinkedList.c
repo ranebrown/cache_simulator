@@ -133,8 +133,10 @@ int removeFirst(list *q)
         return EXIT_FAILURE;
     }
 
-    // if(q->last != NULL)
-    //     printf("In removeFirst, last tag exists\n");
+#ifdef DEBUG_LL
+    if(q->last != NULL)
+        printf("In removeFirst, last tag exists\n");
+#endif
 
     /* check if temp is the last node, if so set the first and last to NULL */
     if(q->nodeCount == 1)
@@ -177,7 +179,6 @@ int removeLast(list *q)
         return EXIT_FAILURE;
     }
 
-
     /* Create and point a temp node to the node to be removed */
     node *temp = NULL;
     if( (temp = q->last) == NULL )
@@ -186,8 +187,10 @@ int removeLast(list *q)
         return EXIT_FAILURE;
     }
 
-    // printf("temp     @ %p\n",temp);
-    // printf("q->last  @ %p\n",q->last);
+#ifdef DEBUG_LL
+    printf("temp     @ %p\n",temp);
+    printf("q->last  @ %p\n",q->last);
+#endif
 
     /* Check if temp is the only node, if so set the last and first to NULL */
     if(q->nodeCount == 1)
@@ -204,9 +207,10 @@ int removeLast(list *q)
 
     }
 
-    // printf("temp2    @ %p\n",temp);
-
-    //printf("%p <-> ... <-> %p\n",q->first->prev, q->last->next);
+#ifdef DEBUG_LL
+    printf("temp2    @ %p\n",temp);
+    printf("%p <-> ... <-> %p\n",q->first->prev, q->last->next);
+#endif
 
     free(temp);
 
@@ -245,9 +249,9 @@ int bumpToFirst(list *q, ulli tag)
         /* Check if we've reached the last node. If so return with message. */
         if(cursor->next == NULL)
         {
-            #ifdef DEBUG
+#ifdef DEBUG_LL
                 printf("Tag not found.\n");
-            #endif
+#endif
             return 1;
         }
         cursor = cursor->next;
@@ -326,9 +330,9 @@ void printList(list *q)
         fprintf(stderr,"ERROR: Could not get next node. printList failed\n");
         return;
     }
-    #ifdef DEBUG
+#ifdef DEBUG_LL
         printf("%p -> ",cursor->prev);
-    #endif
+#endif
 
     while(1)
     {
@@ -340,9 +344,9 @@ void printList(list *q)
         }
         else
         {
-            #ifdef DEBUG
+#ifdef DEBUG_LL
                 printf(" -> %p", cursor->next);
-            #endif
+#endif
             break;
         }
     }

@@ -7,8 +7,6 @@
 #ifndef COMMON_H
     #define COMMON_H
 
-    /* #define DEBUG_TIME ///< if enabled prints statements used to debug execution time */
-
     typedef unsigned long long int ulli;    ///< shorten long type
     typedef unsigned int ui;                ///< maintain same format as ulli
 

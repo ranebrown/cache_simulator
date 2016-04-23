@@ -20,20 +20,20 @@
     #define L2_OFFSET 6             ///< L2 is 64 bytes i.e. 2^6
     #define CLEAN 0                 ///< dirty bit status
     #define DIRTY 1                 ///< dirty bit status
-    #define READ 0  ///< data read operation
-    #define WRITE 1 ///< data write operation
+    #define READ 0                  ///< data read operation
+    #define WRITE 1                 ///< data write operation
 
     /*
      * Defines used for tracking simulation times
      * The hit time is the time to return an item that is a hit in a cache.
      * The miss time is the time to determine that an item has missed and the time to make the request to the next cache level.
      */
-    #define L1_HIT_T 1              ///< number of cycles to return an L1 hit
-    #define L1_MISS_T 1             ///< number of cycles to determine an L1 request is a miss and make request to L2
-    #define L2_HIT_T 8              ///< number of cycles to return an L2 hit
-    #define L2_MISS_T 10            ///< number of cycles to determine an L2 request is a miss and make request to main memory
-    #define L2_TRANSFER_T 20        ///< time to transfer a value from L2 to L1 cache (based on 16 byte bus)
-    #define MAIN_MEM_TRANSFER_T 180 ///< time to transfer a value from main memory to L2 cache
+    #define L1_HIT_T 1                  ///< number of cycles to return an L1 hit
+    #define L1_MISS_T 1                 ///< number of cycles to determine an L1 request is a miss and make request to L2
+    #define L2_HIT_T 8                  ///< number of cycles to return an L2 hit
+    #define L2_MISS_T 10                ///< number of cycles to determine an L2 request is a miss and make request to main memory
+    #define L2_TRANSFER_T 20            ///< time to transfer a value from L2 to L1 cache (based on 16 byte bus)
+    #define MAIN_MEM_TRANSFER_T 180     ///< time to transfer a value from main memory to L2 cache
 
     /**
      * @brief determines if request is data or instruction - value is passed to L2 to determine cycles
@@ -92,35 +92,34 @@
         ulli    VChitL1i;       ///< victim cache hit count L1 instruction cache
         ulli    VChitL1d;       ///< victim cache hit count L1 data cache
         ulli    VChitL2;        ///< victim cache hit ocunt L2 cache
-
         ulli    misAlDReadRef;  ///< mis-aligned data read references
         ulli    misAlDWriteRef; ///< mis-aligned data write references
         ulli    misAlInstRef;   ///< mis-aligend instruction references
 
-        /* TODO move these values to printResults, they aren't needed anywhere else */
-        ulli    totExecT       ;       ///< total execution time for the simulation
-        ulli    totRefs        ;       ///< total number of references = data + instruction
-        ulli    dataRefs       ;       ///< number of data references = read + writes
-        float   percRefInst    ;       ///< percentage of references that are instructions
-        float   percRefDRead   ;       ///< percentage of references that are data reads
-        float   percRefDWrite  ;       ///< percentage of references that are data writes
-        float   percCycleDR    ;       ///< percentage of cycles that are data reads
-        float   percCycleDW    ;       ///< percentage of cycles that are data writes
-        float   percCycleInst  ;       ///< percentage of cycles that are instructions
-        ulli    idealExecT     ;       ///< ideal execution time
-        ulli    idealMisExecT  ;       ///< ideal mis-aligned exectition time
-        float   cpi            ;       ///< actual CPI
-        float   idealCpi       ;       ///< ideal CPI
-        float   idealMisCpi    ;       ///< ideal mis-aligned CPI
-        ulli    totalReqL1i    ;       ///< total requests L1 instruction cache
-        ulli    totalReqL1d    ;       ///< total requests L1 data cache
-        ulli    totalReqL2     ;       ///< total requests L2 cache
-        float   hitRateL1i     ;       ///< hit rate percentage L1 instruction cache
-        float   hitRateL1d     ;       ///< hit rate percentage L1 data cache
-        float   hitRateL2      ;       ///< hit rate percentage L2 cache
-        float   missRateL1i    ;       ///< miss rate percentage L1 instruction cache
-        float   missRateL1d    ;       ///< miss rate percentage L1 data cache
-        float   missRateL2     ;       ///< miss rate percentage L2 cache
+        // below values are only used in printResults function
+        ulli    totExecT;         ///< total execution time for the simulation
+        ulli    totRefs;          ///< total number of references = data + instruction
+        ulli    dataRefs;         ///< number of data references = read + writes
+        float   percRefInst;      ///< percentage of references that are instructions
+        float   percRefDRead;     ///< percentage of references that are data reads
+        float   percRefDWrite;    ///< percentage of references that are data writes
+        float   percCycleDR;      ///< percentage of cycles that are data reads
+        float   percCycleDW;      ///< percentage of cycles that are data writes
+        float   percCycleInst;    ///< percentage of cycles that are instructions
+        ulli    idealExecT;       ///< ideal execution time
+        ulli    idealMisExecT;    ///< ideal mis-aligned exectition time
+        float   cpi;              ///< actual CPI
+        float   idealCpi;         ///< ideal CPI
+        float   idealMisCpi;      ///< ideal mis-aligned CPI
+        ulli    totalReqL1i;      ///< total requests L1 instruction cache
+        ulli    totalReqL1d;      ///< total requests L1 data cache
+        ulli    totalReqL2;       ///< total requests L2 cache
+        float   hitRateL1i;       ///< hit rate percentage L1 instruction cache
+        float   hitRateL1d;       ///< hit rate percentage L1 data cache
+        float   hitRateL2;        ///< hit rate percentage L2 cache
+        float   missRateL1i;      ///< miss rate percentage L1 instruction cache
+        float   missRateL1d;      ///< miss rate percentage L1 data cache
+        float   missRateL2;       ///< miss rate percentage L2 cache
     } performance;
 
     /**
@@ -149,6 +148,8 @@
 
     /**
      * @brief function to initialize cache levels
+     *
+     * NOTE: function assumes L1i and L1d are same size, same # blocks, same # ways
      * @param[in] cacheCnfg structure containing cache configuration options
      * @param[in,out] cacheHier pointer to a struct containing doubly linked lists for each memory hierarchy
      * @returns EXIT_SUCCESS or EXIT_FAILURE
@@ -157,6 +158,8 @@
 
     /**
      * @brief function to free the memory allocated for all cache levels
+     *
+     * NOTE: function assumes L1i and L1d are same size, same # blocks, same # ways
      * @param[in] cacheCnfg structure that contains the configuration settings for each cache level
      * @param[in] cacheHier strucutre that contains pointers to the linked lists for each cache level
      * @returns EXIT_SUCCESS or EXIT_FAILURE

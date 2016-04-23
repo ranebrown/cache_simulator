@@ -14,19 +14,12 @@
     #include <math.h>
     #include "common.h"
 
-    //#define PRINTVALUES         ///< print statements for debugging
     #define L1_4KB        100   ///< cost value
     #define L1_ASSOC      100   ///< cost value
     #define L2_16KB       50    ///< cost value
     #define L2_ASSOC      50    ///< cost value
-    #define DECMEMLAT     200   ///< to halve decrease memory latency
-    #define BANDWIDTH     100   ///< to double the bandwidth
-    // #define L1_HIT_TIME   1     ///<  L1 hit time
-    // #define L1_MISS_TIME  1     ///<  L1 miss time
-    // #define L2_HIT_TIME   8     ///<  L2 hit time
-    // #define L2_MISS_TIME  10    ///<  L2 miss time
-    // #define L2_TRANS_TIME 10    ///< transfer L1 to/from L2
-    // #define L2_BUS_WIDTH  16    ///<  L1 to L2 bus width
+    #define BW_COST       100   ///< to double the bandwidth
+    #define TIMES_BW_DBL  0     ///< number of times the main memory bandwidth is doubled
 
 
     /**
@@ -67,8 +60,6 @@
         char cacheName[128];  ///< the config filename, helpful for printing
     } memInfo;
 
-
-
     /**
      * @brief reads from config file, and set the values of the cache
      * @param[out] cache pointer to fully populated memInfo struct
@@ -86,7 +77,7 @@
     /**
      * @brief pulls a name out of a file path
      *  This requires that the name is in the standard project file path.
-     * @param[out] name of the file passed in
+     * @param[out] str name of the file passed in
      */
     char *getName(char *str);
 

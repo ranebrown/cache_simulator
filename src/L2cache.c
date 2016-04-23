@@ -165,7 +165,6 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
 
         // now get value from main memory for the original request
         // transfer tag from main mem to L2
-
         L2Node->tag = currTagL2;
         L2Node->valid = 1;
         if(rw == READ)

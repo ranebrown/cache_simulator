@@ -12,7 +12,7 @@
     #include <stdlib.h>
     #include "common.h"
 
-    /* #define DEBUG 1 */
+    /* #define DEBUG_LL */
 
     /**
      * @brief contains variables necessary for each node
