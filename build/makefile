@@ -94,7 +94,7 @@ check: $(TEXCS)
 # run main executable
 .PHONY: run
 run: $(MAIN)
-	@zcat < $(trace) | ./$(MAIN) $(conf)
+	@zcat < $(trace) | ./$(MAIN) $(conf) $(trace)
 
 # generate doxygen documentation
 doc:
