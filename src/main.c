@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     performance *stats = malloc(sizeof(performance));
     if(stats == NULL)
         PERR("malloc errro");
-    performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     *stats = zero; // zero all elements in stats
 
     /* structure used to represent each cache level (doubly linked list) */
@@ -111,7 +111,6 @@ int main(int argc, char *argv[])
         traceName[x] = argv[2][x];
     getName(traceName);
     printf("trace: %s\n\n", traceName);
-
 
 #ifdef DEBUG_TIME
     int i = 0;
@@ -185,6 +184,7 @@ int main(int argc, char *argv[])
             switch(op)
             {
                 case 'I':
+                    stats->misAlInstRef++;
                     if(checkL1i(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
@@ -209,6 +209,7 @@ int main(int argc, char *argv[])
                     }
                     break;
                 case 'R':
+                    stats->misAlDReadRef++;
                     if(checkL1dR(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
@@ -233,6 +234,7 @@ int main(int argc, char *argv[])
                     }
                     break;
                 case 'W':
+                    stats->misAlDWriteRef++;
                     if(checkL1dW(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
@@ -279,39 +281,40 @@ int main(int argc, char *argv[])
     printf("end-----------------------------------\n");
 #endif
 
-    /* printCurrCache(cacheCnfg, cacheHier); */
+    // print the simulation results to a file in sim_results/
     printResults(traceName,cacheCnfg,stats);
 
-    printf("inst refs: %llu\n",stats->instRefs);
-    printf("data R refs: %llu\n",stats->dataReadRef);
-    printf("data W refs: %llu\n",stats->dataWriteRef);
+    // print the cache contents
+    /* printCurrCache(cacheCnfg, cacheHier); */
 
-    printf("\n\nhits L1i: %llu\n",stats->hitL1i);
-    printf("miss L1i: %llu\n",stats->missL1i);
-    printf("L1i kick: %llu\n", stats->kickoutL1i);
-    printf("VCL1i hit: %llu\n\n", stats->VChitL1i);
+    /* printf("inst refs: %llu\n",stats->instRefs); */
+    /* printf("data R refs: %llu\n",stats->dataReadRef); */
+    /* printf("data W refs: %llu\n",stats->dataWriteRef); */
 
-    printf("hits L1d: %llu\n",stats->hitL1d);
-    printf("miss L1d: %llu\n",stats->missL1d);
-    printf("L1d kick: %llu\n", stats->kickoutL1d);
-    printf("L1d dirty kick: %llu\n", stats->dirtyKickL1d);
-    printf("VCL1d hit: %llu\n\n", stats->VChitL1d);
+    /* printf("\n\nhits L1i: %llu\n",stats->hitL1i); */
+    /* printf("miss L1i: %llu\n",stats->missL1i); */
+    /* printf("L1i kick: %llu\n", stats->kickoutL1i); */
+    /* printf("VCL1i hit: %llu\n\n", stats->VChitL1i); */
 
-    printf("hits L2: %llu\n",stats->hitL2);
-    printf("miss L2: %llu\n",stats->missL2);
-    printf("L2 kick: %llu\n", stats->kickoutL2);
-    printf("L2 dirty kick: %llu\n", stats->dirtyKickL2);
-    printf("VCL2 hit: %llu\n\n", stats->VChitL2);
+    /* printf("hits L1d: %llu\n",stats->hitL1d); */
+    /* printf("miss L1d: %llu\n",stats->missL1d); */
+    /* printf("L1d kick: %llu\n", stats->kickoutL1d); */
+    /* printf("L1d dirty kick: %llu\n", stats->dirtyKickL1d); */
+    /* printf("VCL1d hit: %llu\n\n", stats->VChitL1d); */
 
-    printf("\ncycles data read: %llu\n", stats->cycleDRead);
-    printf("cycles data write: %llu\n", stats->cycleDWrite);
-    printf("cycles inst: %llu\n", stats->cycleInst);
-    printf("total exec. time: %llu\n", stats->cycleInst+stats->cycleDRead+stats->cycleDWrite);
+    /* printf("hits L2: %llu\n",stats->hitL2); */
+    /* printf("miss L2: %llu\n",stats->missL2); */
+    /* printf("L2 kick: %llu\n", stats->kickoutL2); */
+    /* printf("L2 dirty kick: %llu\n", stats->dirtyKickL2); */
+    /* printf("VCL2 hit: %llu\n\n", stats->VChitL2); */
 
+    /* printf("\ncycles data read: %llu\n", stats->cycleDRead); */
+    /* printf("cycles data write: %llu\n", stats->cycleDWrite); */
+    /* printf("cycles inst: %llu\n", stats->cycleInst); */
+    /* printf("total exec. time: %llu\n", stats->cycleInst+stats->cycleDRead+stats->cycleDWrite); */
 
     // free cache memory
     deleteCache(cacheCnfg, cacheHier);
-
     free(cacheHier);
 
     /* free any allocated memory */

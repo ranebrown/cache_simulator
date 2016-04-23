@@ -47,7 +47,7 @@ int printResults(char *trace, memInfo *mem, performance *stats)
     stats->percCycleInst = (float) stats->cycleInst    / (float) stats->totExecT * 100;     // percentage of cycles that are instructions
 
     stats->idealExecT    = stats->dataReadRef + stats->dataWriteRef + 2*stats->instRefs;  // ideal execution time
-    stats->idealMisExecT = stats->instRefs + stats->dataReadRef + stats->dataWriteRef;    // ideal mis-aligned exectition time
+    stats->idealMisExecT = 2*stats->misAlInstRef + stats->misAlDReadRef + stats->misAlDWriteRef;    // ideal mis-aligned execution time
 
     stats->cpi           = (float) (stats->totExecT)      / (float) stats->instRefs;      // actual CPI
     stats->idealCpi      = (float) (stats->idealExecT)    / (float) stats->instRefs;      // ideal CPI

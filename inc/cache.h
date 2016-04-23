@@ -93,6 +93,10 @@
         ulli    VChitL1d;       ///< victim cache hit count L1 data cache
         ulli    VChitL2;        ///< victim cache hit ocunt L2 cache
 
+        ulli    misAlDReadRef;  ///< mis-aligned data read references
+        ulli    misAlDWriteRef; ///< mis-aligned data write references
+        ulli    misAlInstRef;   ///< mis-aligend instruction references
+
         /* TODO move these values to printResults, they aren't needed anywhere else */
         ulli    totExecT       ;       ///< total execution time for the simulation
         ulli    totRefs        ;       ///< total number of references = data + instruction
