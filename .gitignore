@@ -12,9 +12,6 @@ doc/html/
 .ycm_extra_conf.pyc
 *.taghl
 
-# ignore simulation results dir
-sim_results/
-
 # executables
 *.exe
 
