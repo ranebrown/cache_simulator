@@ -18,6 +18,7 @@ int setCacheValues (memInfo *cacheCnfg)
     if( !(config = fopen(cacheCnfg->cacheName,"r")) )
         PERR("error opening file");
 
+
     /* Read the line from the file */
     fscanf(config, "%d %d %d %d %d %d", &(cacheCnfg->L1dWays), &temp1, \
                                         &(cacheCnfg->L1iWays), &temp2, \

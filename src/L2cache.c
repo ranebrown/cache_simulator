@@ -197,6 +197,7 @@ int L2miss(performance *stats, memInfo *cacheCnfg, ulli currTagL2, ulli currIndx
                 // adhere to LRU policy
                 if(bumpToFirst(cacheHier->L2[currIndxL2], currTagL2))
                     PERR("bumpToFirst failed");
+
                 return EXIT_SUCCESS;
             }
 
