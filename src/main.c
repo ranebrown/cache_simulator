@@ -323,5 +323,8 @@ int main(int argc, char *argv[])
 
     free(cacheHier);
 
+    while(1)
+    ;
+
     return EXIT_SUCCESS;
 }
