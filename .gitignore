@@ -1,3 +1,9 @@
+# excel files
+*.xlsx
+
+# ignore doxygen latex files
+doc/latex
+
 # uncomressed trace
 traces/traces_5M/sjeng.txt
 
