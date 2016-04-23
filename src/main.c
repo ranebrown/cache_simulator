@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
     ulli currTagL2  =   0;      // cache tag for an address
     ulli currAddr   =   0;      // address from trace
     ulli endAddr    =   0;      // end address from trace (depends on number of bytes)
+    char traceName[32];         // temp buffer to hold the trace name
 
     /* structure containing cache settings */
     memInfo *cacheCnfg = (memInfo *) malloc(sizeof(memInfo));
@@ -44,7 +45,7 @@ int main(int argc, char *argv[])
     performance *stats = malloc(sizeof(performance));
     if(stats == NULL)
         PERR("malloc errro");
-    performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    performance zero = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     *stats = zero; // zero all elements in stats
 
     /* structure used to represent each cache level (doubly linked list) */
@@ -64,23 +65,17 @@ int main(int argc, char *argv[])
     cacheCnfg->chunkS    = 8;
 
     /* If there is a file included, it is the config needed */
-    if(argc == 2)
+    if(argc >= 2)
     {
         strcpy(cacheCnfg->cacheName,argv[1]);
         /* Set the values from the file */
         if( setCacheValues(cacheCnfg) )
             PERR("config issue: error setting values");
-        else
-        {
-            printf("\nCache name: %s\n",cacheCnfg->cacheName);
-            printf("Done setting values.\n");
-        }
     }
     else
     {
         /***** Default cache values *****/
         strcpy(cacheCnfg->cacheName,"../config/default.txt");
-        printf("\nCache name: %s\n",cacheCnfg->cacheName);
 
         /* L1 data */
         cacheCnfg->L1dWays   = 1;
@@ -106,6 +101,16 @@ int main(int argc, char *argv[])
 
     // initialize and allocate memory for all cache levels
     initCache(cacheCnfg, cacheHier);
+
+    /* get the config name from the config file passed in */
+    getName(cacheCnfg->cacheName);
+    printf("config: %s\n",cacheCnfg->cacheName);
+
+    /* get the trace name from the second argv */
+    for(unsigned long x=0; x<strlen(argv[2]); x++)
+        traceName[x] = argv[2][x];
+    getName(traceName);
+    printf("trace: %s\n\n", traceName);
 
 #ifdef DEBUG_TIME
     int i = 0;
@@ -179,6 +184,7 @@ int main(int argc, char *argv[])
             switch(op)
             {
                 case 'I':
+                    stats->misAlInstRef++;
                     if(checkL1i(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
@@ -203,6 +209,7 @@ int main(int argc, char *argv[])
                     }
                     break;
                 case 'R':
+                    stats->misAlDReadRef++;
                     if(checkL1dR(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
@@ -227,6 +234,7 @@ int main(int argc, char *argv[])
                     }
                     break;
                 case 'W':
+                    stats->misAlDWriteRef++;
                     if(checkL1dW(currIndxL1, currTagL1, cacheHier) == HIT)
                     {
                         /* increment statistics for simulation */
@@ -273,38 +281,40 @@ int main(int argc, char *argv[])
     printf("end-----------------------------------\n");
 #endif
 
+    // print the simulation results to a file in sim_results/
+    printResults(traceName,cacheCnfg,stats);
+
+    // print the cache contents
     /* printCurrCache(cacheCnfg, cacheHier); */
 
-    printf("inst refs: %llu\n",stats->instRefs);
-    printf("data R refs: %llu\n",stats->dataReadRef);
-    printf("data W refs: %llu\n",stats->dataWriteRef);
+    /* printf("inst refs: %llu\n",stats->instRefs); */
+    /* printf("data R refs: %llu\n",stats->dataReadRef); */
+    /* printf("data W refs: %llu\n",stats->dataWriteRef); */
 
-    printf("\n\nhits L1i: %llu\n",stats->hitL1i);
-    printf("miss L1i: %llu\n",stats->missL1i);
-    printf("L1i kick: %llu\n", stats->kickoutL1i);
-    printf("VCL1i hit: %llu\n\n", stats->VChitL1i);
+    /* printf("\n\nhits L1i: %llu\n",stats->hitL1i); */
+    /* printf("miss L1i: %llu\n",stats->missL1i); */
+    /* printf("L1i kick: %llu\n", stats->kickoutL1i); */
+    /* printf("VCL1i hit: %llu\n\n", stats->VChitL1i); */
 
-    printf("hits L1d: %llu\n",stats->hitL1d);
-    printf("miss L1d: %llu\n",stats->missL1d);
-    printf("L1d kick: %llu\n", stats->kickoutL1d);
-    printf("L1d dirty kick: %llu\n", stats->dirtyKickL1d);
-    printf("VCL1d hit: %llu\n\n", stats->VChitL1d);
+    /* printf("hits L1d: %llu\n",stats->hitL1d); */
+    /* printf("miss L1d: %llu\n",stats->missL1d); */
+    /* printf("L1d kick: %llu\n", stats->kickoutL1d); */
+    /* printf("L1d dirty kick: %llu\n", stats->dirtyKickL1d); */
+    /* printf("VCL1d hit: %llu\n\n", stats->VChitL1d); */
 
-    printf("hits L2: %llu\n",stats->hitL2);
-    printf("miss L2: %llu\n",stats->missL2);
-    printf("L2 kick: %llu\n", stats->kickoutL2);
-    printf("L2 dirty kick: %llu\n", stats->dirtyKickL2);
-    printf("VCL2 hit: %llu\n\n", stats->VChitL2);
+    /* printf("hits L2: %llu\n",stats->hitL2); */
+    /* printf("miss L2: %llu\n",stats->missL2); */
+    /* printf("L2 kick: %llu\n", stats->kickoutL2); */
+    /* printf("L2 dirty kick: %llu\n", stats->dirtyKickL2); */
+    /* printf("VCL2 hit: %llu\n\n", stats->VChitL2); */
 
-    printf("\ncycles data read: %llu\n", stats->cycleDRead);
-    printf("cycles data write: %llu\n", stats->cycleDWrite);
-    printf("cycles inst: %llu\n", stats->cycleInst);
-    printf("total exec. time: %llu\n", stats->cycleInst+stats->cycleDRead+stats->cycleDWrite);
-
+    /* printf("\ncycles data read: %llu\n", stats->cycleDRead); */
+    /* printf("cycles data write: %llu\n", stats->cycleDWrite); */
+    /* printf("cycles inst: %llu\n", stats->cycleInst); */
+    /* printf("total exec. time: %llu\n", stats->cycleInst+stats->cycleDRead+stats->cycleDWrite); */
 
     // free cache memory
     deleteCache(cacheCnfg, cacheHier);
-
     free(cacheHier);
 
     /* free any allocated memory */
