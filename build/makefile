@@ -13,7 +13,7 @@ CC = clang
 INCLUDES = -I $(INCDIR) -I /usr/local/include
 
 # Compiler flags
-CFLAGS = -Wall -Wextra -g $(INCLUDES) -std=c11
+CFLAGS = -Wall -Wextra -g $(INCLUDES) -std=c99 -O3
 
 # Paths to required libraries
 LFLAGS = -L /usr/local/lib

@@ -18,6 +18,7 @@
 /* #define DEBUG_PRINT_TRACE ///< print traces for debugging */
 /* #define DEBUG_ADDR ///< print the tag and index info */
 /* #define DEBUG_MAIN */
+/* #define READ_FILE */
 
 /**
  * @brief main function for cache simulator
@@ -110,9 +111,22 @@ int main(int argc, char *argv[])
 #ifdef DEBUG_TIME
     int i = 0;
 #endif
+
+    ulli j = 0;
+
+#ifdef READ_FILE
+    FILE *fp;
+    fp = fopen("../traces/traces_5M/sjeng.txt", "r");
     /* read a trace from stdin and print it */
+    while(fscanf(fp, "%c %llx %d\n", &op, &addr, &numBytes) == 3)
+#else
     while(readTrace(&op, &addr, &numBytes) == EXIT_SUCCESS)
+#endif
     {
+        /* printf("%c %llx %d\n",op, addr, numBytes); */
+        if(j%1000000 == 0)
+            printf("ref:%llu %llu %c\n",j,addr, op);
+        j++;
 #ifdef DEBUG_PRINT_TRACE
             printf("%c %llx %d\n" ,op ,addr ,numBytes);
 #endif
@@ -262,26 +276,26 @@ int main(int argc, char *argv[])
 
     /* printCurrCache(cacheCnfg, cacheHier); */
 
-    /* printf("inst refs: %llu\n",stats->instRefs); */
-    /* printf("data R refs: %llu\n",stats->dataReadRef); */
-    /* printf("data W refs: %llu\n",stats->dataWriteRef); */
+    printf("inst refs: %llu\n",stats->instRefs);
+    printf("data R refs: %llu\n",stats->dataReadRef);
+    printf("data W refs: %llu\n",stats->dataWriteRef);
 
-    /* printf("\n\nhits L1i: %llu\n",stats->hitL1i); */
-    /* printf("miss L1i: %llu\n",stats->missL1i); */
-    /* printf("L1i kick: %llu\n", stats->kickoutL1i); */
-    /* printf("VCL1i hit: %llu\n\n", stats->VChitL1i); */
+    printf("\n\nhits L1i: %llu\n",stats->hitL1i);
+    printf("miss L1i: %llu\n",stats->missL1i);
+    printf("L1i kick: %llu\n", stats->kickoutL1i);
+    printf("VCL1i hit: %llu\n\n", stats->VChitL1i);
 
-    /* printf("hits L1d: %llu\n",stats->hitL1d); */
-    /* printf("miss L1d: %llu\n",stats->missL1d); */
-    /* printf("L1d kick: %llu\n", stats->kickoutL1d); */
-    /* printf("L1d dirty kick: %llu\n", stats->dirtyKickL1d); */
-    /* printf("VCL1d hit: %llu\n\n", stats->VChitL1d); */
+    printf("hits L1d: %llu\n",stats->hitL1d);
+    printf("miss L1d: %llu\n",stats->missL1d);
+    printf("L1d kick: %llu\n", stats->kickoutL1d);
+    printf("L1d dirty kick: %llu\n", stats->dirtyKickL1d);
+    printf("VCL1d hit: %llu\n\n", stats->VChitL1d);
 
-    /* printf("hits L2: %llu\n",stats->hitL2); */
-    /* printf("miss L2: %llu\n",stats->missL2); */
-    /* printf("L2 kick: %llu\n", stats->kickoutL2); */
-    /* printf("L2 dirty kick: %llu\n", stats->dirtyKickL2); */
-    /* printf("VCL2 hit: %llu\n\n", stats->VChitL2); */
+    printf("hits L2: %llu\n",stats->hitL2);
+    printf("miss L2: %llu\n",stats->missL2);
+    printf("L2 kick: %llu\n", stats->kickoutL2);
+    printf("L2 dirty kick: %llu\n", stats->dirtyKickL2);
+    printf("VCL2 hit: %llu\n\n", stats->VChitL2);
 
     printf("\ncycles data read: %llu\n", stats->cycleDRead);
     printf("cycles data write: %llu\n", stats->cycleDWrite);
@@ -289,14 +303,18 @@ int main(int argc, char *argv[])
     printf("total exec. time: %llu\n", stats->cycleInst+stats->cycleDRead+stats->cycleDWrite);
 
 
-    /* free any allocated memory */
-    free(cacheCnfg);
-    free(stats);
-
     // free cache memory
     deleteCache(cacheCnfg, cacheHier);
 
     free(cacheHier);
+
+    /* free any allocated memory */
+    free(cacheCnfg);
+    free(stats);
+
+#ifdef READ_FILE
+    fclose(fp);
+#endif
 
     return EXIT_SUCCESS;
 }
