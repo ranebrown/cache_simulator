@@ -12,9 +12,7 @@
     #include <stdlib.h>
     #include "common.h"
 
-    /* #define DEBUG 1 */
-
-    typedef unsigned long long int ulli;    ///< shorten long type
+    /* #define DEBUG_LL */
 
     /**
      * @brief contains variables necessary for each node

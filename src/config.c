@@ -20,7 +20,6 @@ int setCacheValues (memInfo *cacheCnfg)
 
 
     /* Read the line from the file */
-    //fscanf(config, "%s", inStr);
     fscanf(config, "%d %d %d %d %d %d", &(cacheCnfg->L1dWays), &temp1, \
                                         &(cacheCnfg->L1iWays), &temp2, \
                                         &(cacheCnfg->L2Ways),  &temp3);
@@ -40,14 +39,14 @@ int calculateCost(memInfo *cacheCnfg)
 {
     int numWaysL1,numWaysL2;
 
-// #ifdef PRINTVALUES
-//         printf("CACHE NAME: %s\n",cacheCnfg->cacheName);
-//         printf("L1dWays: %d\nL1dSize: %d\n",  cacheCnfg->L1dWays,cacheCnfg->L1dSize);
-//         printf("L1iWays: %d\nL1iSize: %d\n",  cacheCnfg->L1iWays,cacheCnfg->L1iSize);
-//         printf("L2Ways:  %d\nL2Size:  %d\n\n",cacheCnfg->L2Ways,cacheCnfg->L2Size);
-// #endif
+#ifdef PRINTVALUES
+    printf("CACHE NAME: %s\n",cacheCnfg->cacheName);
+    printf("L1dWays: %d\nL1dSize: %d\n",  cacheCnfg->L1dWays,cacheCnfg->L1dSize);
+    printf("L1iWays: %d\nL1iSize: %d\n",  cacheCnfg->L1iWays,cacheCnfg->L1iSize);
+    printf("L2Ways:  %d\nL2Size:  %d\n\n",cacheCnfg->L2Ways,cacheCnfg->L2Size);
+#endif
 
-    cacheCnfg->memoryCost = 75;
+    cacheCnfg->memoryCost = 75 + BW_COST*TIMES_BW_DBL;
 
     /* If either the L1 or L2 is fully associative calculate their costs separatly */
     if(cacheCnfg->L1iWays == 0)
@@ -84,16 +83,12 @@ int calculateCost(memInfo *cacheCnfg)
         cacheCnfg->totalCost = cacheCnfg->L1TotCost + cacheCnfg->L2Cost + cacheCnfg->memoryCost;
     }
 
-    // TODO extra simulation cost using sjeng trace with different parameters.
-
-
 #ifdef PRINTVALUES
     printf("L1 cache cost (Icache $%d) + (Dcache $%d) = $%d\n", \
            cacheCnfg->L1iCost, cacheCnfg->L1dCost, cacheCnfg->L1TotCost);
     printf("L2 cache cost = $%d;  Memory cost = %d  Total cost = $%d\n", \
             cacheCnfg->L2Cost, cacheCnfg->memoryCost, cacheCnfg->totalCost);
 #endif
-
 
     return 0;
 }
@@ -103,11 +98,11 @@ char *getName(char *str)
 {
     int i=0,j=0,k=0,l=0;
     int flag = 0; // 0=cacheName, 1=argv
-    char temp[32];
+    char temp[128];
 
 
     //Find the '.' in the '.txt' or '.gz'
-    for(i=0;i<32;i++)
+    for(i=0;i<128;i++)
         if(str[i] == '.' && str[i+1] == 't')
         {
             flag = 0;
@@ -136,7 +131,7 @@ char *getName(char *str)
         str[k] = temp[k];
 
     //Fill the unused part of the cacheName with '\0'
-    for(i=k;k<32;k++)
+    for(i=k;k<128;k++)
         str[k] = '\0';
 
     return str;

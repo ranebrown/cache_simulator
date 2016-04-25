@@ -1,3 +1,12 @@
+# excel files
+*.xlsx
+
+# ignore doxygen latex files
+doc/latex
+
+# uncomressed trace
+traces/traces_5M/sjeng.txt
+
 # ignore doxygen generated files
 doc/html/
 
@@ -8,9 +17,6 @@ doc/html/
 .ycm_extra_conf.py
 .ycm_extra_conf.pyc
 *.taghl
-
-# ignore simulation results dir
-sim_results/
 
 # executables
 *.exe
