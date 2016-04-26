@@ -22,5 +22,33 @@
 \listoftables
 \newpage
 
-\section{Description}
+\section{Introduction}
+    This project simulates a two level cache using the C programming language. The memory hierarchy consists of a L1 instruction cache, a L1 data cache and a unifed L2 cache. In addition, each cache level has an associated victim cache which is setup as an eight deep fully associative cache. If there is a miss at a particular cache level then that level's victim cache is checked before making a request to the next level in the hierarchy. The caches are \emph{write-allocate}, \emph{write-back} caches which means a dirty bit must be used to track when a write request occurs. Each cache maintains a LRU (least recently used) replacement policy for each set in a set associative cache or in a fully associative cache. This project evaluates the performance of nine different memory configurations using sample traces from a selection of six SPEC benchmarks. The bus widths, transfer times, hit/miss times, and various other important paramaters can be found in the official project description. 
+
+\section{Setup and Code Structure}
+
+\section{Performance Evaluation}
+
+    \subsection{astar}
+
+    \subsection{bzip2}
+
+    \subsection{gobmk}
+
+    \subsection{libquantum}
+
+    \subsection{omnetpp}
+
+    \subsection{sjeng}
+
+\section{Overall Performance Comparison}
+
+\section{Cost Evaluation}
+
+    \subsection{Cost versus Performance}
+
+\section{Main Memory Bandwidth Increase}
+
+\section{Conclusion}
+
 \end{document}
