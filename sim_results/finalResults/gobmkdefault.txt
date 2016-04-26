@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------------------------
-               sjeng.default_bw32             Simulation Results
+               gobmk.default             Simulation Results
 -----------------------------------------------------------------------------------------------
 
 
@@ -13,61 +13,61 @@
 
            hierarchy           ready time           chunk size           chunk time
            ---------           ----------           ----------           ----------
-         Main memory                   50                   32                   15
+         Main memory                   50                    8                   15
 
 
                                          Overall Performance
      -------------------------------------------------------------------------------------
-                          Execution time                    84481691049
-                        Total references                    17300001933
-                  Instruction references                    12741056222
-                         Data references                     4558945711
+                          Execution time                   100855225897
+                        Total references                    10000000628
+                  Instruction references                     7146163623
+                         Data references                     2853837005
 
 
                                 Number of references by type
      -------------------------------------------------------------------------------------
                      type                     count                percentage
                      ----                     -----                ----------
-                    reads                3299993836                     19.08
-                   writes                1258951875                      7.28
-              instruction               12741056222                     73.65
+                    reads                1921584739                     19.22
+                   writes                 932252266                      9.32
+              instruction                7146163623                     71.46
                                      --------------           ---------------
-                    total               17300001933                    100.00
+                    total               10000000628                    100.00
 
 
                                  Total cycles for activities
      -------------------------------------------------------------------------------------
                      type                     count                percentage
                      ----                     -----                ----------
-                    reads               18120820697                     21.45
-                   writes                9688256814                     11.47
-              instruction               56672613538                     67.08
+                    reads               21249435070                     21.07
+                   writes               17212817855                     17.07
+              instruction               62392972972                     61.86
                                     ---------------           ---------------
-                    total               84481691049                    100.00
+                    total              100855225897                    100.00
 
 
                                         CPI and ideal values
      -------------------------------------------------------------------------------------
                      type            execution time                       CPI
                      ----            --------------                       ---
-                   actual               84481691049                       6.6
-                    ideal               30041058155                       2.4
-        ideal mis-aligned               40161444400                       3.2
+                   actual              100855225897                      14.1
+                    ideal               17146164251                       2.4
+        ideal mis-aligned               23357690826                       3.3
 
 
                                     Performance by hierarchy
      -------------------------------------------------------------------------------------
                value                  L1i                  L1d                   L2
                -----                 ----                 ----                 ----
-           hit count          21310647762           5381411277            485941759
-          miss count            404909342            323419797            213999796
-      total requests          21715557104           5704831074            699941555
-            hit rate                98.14                94.33                69.43
-           miss rate                 1.86                 5.67                30.57
-            kickouts            373687626            227161103            198648199
-      dirty kickouts                    0             99092298             44168570
-           transfers            373687890            227161367            198648719
-        VC hit count             31221452             96258430             15351077
+           hit count          11708085009           3837245587            455069650
+          miss count            451495177            214701430            252107768
+      total requests          12159580186           4051947017            707177418
+            hit rate                96.29                94.70                64.35
+           miss rate                 3.71                 5.30                35.65
+            kickouts            429513323            172054537            242306394
+      dirty kickouts                    0            105609030             60522492
+           transfers            429513587            172054801            242306914
+        VC hit count             21981590             42646629              9800854
 
 
                                                  Memory Cost
@@ -76,8 +76,8 @@
                                ---------                           ----
                                       L1                            400
                                       L2                            100
-                             Main memory                            275
+                             Main memory                             75
                                                         ---------------
-                                   Total                            775
+                                   Total                            575
 
 

@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------------------------
-               sjeng.default             Simulation Results
+               sjeng.default_bw16             Simulation Results
 -----------------------------------------------------------------------------------------------
 
 
@@ -13,7 +13,7 @@
 
            hierarchy           ready time           chunk size           chunk time
            ---------           ----------           ----------           ----------
-         Main memory                   50                    8                   15
+         Main memory                   50                   16                   15
 
 
                                          Overall Performance

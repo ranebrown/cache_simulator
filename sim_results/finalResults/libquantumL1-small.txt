@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------------------------
-               sjeng.default_bw32             Simulation Results
+          libquantum.L1-small             Simulation Results
 -----------------------------------------------------------------------------------------------
 
 
@@ -7,77 +7,77 @@
      -------------------------------------------------------------------------------------
            hierarchy                 size                 ways           block size
            ---------                 ----                 ----           ----------
-             L1 data                 8192                    1                   32
-      L1 instruction                 8192                    1                   32
+             L1 data                 4096                    1                   32
+      L1 instruction                 4096                    1                   32
             L2 cache                32768                    1                   64
 
            hierarchy           ready time           chunk size           chunk time
            ---------           ----------           ----------           ----------
-         Main memory                   50                   32                   15
+         Main memory                   50                    8                   15
 
 
                                          Overall Performance
      -------------------------------------------------------------------------------------
-                          Execution time                    84481691049
-                        Total references                    17300001933
-                  Instruction references                    12741056222
-                         Data references                     4558945711
+                          Execution time                   138278154943
+                        Total references                    16506492546
+                  Instruction references                    12487578510
+                         Data references                     4018914036
 
 
                                 Number of references by type
      -------------------------------------------------------------------------------------
                      type                     count                percentage
                      ----                     -----                ----------
-                    reads                3299993836                     19.08
-                   writes                1258951875                      7.28
-              instruction               12741056222                     73.65
+                    reads                3526260463                     21.36
+                   writes                 492653573                      2.98
+              instruction               12487578510                     75.65
                                      --------------           ---------------
-                    total               17300001933                    100.00
+                    total               16506492546                    100.00
 
 
                                  Total cycles for activities
      -------------------------------------------------------------------------------------
                      type                     count                percentage
                      ----                     -----                ----------
-                    reads               18120820697                     21.45
-                   writes                9688256814                     11.47
-              instruction               56672613538                     67.08
+                    reads              107888959367                     78.02
+                   writes                1272785168                      0.92
+              instruction               29116410408                     21.06
                                     ---------------           ---------------
-                    total               84481691049                    100.00
+                    total              138278154943                    100.00
 
 
                                         CPI and ideal values
      -------------------------------------------------------------------------------------
                      type            execution time                       CPI
                      ----            --------------                       ---
-                   actual               84481691049                       6.6
-                    ideal               30041058155                       2.4
-        ideal mis-aligned               40161444400                       3.2
+                   actual              138278154943                      11.1
+                    ideal               28994071056                       2.3
+        ideal mis-aligned               35948584560                       2.9
 
 
                                     Performance by hierarchy
      -------------------------------------------------------------------------------------
                value                  L1i                  L1d                   L2
                -----                 ----                 ----                 ----
-           hit count          21310647762           5381411277            485941759
-          miss count            404909342            323419797            213999796
-      total requests          21715557104           5704831074            699941555
-            hit rate                98.14                94.33                69.43
-           miss rate                 1.86                 5.67                30.57
-            kickouts            373687626            227161103            198648199
-      dirty kickouts                    0             99092298             44168570
-           transfers            373687890            227161367            198648719
-        VC hit count             31221452             96258430             15351077
+           hit count          16621282284           6246339741            525338563
+          miss count               106769            593277256            289286793
+      total requests          16621389053           6839616997            814625356
+            hit rate               100.00                91.33                64.49
+           miss rate                 0.00                 8.67                35.51
+            kickouts                31651            576863753            288874864
+      dirty kickouts                    0            237729680            133534663
+           transfers                31787            576863889            288875384
+        VC hit count                74982             16413367               411409
 
 
                                                  Memory Cost
      -------------------------------------------------------------------------------------
                                hierarchy                           cost
                                ---------                           ----
-                                      L1                            400
+                                      L1                            200
                                       L2                            100
-                             Main memory                            275
+                             Main memory                             75
                                                         ---------------
-                                   Total                            775
+                                   Total                            375
 
 
