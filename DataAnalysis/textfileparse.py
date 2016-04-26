@@ -13,6 +13,7 @@ ipath = '../sim_results/'
 
 # Open the cumulative file output file 'outfile'
 cmltvfile = open("allData.csv",'w')
+nameList = open("nameList.csv", 'w')
 
 # Step through each file in the directory
 for infile in glob.glob( os.path.join(ipath, '*.txt')):
@@ -34,7 +35,9 @@ for infile in glob.glob( os.path.join(ipath, '*.txt')):
             simName = line[0]
             simName = simName.replace('.','_')
             ofile = simName + ".csv"
-            dataList.append(simName)
+            nmStr = ofile + "\n"
+            nameList.write(nmStr)
+            #dataList.append(simName)
             #print("ofile: ", ofile)
 
         elif i == 9:
@@ -70,16 +73,16 @@ for infile in glob.glob( os.path.join(ipath, '*.txt')):
             dataList.append(numDataRefs)
 
         elif i == 30:
-            numReads = line[1]
-            dataList.append(numReads)
+            numCReads = line[1]
+            dataList.append(numCReads)
 
         elif i == 31:
-            numWrites = line[1]
-            dataList.append(numWrites)
+            numCWrites = line[1]
+            dataList.append(numCWrites)
 
         elif i == 32:
-            numInst = line[1]
-            dataList.append(numInst)
+            numCInst = line[1]
+            dataList.append(numCInst)
 
         elif i == 52:
             # execT on line 20
@@ -147,28 +150,28 @@ for infile in glob.glob( os.path.join(ipath, '*.txt')):
             dataList.append(L2VChit)
 
         elif i == 76:
-            L1iCost = line[1]
-            dataList.append(L1iCost)
+            L1Cost = line[1]
+            dataList.append(L1Cost)
 
         elif i == 77:
-            L1dCost = line[1]
-            dataList.append(L1dCost)
+            L2Cost = line[1]
+            dataList.append(L2Cost)
 
         elif i == 78:
-            L2Cost = line[2]
-            dataList.append(L2Cost)
+            mMemCost = line[2]
+            dataList.append(mMemCost)
 
         elif i == 80:
             numReads = line[1]
             dataList.append(numReads)
 
 
-    print("outfile name: ", ofile)
+    # print("outfile name: ", ofile)
 
     outStr = " ".join(dataList)
-    outfile = open(ofile,'w')
-    outfile.write(outStr)
-    outfile.close()
+    # outfile = open(ofile,'w')
+    # outfile.write(outStr)
+    # outfile.close()
 
     cmltvfile.write(outStr + "\n")
     # print(dataList)
@@ -177,3 +180,4 @@ for infile in glob.glob( os.path.join(ipath, '*.txt')):
 
 tfile.close()
 cmltvfile.close()
+nameList.close()
