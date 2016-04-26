@@ -13,9 +13,9 @@ res.execTime            =       trace(7);
 res.totalRefs           =       trace(8);
 res.numInstRefs         =       trace(9);
 res.numDataRefs         =       trace(10);
-res.numReads            =       trace(11);
-res.numWrites           =       trace(12);
-res.numInst             =       trace(13);
+res.numCycReads         =       trace(11);
+res.numCycWrites        =       trace(12);
+res.numCycInst          =       trace(13);
 res.cpi                 =       trace(14);
 res.idealExecT          =       trace(15);
 res.idealCPI            =       trace(16);
@@ -39,9 +39,9 @@ res.L2DrtyKcks          =       trace(33);
 res.L1iVChit            =       trace(34);
 res.L1dVChit            =       trace(35);
 res.L2VChit             =       trace(36);
-res.L1iCost             =       trace(37);
-res.L1dCost             =       trace(38);
-res.L2Cost              =       trace(39);
+res.L1Cost              =       trace(37);
+res.L2Cost              =       trace(38);
+res.mainMemCost         =       trace(39);
 res.totCost             =       trace(40);
 
 end

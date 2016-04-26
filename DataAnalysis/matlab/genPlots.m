@@ -4,8 +4,11 @@ clear all; close all; clc;
 % control which plots are shown
 execT_bar = 0;
 execT_line = 0;
+execT_ideal = 0;
 cpi_bar = 0;
 hm_plot = 1;
+cost_plot = 0;
+kick_plot = 0;
 
 % read in data
 [ astar, bzip2, gobmk, libquantum, omnetpp, sjeng ] = readData;
@@ -35,6 +38,16 @@ if execT_line == 1
     hold off
 end
 
+% stacked 3d bar plot of execution times and ideal times
+if execT_ideal == 1
+    figure, execTimePlot( astar, 2 );
+    figure, execTimePlot( bzip2, 2 );
+    figure, execTimePlot( gobmk, 2 );
+    figure, execTimePlot( libquantum, 2 );
+    figure, execTimePlot( omnetpp, 2 );
+    figure, execTimePlot( sjeng, 2 );
+end
+
 % cpi bar plots
 if cpi_bar == 1
     figure, cpiPlot( astar );
@@ -45,6 +58,7 @@ if cpi_bar == 1
     figure, cpiPlot( sjeng );
 end
 
+% hit and miss 3d bar plots
 if hm_plot == 1
     figure, hitMissPlot( astar );
     figure, hitMissPlot( bzip2 );
@@ -52,4 +66,20 @@ if hm_plot == 1
     figure, hitMissPlot( libquantum );
     figure, hitMissPlot( omnetpp );
     figure, hitMissPlot( sjeng );
+end
+
+% total cost line plot - NOTE: costs do not change per trace only per
+% configuration
+if cost_plot == 1
+    figure, costPlot(astar);
+end
+
+% kickouts and dirty kickouts
+if kick_plot == 1
+    figure, kickoutPlot( astar );
+    figure, kickoutPlot( bzip2 );
+    figure, kickoutPlot( gobmk );
+    figure, kickoutPlot( libquantum );
+    figure, kickoutPlot( omnetpp );
+    figure, kickoutPlot( sjeng );
 end
