@@ -23,7 +23,7 @@
 \newpage
 
 \section{Introduction}
-    This project simulates a two level cache using the C programming language. The memory hierarchy consists of a L1 instruction cache, a L1 data cache and a unifed L2 cache. In addition, each cache level has an associated victim cache which is setup as an eight deep fully associative cache. If there is a miss at a particular cache level then that level's victim cache is checked before making a request to the next level in the hierarchy. The caches are \emph{write-allocate}, \emph{write-back} caches which means a dirty bit must be used to track when a write request occurs. Each cache maintains a LRU (least recently used) replacement policy for each set in a set associative cache or in a fully associative cache. This project evaluates the performance of nine different memory configurations using sample traces from a selection of six SPEC benchmarks. The bus widths, transfer times, hit/miss times, and various other important paramaters can be found in the official project description. 
+    This project simulates a two level cache using the C programming language. The memory hierarchy consists of a L1 instruction cache, a L1 data cache and a unified L2 cache. In addition, each cache level has an associated victim cache which is setup as an eight deep fully associative cache. If there is a miss at a particular cache level then that level's victim cache is checked before making a request to the next level in the hierarchy. The caches are \emph{write-allocate}, \emph{write-back} caches which means a dirty bit must be used to track when a write request occurs. Each cache maintains a LRU (least recently used) replacement policy for each set in a set associative cache or in a fully associative cache. This project evaluates the performance of nine different memory configurations using sample traces from a selection of six SPEC benchmarks. The bus widths, transfer times, hit/miss times, and various other important parameters can be found in the official project description.
 
 \section{Setup and Code Structure}
 
@@ -44,10 +44,85 @@
 \section{Overall Performance Comparison}
 
 \section{Cost Evaluation}
+    An additional method used to evaluate the different cache configurations is to look at the cost associated with a particular configuration. The costs are evaluated based on the following information:
+    \begin{itemize}
+        \item L1 cache
+            \begin{itemize}
+                \item \$100 for each 4KB
+                \item \$100 for each doubling in associativity beyond direct-mapped
+            \end{itemize}
+        \item L2 cache
+            \begin{itemize}
+                \item \$50 per 16KB
+                \item \$50 for each doubling in associativity beyond direct-mapped
+            \end{itemize}
+        \item Main memory
+            \begin{itemize}
+                \item base latency of 50 costs \$50
+                \item base 8-byte mem chunk-size bandwidth costs \$25
+                \item \$100 to increase the bandwidth (mem chunk-size) by a factor of 2
+            \end{itemize}
+    \end{itemize}
 
-    \subsection{Cost versus Performance}
+    \subsection{Cost by configuration}
+        Figure \ref{fig:totCost} shows the breakdown of the memory cost for each of the different configurations. The overall cost is shown as well as the cost for each level in the memory hierarchy. This plot shows that the All-small configuration results in the lowest cost while the All-FA (fully associative) configuration results in the highest cost. Section \ref{sec:costVperf} examines the relation between cost and performance.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.75]{totalCost}
+            \caption{Cost by configuration}
+            \label{fig:totCost}
+        \end{figure}
+
+    \subsection{Cost versus Performance} \label{sec:costVperf}
+        The following series of bar graphs displays the CPI versus cost for each trace and configuration. The values for the cost are divided by 100 and then the data is normalized between 0-1. This was necessary in order to display the large values of cost with the relatively lower values of CPI. Each plot is sorted with the best performance (shown in yellow) on the left. The cost associated with that performance level is represented in blue next to the CPI value. Clearly, the best performance is given by the fully associative configuration but this option also results in the highest cost. A better choice would be to use these plots and select the lowest CPI with the correspondingly lowest cost. The best option is somewhat subjective and related to the budget available when designing the cache but the All-2way configuration provides a decently low CPI while still maintaining a low cost.
+        \begin{figure}[H]
+            \centering
+            \begin{minipage}{.5\textwidth}
+                \centering
+                \includegraphics[width=10cm]{cvpastar}
+                \caption{Cost vs. CPI astar}
+                \label{fig:cvpastar}
+            \end{minipage}%
+            \begin{minipage}{.5\textwidth}
+                \centering
+                \includegraphics[width=10cm]{cvpbzip2}
+                \caption{Cost vs. CPI bzip2}
+                \label{fig:cvpbzip2}
+            \end{minipage}
+        \end{figure}
+        \begin{figure}[H]
+            \centering
+            \begin{minipage}{.5\textwidth}
+                \centering
+                \includegraphics[width=10cm]{cvpgobmk}
+                \caption{Cost vs. CPI gobmk}
+                \label{fig:cvpgobmk}
+            \end{minipage}%
+            \begin{minipage}{.5\textwidth}
+                \centering
+                \includegraphics[width=10cm]{cvplibquantum}
+                \caption{Cost vs. CPI libquantum}
+                \label{fig:cvplibquantum}
+            \end{minipage}
+        \end{figure}
+        \begin{figure}[H]
+            \centering
+            \begin{minipage}{.5\textwidth}
+                \centering
+                \includegraphics[width=10cm]{cvpomnetpp}
+                \caption{Cost vs. CPI omnetpp}
+                \label{fig:cvomnetpp}
+            \end{minipage}%
+            \begin{minipage}{.5\textwidth}
+                \centering
+                \includegraphics[width=10cm]{cvpsjeng}
+                \caption{Cost vs. CPI sjeng}
+                \label{fig:cvpsjeng}
+            \end{minipage}
+        \end{figure}
 
 \section{Main Memory Bandwidth Increase}
+   A method that can be used to increase the memory system performance is to increase the bandwidth to main memory. The base configuration uses a mem chunk-size of 8 bytes. Increasing this value will speed up each access to main memory. To evaluate the performance gains when the bandwidth is increased we ran three additional simulations using the sjeng trace. Each additional simulation used the default configuration with the bandwidth to main memory increasing from the default 8 bytes to 16, 32, and 64 bytes. The increase in bandwidth results in an associated increase in cost of \$100 for each doubling of mem chunk-size.
 
 \section{Conclusion}
 
