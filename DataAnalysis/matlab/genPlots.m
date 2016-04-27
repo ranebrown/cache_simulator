@@ -6,8 +6,9 @@ execT_bar = 0;
 execT_line = 0;
 execT_ideal = 0;
 cpi_bar = 0;
-hm_plot = 1;
+hm_plot = 0;
 cost_plot = 0;
+costVperf_plot = 0;
 kick_plot = 0;
 
 % read in data
@@ -71,7 +72,17 @@ end
 % total cost line plot - NOTE: costs do not change per trace only per
 % configuration
 if cost_plot == 1
-    figure, costPlot(astar);
+    figure, costPlot(astar, 1);
+end
+
+% cost vs. performance (cpi)
+if costVperf_plot == 1
+    figure, costPlot( astar, 2);
+    figure, costPlot( bzip2, 2 );
+    figure, costPlot( gobmk, 2 );
+    figure, costPlot( libquantum, 2 );
+    figure, costPlot( omnetpp, 2 );
+    figure, costPlot( sjeng, 2 );
 end
 
 % kickouts and dirty kickouts
