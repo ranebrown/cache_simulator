@@ -1,12 +1,13 @@
 % clean up workspace
-clear all; close all; clc;
+%clear all; 
+close all; clc;
 
 % control which plots are shown
-execT_bar = 1;
+execT_bar = 0;
 execT_line = 0;
 execT_ideal = 0;
 cpi_bar = 0;
-hm_plot = 0;
+hm_plot = 1;
 cost_plot = 0;
 costVperf_plot = 0;
 kick_plot = 0;
@@ -61,12 +62,24 @@ end
 
 % hit and miss 3d bar plots
 if hm_plot == 1
-    figure, hitMissPlot( astar );
-    figure, hitMissPlot( bzip2 );
-    figure, hitMissPlot( gobmk );
-    figure, hitMissPlot( libquantum );
-    figure, hitMissPlot( omnetpp );
-    figure, hitMissPlot( sjeng );
+    figure, hitMissPlot( astar, 1 );
+    figure, hitMissPlot( bzip2, 1 );
+    figure, hitMissPlot( gobmk, 1 );
+    figure, hitMissPlot( libquantum, 1 );
+    figure, hitMissPlot( omnetpp, 1 );
+    figure, hitMissPlot( sjeng, 1 );
+    figure, hitMissPlot( astar, 2 );
+    figure, hitMissPlot( bzip2, 2 );
+    figure, hitMissPlot( gobmk, 2 );
+    figure, hitMissPlot( libquantum, 2 );
+    figure, hitMissPlot( omnetpp, 2 );
+    figure, hitMissPlot( sjeng, 2 );
+    figure, hitMissPlot( astar, 3 );
+    figure, hitMissPlot( bzip2, 3 );
+    figure, hitMissPlot( gobmk, 3 );
+    figure, hitMissPlot( libquantum, 3 );
+    figure, hitMissPlot( omnetpp, 3 );
+    figure, hitMissPlot( sjeng, 3 );
 end
 
 % total cost line plot - NOTE: costs do not change per trace only per
