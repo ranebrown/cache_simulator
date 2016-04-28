@@ -2,7 +2,7 @@
 clear all; close all; clc;
 
 % control which plots are shown
-execT_bar = 0;
+execT_bar = 1;
 execT_line = 0;
 execT_ideal = 0;
 cpi_bar = 0;

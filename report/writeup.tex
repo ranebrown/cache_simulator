@@ -26,20 +26,61 @@
     This project simulates a two level cache using the C programming language. The memory hierarchy consists of a L1 instruction cache, a L1 data cache and a unified L2 cache. In addition, each cache level has an associated victim cache which is setup as an eight deep fully associative cache. If there is a miss at a particular cache level then that level's victim cache is checked before making a request to the next level in the hierarchy. The caches are \emph{write-allocate}, \emph{write-back} caches which means a dirty bit must be used to track when a write request occurs. Each cache maintains a LRU (least recently used) replacement policy for each set in a set associative cache or in a fully associative cache. This project evaluates the performance of nine different memory configurations using sample traces from a selection of six SPEC benchmarks. The bus widths, transfer times, hit/miss times, and various other important parameters can be found in the official project description.
 
 \section{Setup and Code Structure}
-
+    When a simulation is executed, the cache first needs to be structured and built. The structure of the cache is determined from a configuration file passed in at startup. This file contains the cache size and number of ways for all of the cache levels and stores it in a structure on the heap. From there, an array of pointers to linked lists is built. The length of the array is the number of levels in the cache, and the number of ways for the cache level determines the number of nodes (i.e. an L1 4-way cache has four nodes at each index, a direct mapped has a single node per index and the fully associative has one index and cache size / block size nodes).
+    
+    After configuration and setup the lines from the trace begin to be read in and parsed. After some initial information is gathered the necessary addressing information is collected and sent to the corresponding L1 cache search function. After checking the L1, the program calls a function that will initiate a check of the L1 victim cache, L2 cache, and  L2 victim cache returning only when a hit occurs.  If a hit occurs at any level of a cache, the proper blocks are swapped as necessary. When swapping, only the values in each node is swapped, the actual nodes are kept in their own cache level. When new blocks are brought in, the node is "bumped" to the from of the list. In doing this an LRU policy is maintained with the least recent block at the end of every list. 
+    
+    Upon completion of the trace read, the important calculations are made and the results are printed to the Simulation Results page for that trace and configuration. All simulation results files are included in this report in the Appendix section. A complete copy of the code is also included in the Appendix section in a Doxygen generated file. In addition to the code for this project, the Doxygen report includes information about all functions and structures used. 
+    
 \section{Performance Evaluation}
 
     \subsection{astar}
+	\begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.75]{etastar}
+            \caption{astar Execution Times}
+            \label{fig:etastar}
+        \end{figure}
 
     \subsection{bzip2}
+	\begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.75]{etbzip2}
+            \caption{bzip2 Execution Times}
+            \label{fig:etbzip2}
+        \end{figure}
 
     \subsection{gobmk}
+	\begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.75]{etgobmk}
+            \caption{gobmk Execution Times}
+            \label{fig:etgobmk}
+        \end{figure}
 
     \subsection{libquantum}
+	\begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.75]{etlibquantum}
+            \caption{libquantum Execution Times}
+            \label{fig:etlibquantum}
+        \end{figure}
 
     \subsection{omnetpp}
+	\begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.75]{etomnetpp}
+            \caption{omnetpp Execution Times}
+            \label{fig:etomnetpp}
+        \end{figure}
 
     \subsection{sjeng}
+	\begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.75]{etsjeng}
+            \caption{sjeng Execution Times}
+            \label{fig:etsjeng}
+        \end{figure}
 
 \section{Overall Performance Comparison}
 
