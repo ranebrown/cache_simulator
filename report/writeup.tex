@@ -122,7 +122,13 @@
         \end{figure}
 
 \section{Main Memory Bandwidth Increase}
-   A method that can be used to increase the memory system performance is to increase the bandwidth to main memory. The base configuration uses a mem chunk-size of 8 bytes. Increasing this value will speed up each access to main memory. To evaluate the performance gains when the bandwidth is increased we ran three additional simulations using the sjeng trace. Each additional simulation used the default configuration with the bandwidth to main memory increasing from the default 8 bytes to 16, 32, and 64 bytes. The increase in bandwidth results in an associated increase in cost of \$100 for each doubling of mem chunk-size.
+   A method that can be used to increase the memory system performance is to increase the bandwidth to main memory. The base configuration uses a mem chunk-size of 8 bytes. Increasing this value will speed up each access to main memory. To evaluate the performance gains when the bandwidth is increased we ran three additional simulations using the sjeng trace. Each additional simulation used the default configuration with the bandwidth to main memory increasing from the default 8 bytes to 16, 32, and 64 bytes. The increase in bandwidth results in an associated increase in cost of \$100 for each doubling of mem chunk-size. Figure \ref{fig:exSj} displays the CPI versus cost using the same method described in section \ref{sec:costVperf}. It can be seen that the increasing the bandwidth to 64 bytes results in the lowest CPI of 6.3 but the cost is the highest. The base cost with a bandwidth of 8 bytes if \$575 and increasing the bandwidth to 64 bytes results in a cost of \$875. The cost increase of \$300 is fairly low and the CPI is reduced from 8.3 to 6.3. Our analysis it that accepting the additional cost to increase the bandwidth to 64 bytes is an acceptable compromise to realize a 25\% decrease in CPI.
+   \begin{figure}[H]
+       \centering
+       \includegraphics[scale=0.75]{extraSjeng}
+       \caption{Cost vs. Performance: Bandwidth Increase}
+       \label{fig:exSj}
+   \end{figure}
 
 \section{Conclusion}
 
