@@ -23,19 +23,20 @@
 \newpage
 
 \section{Introduction}
-This project simulates a two level cache using the C programming language. The memory hierarchy consists of a L1 instruction cache, a L1 data cache and a unified L2 cache. In addition, each cache level has an associated victim cache which is setup as an eight deep fully associative cache. If there is a miss at a particular cache level then that level's victim cache is checked before making a request to the next level in the hierarchy. The caches are \emph{write-allocate}, \emph{write-back} caches which means a dirty bit must be used to track when a write request occurs. Each cache maintains a LRU (least recently used) replacement policy for each set in a set associative cache or in a fully associative cache. This project evaluates the performance of nine different memory configurations using sample traces from a selection of six SPEC benchmarks. The bus widths, transfer times, hit/miss times, and various other important parameters can be found in the official project description.
+This project simulates a two level cache using the C programming language. The memory hierarchy consists of a L1 instruction cache, a L1 data cache and a unified L2 cache. In addition, each cache level has a victim cache which is setup as an eight deep fully associative cache. If there is a miss at a particular cache level then that level's victim cache is checked before making a request to the next level in the hierarchy. The caches are \emph{write-allocate}, \emph{write-back} caches which means a dirty bit must be used to track when a write request occurs. Each cache maintains a LRU (least recently used) replacement policy for each set in a set associative cache or in a fully associative cache. This project evaluates the performance of nine different memory configurations using sample traces from a selection of six SPEC benchmarks. The bus widths, transfer times, hit/miss times, and various other important parameters can be found in the official project description.
 
 \section{Setup and Code Structure}
-When a simulation is executed, the cache first needs to be structured and built. The structure of the cache is determined from a configuration file passed in at startup. This file contains the cache size and number of ways for all of the cache levels and stores it in a structure on the heap. From there, an array of pointers to linked lists is built. The length of the array is the number of levels in the cache, and the number of ways for the cache level determines the number of nodes (i.e. an L1 4-way cache has four nodes at each index, a direct mapped has a single node per index and the fully associative has one index and cache size / block size nodes).
+When a simulation is executed, the cache first needs to be structured and built. The structure of the cache is determined from a configuration file passed in at startup. This file contains the cache size and number of ways for all of the cache levels and stores it in a structure on the heap. From there, an array of pointers to linked lists is built. The length of the array is the number of levels in the cache, and the number of ways for the cache level determines the number of nodes (i.e. an L1 4-way cache has four nodes at each index, a direct mapped has a single node per index and the fully associative has one index and $[cache size / block size]$ nodes).
 
-After configuration and setup the lines from the trace begin to be read in and parsed. After some initial information is gathered the necessary addressing information is collected and sent to the corresponding L1 cache search function. After checking the L1, the program calls a function that will initiate a check of the L1 victim cache, L2 cache, and L2 victim cache returning only when a hit occurs. If a hit occurs at any level of a cache, the proper blocks are swapped as necessary. When swapping, only the values in each node is swapped, the actual nodes are kept in their own cache level. When new blocks are brought in, the node is "bumped" to the from of the list. In doing this an LRU policy is maintained with the least recent block at the end of every list.
+After configuration and setup the lines from the trace are read in and parsed. After some initial information is gathered the necessary addressing information is collected and sent to the corresponding L1 cache search function. After checking the L1, the program calls a function that will initiate a check of the L1 victim cache, L2 cache, and L2 victim cache returning only when a hit occurs. If a hit occurs at any level of a cache, the proper blocks are swapped as necessary. When swapping, only the values in each node is swapped, the actual nodes are kept in their own cache level. When new blocks are brought in, the node is "bumped" to the from of the list. In doing this an LRU policy is maintained with the least recent block at the end of every list.
 
 Upon completion of the trace read, the important calculations are made and the results are printed to the Simulation Results page for that trace and configuration. All simulation results files are included in this report in the Appendix section. A complete copy of the code is also included in the Appendix section in a Doxygen generated file. In addition to the code for this project, the Doxygen report includes information about all functions and structures used.
 
 \section{Performance Evaluation}
-In evaluating the performance of the different cache configurations the natural place to begin is in an analysis of the Clock cycles Per Instruction (CPI) for each trace.  In this first section, the CPI is examined to find any patterns, and then those patterns are investigated to determine what causes them.    \subsection{astar}
-    Figure \ref{fig:CPIastar} shows the different CPI values for each cache configuration while running the astar trace. The interesting observation from this graph are the five confgurations that give the same CPI. Each of these configurations have a direct-mapped L2 cache, changing only the associativity of the L1 cache. As soon as the L2 associativity is increased, the CPI begins to decrease as expected, with the fully-associative configuration providing the best CPI. Another contributing factor to this relatively consistent CPI can be seen from the low miss rate in the L1 instruction cache. 
-	 \begin{figure}[H]
+In evaluating the performance of the different cache configurations the natural place to begin is in an analysis of the Clock cycles Per Instruction (CPI) for each trace.  In this first section, the CPI is examined to find any patterns, and then those patterns are investigated to determine what causes them. It should be noted that the plots in this section that show the hit/miss rates for each cache level use a $log_{10}$ scale. This was necessary because the hit rates are much larger numbers than the miss rates and without scaling the data a useful plot cannot be created.
+    \subsection{astar}
+    Figure \ref{fig:CPIastar} shows the different CPI values for each cache configuration while running the astar trace. The interesting observation from this graph are the five configurations that give the same CPI. Each of these configurations have a direct-mapped L2 cache, changing only the associativity of the L1 cache. As soon as the L2 associativity is increased, the CPI begins to decrease as expected, with the fully-associative configuration providing the best CPI. Another contributing factor to this relatively consistent CPI can be seen from the low miss rate in the L1 instruction cache.
+     \begin{figure}[H]
           \centering
           \begin{minipage}{.5\textwidth}
             \centering
@@ -48,7 +49,7 @@ In evaluating the performance of the different cache configurations the natural 
             \caption{L1 Inst. Cache hits/misses: astar}
             \label{fig:L1IHM_astar}
           \end{minipage}%
-	\end{figure}
+    \end{figure}
         \begin{figure}[H]
           \centering
           \begin{minipage}{.45\textwidth}
@@ -61,10 +62,10 @@ In evaluating the performance of the different cache configurations the natural 
             \caption{L2 Cache hits/misses: astar}
             \label{fig:L2HM_astar}
           \end{minipage}
-	\end{figure}
+    \end{figure}
 
     \subsection{bzip2}
-    Figure \ref{fig:CPIbzip2} which shows the CPI values from the bzip2 traces, gives little in the way of a pattern or comparison between differen cache configurations. The interesting part of this simulation can be seen by comparing the bzip2 CPI's to other trace results. The difference can be seen in Figure \ref{fig:L1IHM_bzip2}, which shows L1 instruction cache hits and misses. Here we can see a lower than usual miss count, and a high hit count. This, and the libquantum trace simulations both who Figure \ref{fig:L1IHM_bzip2} shows again that a direct-mapped configuration produces lower performance than almost any level of higher association. 
+    Figure \ref{fig:CPIbzip2} which shows the CPI values from the bzip2 traces, gives little in the way of a pattern or comparison between different cache configurations. The interesting part of this simulation can be seen by comparing the bzip2 CPI's to other trace results. The difference can be seen in Figure \ref{fig:L1IHM_bzip2}, which shows L1 instruction cache hits and misses. Here we can see a lower than usual miss count, and a high hit count. This, and the libquantum trace simulations shown in Figure \ref{fig:L1IHM_bzip2} shows again that a direct-mapped configuration produces lower performance than almost any level of higher associativity.
         \begin{figure}[H]
           \centering
           \begin{minipage}{.5\textwidth}
@@ -82,7 +83,7 @@ In evaluating the performance of the different cache configurations the natural 
         \end{figure}
 
     \subsection{gobmk}
-    The gobmk simulation was the first simulation to provide a clear look at how increasing the associativity (as well as the size for similar associativies) increases the performance and decreases the CPI of each simulation. These results are the anticipated outcome for general CPU cacheing, the larger the cache and higher the number of association, the better the performance. Looking at the hit and miss counts for each of the caches, (shown in Figures \ref{fig:L1IHM_gobmk}, \ref{fig:L1DHM_gobmk}, and, \ref{fig:L2HM_gobmk}) there are relatively consistent and higher miss counts at every level. These counts are the contributing factors to the CPI values calculated. 
+    The gobmk simulation was the first simulation to provide a clear look at how increasing the associativity (as well as the size for similar associativity) increases the performance and decreases the CPI of each simulation. These results are the anticipated outcome for general CPU caching, the larger the cache and higher the number of associativity, the better the performance. Looking at the hit and miss counts for each of the caches, (shown in Figures \ref{fig:L1IHM_gobmk}, \ref{fig:L1DHM_gobmk}, and, \ref{fig:L2HM_gobmk}) there are relatively consistent and higher miss counts at every level. These counts are the contributing factors to the CPI values calculated.
     \begin{figure}[H]
           \centering
           \begin{minipage}{.5\textwidth}
@@ -96,7 +97,7 @@ In evaluating the performance of the different cache configurations the natural 
             \caption{L1 Inst. Cache hits/misses: gobmk}
             \label{fig:L1IHM_gobmk}
           \end{minipage}%
-	\end{figure}
+    \end{figure}
         \begin{figure}[H]
           \centering
           \begin{minipage}{.45\textwidth}
@@ -109,20 +110,20 @@ In evaluating the performance of the different cache configurations the natural 
             \caption{L2 Cache hits/misses: gobmk}
             \label{fig:L2HM_gobmk}
           \end{minipage}
-	\end{figure}
-   
+    \end{figure}
+
     \subsection{libquantum}
-    The libquantum trace simulation returned results similar to those of the bzip2 trace, however more extreme. Figure \ref{fig:CPIlibquantum} shows identical CPI's for each configuration. This is again curious until the hit/miss graph shown in Figure \ref{fig:L1IHM_libquantum} is examined. Here we see  a \emph{very} low miss count for each of the cache configurations. This is evident of either a small set of instructions being used, or very high locality in the libquantum trace. 
+    The libquantum trace simulation returned results similar to those of the bzip2 trace, however more extreme. Figure \ref{fig:CPIlibquantum} shows identical CPI's for each configuration. This is again curious until the hit/miss graph shown in Figure \ref{fig:L1IHM_libquantum} is examined. Here we see  a \emph{very} low miss count for each of the cache configurations. This is evident of either a small set of instructions being used, or very high locality in the libquantum trace.
         \begin{figure}[H]
           \centering
           \begin{minipage}{.45\textwidth}
              \includegraphics[width=9cm]{CPIlibquantum}
              \caption{CPI: libquantum}
-      	     \label{fig:CPIlibquantum}
+             \label{fig:CPIlibquantum}
           \end{minipage}
           \begin{minipage}{.45\textwidth}
               \includegraphics[width=9cm]{L1IHM_libquantum}
-              \caption{L1 Instruction Cache hits/misses: libquantum}
+              \caption{L1i hits/misses: libquantum}
               \label{fig:L1IHM_libquantum}
           \end{minipage}%
           \end{figure}
@@ -130,18 +131,18 @@ In evaluating the performance of the different cache configurations the natural 
           \centering
           \begin{minipage}{.45\textwidth}
                \includegraphics[width=9cm]{L1DHM_libquantum}
-               \caption{L1 Data Cache hits/misses: libquantum}
+               \caption{L1d hits/misses: libquantum}
                \label{fig:L1DHM_libquantum}
           \end{minipage}
           \begin{minipage}{.45\textwidth}
                \includegraphics[width=9cm]{L2HM_libquantum}
-               \caption{L2 Cache hits/misses: libquantum}
+               \caption{L2 hits/misses: libquantum}
                \label{fig:L2HM_libquantum}
           \end{minipage}
         \end{figure}
-    
+
     \subsection{omnetpp}
-    The omnetpp simulation shows data very much like that of the gobmk. We see a high miss count and the corresponding CPI improvement as the associativity and cache size increases. 
+    The omnetpp simulation shows data very much like that of the gobmk. We see a high miss count and the corresponding CPI improvement as the associativity and cache size increases.
     \begin{figure}[H]
       \centering
       \begin{minipage}{.45\textwidth}
@@ -152,7 +153,7 @@ In evaluating the performance of the different cache configurations the natural 
       \begin{minipage}{.45\textwidth}
             \centering
             \includegraphics[width=9cm]{L1IHM_omnetpp}
-            \caption{L1 Inst. Cache hits/misses: omnetpp}
+            \caption{L1i hits/misses: omnetpp}
             \label{fig:L1IHM_omnetpp}
           \end{minipage}%
            \end{figure}
@@ -160,19 +161,19 @@ In evaluating the performance of the different cache configurations the natural 
           \centering
           \begin{minipage}{.45\textwidth}
             \includegraphics[width=9cm]{L1DHM_omnetpp}
-            \caption{L1 Data Cache hits/misses: omnetpp}
+            \caption{L1i hits/misses: omnetpp}
             \label{fig:L1DHM_omnetpp}
           \end{minipage}
           \begin{minipage}{.45\textwidth}
             \centering
             \includegraphics[width=9cm]{L2HM_omnetpp}
-            \caption{L2 Cache hits/misses: omnetpp}
+            \caption{L2 hits/misses: omnetpp}
             \label{fig:L2HM_omnetpp}
           \end{minipage}
-	\end{figure}
-    
+    \end{figure}
+
     \subsection{sjeng}
-    The final simulation is the sjeng trace follows the same pattern as gobmk and omnetpp. Here again we see higher miss counts in all levels of the memory and consistent improvements to the CPI as the size and associativities increase. 
+    The final simulation is the sjeng and this trace follows the same pattern as gobmk and omnetpp. Again, we see higher miss counts in all levels of the memory and consistent improvements to the CPI as the size and associativities increase.
         \begin{figure}[H]
       \centering
       \begin{minipage}{.45\textwidth}
@@ -187,7 +188,7 @@ In evaluating the performance of the different cache configurations the natural 
           \end{minipage}%
            \end{figure}
           \begin{figure}[H]
-          \centering   
+          \centering
           \begin{minipage}{.45\textwidth}
             \centering
             \includegraphics[width=9cm]{L1DHM_sjeng}
@@ -200,10 +201,10 @@ In evaluating the performance of the different cache configurations the natural 
             \caption{L2 Cache hits/misses: sjeng}
             \label{fig:L2HM_sjeng}
           \end{minipage}
-	\end{figure}
+    \end{figure}
 \pagebreak
     \section{Overall Performance Comparison}
-    From the previous performance evaluations, two major patterns emerge. First, for traces with high locality in the instruction list, we see similar CPI's across the range of different configurations. Traces such as the libquantum, which show a very low miss count in the L1 cache have an identical CPI for each cache scheme. Compare that to the gobmk trace which shows a high miss count at all levels of cache, and a wide range of CPI values are found. This leads to the second pattern, that the higher the miss count in the caches, the more the architecture of the cache plays a role in performance. This role shows that the higher the associativity of a cache, the better the performance. If two caches have the same associativity, then the larger cache shows the better performance. For example, the omnetpp trace received an almost 300\% improvement to its CPI going between the All-small direct-mapped and the All-FA cache configurations.  
+    From the previous performance evaluations, two major patterns emerge. First, for traces with high locality in the instruction list, we see similar CPI's across the range of different configurations. Traces such as the libquantum, which show a very low miss count in the L1 cache have an identical CPI for each cache scheme. Compare that to the gobmk trace which shows a high miss count at all levels of cache, and a wide range of CPI values are found. This leads to the second pattern, that the higher the miss count in the caches, the more the architecture of the cache plays a role in performance. This role shows that the higher the associativity of a cache, the better the performance. If two caches have the same associativity, then the larger cache shows the better performance. For example, the omnetpp trace received an almost 300\% improvement to its CPI going between the All-small direct-mapped and the All-FA cache configurations.
      \begin{figure}[H]
       \centering
       \includegraphics[scale=0.45]{CPIall}
@@ -217,9 +218,7 @@ In evaluating the performance of the different cache configurations the natural 
       \label{fig:etalll}
     \end{figure}
 
-    
-    
-    Viewing the executions times of a simulation for different configurations is useful but it is also helpful to compare the actual execution times to the ideal case. In the ideal case there would be 100\% hit rate in the L1 cache. There are two ideal cases to consider: first, the bus width between the processor and the L1 cache is as wide as necessary to accommodate the number of bytes in the request; second, the bus between the processor and the L2 cache is 4 bytes. In the second scenario it is possible for a trace to require multiple accesses to the L1 cache since the memory addresses must align on 4 byte boundaries. The following plots show the relation between the actual execution time for each configuration versus the two ideal cases. Also, table \ref{tbl:ideal} shows how much faster the ideal and ideal mis-aligned execution is than the actual execution time. These values are averaged across all configurations for a given trace.
+    Viewing the executions times of a simulation for different configurations is useful but it is also helpful to compare the actual execution times to the ideal case. In the ideal case there would be 100\% hit rate in the L1 cache. There are two ideal cases to consider: first, the bus width between the processor and the L1 cache is as wide as necessary to accommodate the number of bytes in the request; second, the bus between the processor and the L2 cache is 4 bytes. In the second scenario it is possible for a trace to require multiple accesses to the L1 cache since the memory addresses must align on 4 byte boundaries. Plots \ref{fig:idealA} -- \ref{fig:idealS} show the relation between the actual execution time for each configuration versus the two ideal cases. Also, table \ref{tbl:ideal} shows how much faster the ideal and ideal mis-aligned execution is than the actual execution time. These values are averaged across all configurations for a given trace.
     \begin{figure}[H]
       \centering
       \begin{minipage}{.5\textwidth}
@@ -265,7 +264,7 @@ In evaluating the performance of the different cache configurations the natural 
         \label{fig:idealS}
       \end{minipage}
     \end{figure}
-    
+
     \begin{table}[H]
       \centering
       \begin{tabular}{|m{4cm}|m{4cm}|m{4cm}|}
@@ -287,8 +286,6 @@ In evaluating the performance of the different cache configurations the natural 
       \end{tabular}
       \caption{Speedup: Ideal Cases} \label{tbl:ideal}
     \end{table}
-
-
 
 \section{Cost Evaluation}
 An additional method used to evaluate the different cache configurations is to look at the cost associated with a particular configuration. The costs are evaluated based on the following information:
@@ -321,7 +318,7 @@ Figure \ref{fig:totCost} shows the breakdown of the memory cost for each of the 
   \label{fig:totCost}
 \end{figure}
 
-\subsection{Cost versus Performance} \label{sec:costVperf} The following series of bar graphs displays the CPI versus cost for each trace and configuration. The values for the cost are divided by 100 and then the data is normalized between 0-1. This was necessary in order to display the large values of cost with the relatively lower values of CPI. Each plot is sorted with the best performance (shown in yellow) on the left. The cost associated with that performance level is represented in blue next to the CPI value. Clearly, the best performance is given by the fully associative configuration but this option also results in the highest cost. A better choice would be to use these plots and select the lowest CPI with the correspondingly lowest cost. The best option is somewhat subjective and related to the budget available when designing the cache but the All-2way configuration provides a decently low CPI while still maintaining a low cost.
+\subsection{Cost versus Performance} \label{sec:costVperf} The following series of bar graphs (figures \ref{fig:cvpastar}-\ref{fig:cvpsjeng}) displays the CPI versus cost for each trace and configuration. The values for the cost are divided by 100 and then the data is normalized between 0-1. This was necessary in order to display the large values of cost with the relatively lower values of CPI. Each plot is sorted with the best performance (shown in yellow) on the left. The cost associated with that performance level is represented in blue next to the CPI value. Clearly, the best performance is given by the fully associative configuration but this option also results in the highest cost. A better choice would be to use these plots and select the lowest CPI with the correspondingly lowest cost. The best option is somewhat subjective and related to the budget available when designing the cache but the All-2way configuration provides a decently low CPI while still maintaining a low cost.
 \begin{figure}[H]
   \centering
   \begin{minipage}{.5\textwidth}
