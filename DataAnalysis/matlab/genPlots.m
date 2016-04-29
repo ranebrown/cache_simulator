@@ -5,10 +5,10 @@ close all; clc;
 % control which plots are shown
 execT_bar = 0;
 execT_line = 0;
-execT_ideal = 0;
+execT_ideal = 1;
 cpi_bar = 0;
 cpi_line = 0;
-hm_plot = 1;
+hm_plot = 0;
 cost_plot = 0;
 costVperf_plot = 0;
 kick_plot = 0;

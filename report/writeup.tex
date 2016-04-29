@@ -34,7 +34,7 @@
     Upon completion of the trace read, the important calculations are made and the results are printed to the Simulation Results page for that trace and configuration. All simulation results files are included in this report in the Appendix section. A complete copy of the code is also included in the Appendix section in a Doxygen generated file. In addition to the code for this project, the Doxygen report includes information about all functions and structures used.
 
 \section{Performance Evaluation}
-The data gathered from the simulations shows some interesting patterns. 
+ 
     \subsection{astar}
         \begin{figure}[H]
             \centering
@@ -84,6 +84,7 @@ The data gathered from the simulations shows some interesting patterns.
         \end{figure}
 
 \section{Overall Performance Comparison}
+
 \begin{figure}[H]
             \centering
             \includegraphics[scale=0.5]{CPIall}
@@ -91,6 +92,78 @@ The data gathered from the simulations shows some interesting patterns.
             \label{fig:CPIall}
         \end{figure}
         
+
+    Viewing the executions times of a simulation for different configurations is useful but it is also helpful to compare the actual execution times to the ideal case. In the ideal case there would be 100\% hit rate in the L1 cache. There are two ideal cases to consider: first, the bus width between the processor and the L1 cache is as wide as necessary to accommodate the number of bytes in the request; second, the bus between the processor and the L2 cache is 4 bytes. In the second scenario it is possible for a trace to require multiple accesses to the L1 cache since the memory addresses must align on 4 byte boundaries. The following plots show the relation between the actual execution time for each configuration versus the two ideal cases. Also, table \ref{tbl:ideal} shows how much faster the ideal and ideal mis-aligned execution is than the actual execution time. These values are averaged across all configurations for a given trace.
+    \begin{figure}[H]
+        \centering
+        \begin{minipage}{.5\textwidth}
+            \centering
+            \includegraphics[width=10cm]{idealAstar}
+            \caption{Ideal Execution Times: astar}
+            \label{fig:idealA}
+        \end{minipage}%
+        \begin{minipage}{.5\textwidth}
+            \centering
+            \includegraphics[width=10cm]{idealBzip2}
+            \caption{Ideal Execution Times: bzip2}
+            \label{fig:idealB}
+        \end{minipage}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \begin{minipage}{.5\textwidth}
+            \centering
+            \includegraphics[width=10cm]{idealGobmk}
+            \caption{Ideal Execution Times: gobmk}
+            \label{fig:idealG}
+        \end{minipage}%
+        \begin{minipage}{.5\textwidth}
+            \centering
+            \includegraphics[width=10cm]{idealOmnetpp}
+            \caption{Ideal Execution Times: omnetpp}
+            \label{fig:idealO}
+        \end{minipage}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \begin{minipage}{.5\textwidth}
+            \centering
+            \includegraphics[width=10cm]{idealLibquantum}
+            \caption{Ideal Execution Times: libquantum}
+            \label{fig:idealL}
+        \end{minipage}%
+        \begin{minipage}{.5\textwidth}
+            \centering
+            \includegraphics[width=10cm]{idealSjeng}
+            \caption{Ideal Execution Times: sjeng}
+            \label{fig:idealS}
+        \end{minipage}
+    \end{figure}
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|m{4cm}|m{4cm}|m{4cm}|}
+            \hline
+            Trace & Ideal & Ideal mis-aligned \\
+            \hline
+            astar & 4.2150 & 3.1272 \\
+            \hline
+            bzip2 & 3.8738 & 3.0652 \\
+            \hline
+            gobmk & 5.9394 & 4.3599 \\
+            \hline
+            omnetpp & 6.9832 & 4.8438 \\
+            \hline
+            libquantum & 4.7694 & 3.8467 \\
+            \hline
+            sjeng &  3.6417 & 2.7240 \\
+            \hline
+        \end{tabular}
+        \caption{Speedup: Ideal Cases} \label{tbl:ideal}
+    \end{table}
+
+
+
 \section{Cost Evaluation}
     An additional method used to evaluate the different cache configurations is to look at the cost associated with a particular configuration. The costs are evaluated based on the following information:
     \begin{itemize}
@@ -179,5 +252,6 @@ The data gathered from the simulations shows some interesting patterns.
    \end{figure}
 
 \section{Conclusion}
+    Overall, the memory simulator project was a success. Building the simulator provided us with a much greater understanding of how a cache works and how different configurations affect performance and cost. There are multiple choices that must be considered before implementing a memory hierarchy in hardware and simulating the options in software is an effective means of viewing the ramifications of a particular configuration. Using a fully associative L1 and L2 cache provides the best performance but this also results in a prohibitively high cost. In addition, increasing the bus widths between each cache level improves performance but may not be feasible in all cases. We learned that it is very challenging to effectively analyze the results of 54 simulations with statistics that range from integers less than 10 to execution times in the billions of cycles.  Due to the large numbers associated with execution times and other statistics it was necessary to scale the data in certain cases. Scaling can be useful for creating and viewing plots but it is also possible to skew results if care is not taken. This project was very challenging but in the end we created a working simulator and conducted a useful analysis of the results.
 
 \end{document}
