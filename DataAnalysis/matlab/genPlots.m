@@ -7,6 +7,7 @@ execT_bar = 0;
 execT_line = 0;
 execT_ideal = 0;
 cpi_bar = 0;
+cpi_line = 0;
 hm_plot = 1;
 cost_plot = 0;
 costVperf_plot = 0;
@@ -58,6 +59,19 @@ if cpi_bar == 1
     figure, cpiPlot( libquantum );
     figure, cpiPlot( omnetpp );
     figure, cpiPlot( sjeng );
+end
+
+if cpi_line == 1
+    figure, cpiLinePlot( astar );
+    hold on
+    cpiLinePlot( bzip2 );
+    cpiLinePlot( gobmk );
+    cpiLinePlot( libquantum );
+    cpiLinePlot( omnetpp );
+    cpiLinePlot( sjeng );
+    lg = legend('astar', 'bzip2', 'gobmk', 'libquantum', 'omnetpp', 'sjeng');
+    set(lg, 'Location', 'northwest'); % legend location
+    hold off
 end
 
 % hit and miss 3d bar plots

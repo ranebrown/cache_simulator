@@ -34,57 +34,63 @@
     Upon completion of the trace read, the important calculations are made and the results are printed to the Simulation Results page for that trace and configuration. All simulation results files are included in this report in the Appendix section. A complete copy of the code is also included in the Appendix section in a Doxygen generated file. In addition to the code for this project, the Doxygen report includes information about all functions and structures used.
 
 \section{Performance Evaluation}
-
+The data gathered from the simulations shows some interesting patterns. 
     \subsection{astar}
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.75]{etastar}
-            \caption{astar Execution Times}
-            \label{fig:etastar}
+            \includegraphics[scale=0.75]{CPIastar}
+            \caption{astar CPI}
+            \label{fig:CPIastar}
         \end{figure}
 
     \subsection{bzip2}
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.75]{etbzip2}
-            \caption{bzip2 Execution Times}
-            \label{fig:etbzip2}
+            \includegraphics[scale=0.75]{CPIbzip2}
+            \caption{bzip2 CPI}
+            \label{fig:CPIbzip2}
         \end{figure}
 
     \subsection{gobmk}
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.75]{etgobmk}
-            \caption{gobmk Execution Times}
-            \label{fig:etgobmk}
+            \includegraphics[scale=0.75]{CPIgobmk}
+            \caption{gobmk CPI}
+            \label{fig:CPIgobmk}
         \end{figure}
 
     \subsection{libquantum}
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.75]{etlibquantum}
-            \caption{libquantum Execution Times}
-            \label{fig:etlibquantum}
+            \includegraphics[scale=0.75]{CPIlibquantum}
+            \caption{libquantum CPI}
+            \label{fig:CPIlibquantum}
         \end{figure}
 
     \subsection{omnetpp}
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.75]{etomnetpp}
-            \caption{omnetpp Execution Times}
-            \label{fig:etomnetpp}
+            \includegraphics[scale=0.75]{CPIomnetpp}
+            \caption{omnetpp CPI}
+            \label{fig:CPIomnetpp}
         \end{figure}
 
     \subsection{sjeng}
         \begin{figure}[H]
             \centering
-            \includegraphics[scale=0.75]{etsjeng}
-            \caption{sjeng Execution Times}
-            \label{fig:etsjeng}
+            \includegraphics[scale=0.75]{CPIsjeng}
+            \caption{sjeng CPI}
+            \label{fig:CPIsjeng}
         \end{figure}
 
 \section{Overall Performance Comparison}
-
+\begin{figure}[H]
+            \centering
+            \includegraphics[scale=0.5]{CPIall}
+            \caption{CPI comparison}
+            \label{fig:CPIall}
+        \end{figure}
+        
 \section{Cost Evaluation}
     An additional method used to evaluate the different cache configurations is to look at the cost associated with a particular configuration. The costs are evaluated based on the following information:
     \begin{itemize}
